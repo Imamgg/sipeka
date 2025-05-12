@@ -1,0 +1,139 @@
+/* Glassmorphism Effects */
+.glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.dark .glass-card {
+    background: rgba(17, 25, 40, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Futuristic Gradients */
+.gradient-blue {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+}
+
+.gradient-purple {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+}
+
+.gradient-green {
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+}
+
+.gradient-orange {
+    background: linear-gradient(135deg, rgba(234, 88, 12, 0.1) 0%, rgba(251, 146, 60, 0.1) 100%);
+}
+
+/* Hover Effects */
+.hover-scale {
+    transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+    transform: scale(1.02);
+}
+
+/* Animation Effects */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+}
+
+/* Badge with glow effect */
+.badge-glow {
+    position: relative;
+}
+
+.badge-glow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 9999px;
+    box-shadow: 0 0 8px 2px var(--badge-color, rgba(99, 102, 241, 0.7));
+    opacity: 0.6;
+}
+
+.badge-glow-success::after {
+    --badge-color: rgba(16, 185, 129, 0.7);
+}
+
+.badge-glow-warning::after {
+    --badge-color: rgba(245, 158, 11, 0.7);
+}
+
+.badge-glow-error::after {
+    --badge-color: rgba(239, 68, 68, 0.7);
+}
+
+/* Futuristic decorative elements */
+.deco-line {
+    position: relative;
+}
+
+.deco-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -15px;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--line-color, rgba(99, 102, 241, 0.7)), transparent);
+    border-radius: 4px;
+}
+
+.deco-dot {
+    position: relative;
+}
+
+.deco-dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: var(--dot-color, rgba(99, 102, 241, 1));
+    border-radius: 50%;
+}
+
+/* Futuristic borders */
+.border-glow {
+    position: relative;
+}
+
+.border-glow::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: inherit;
+    box-shadow: 0 0 15px 2px var(--border-color, rgba(99, 102, 241, 0.3));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.border-glow:hover::after {
+    opacity: 1;
+}
