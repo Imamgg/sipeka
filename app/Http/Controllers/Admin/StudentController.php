@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use App\Models\Student;
 use App\Models\User;
@@ -31,7 +32,7 @@ class StudentController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return Inertia::render('students/index', [
+        return Inertia::render('admin/students/index', [
             'students' => $students,
             'filters' => $request->only(['search']),
         ]);
@@ -42,33 +43,14 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return Inertia::render('students/create');
+        return Inertia::render('admin/students/create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'nis' => 'required|string|max:20|unique:students',
-            'nisn' => 'nullable|string|max:20|unique:students',
-            'place_of_birth' => 'required|string|max:100',
-            'date_of_birth' => 'required|date',
-            'gender' => 'required|in:M,F',
-            'address' => 'required|string',
-            'phone_number' => 'nullable|string|max:15',
-            'father_name' => 'nullable|string|max:255',
-            'mother_name' => 'nullable|string|max:255',
-        ], [
-            'email.unique' => 'Email sudah digunakan, gunakan email yang lain.',
-            'nis.unique' => 'NIS sudah digunakan, gunakan NIS yang lain.',
-            'nisn.unique' => 'NISN sudah digunakan, gunakan NISN yang lain.',
-        ]);
-
         DB::beginTransaction();
 
         try {
@@ -107,7 +89,7 @@ class StudentController extends Controller
     {
         $student->load('user');
 
-        return Inertia::render('students/show', [
+        return Inertia::render('admin/students/show', [
             'student' => [
                 'id' => $student->id,
                 'user_id' => $student->user_id,
@@ -135,7 +117,7 @@ class StudentController extends Controller
     {
         $student->load('user');
 
-        return Inertia::render('students/edit', [
+        return Inertia::render('admin/students/edit', [
             'student' => [
                 'id' => $student->id,
                 'user_id' => $student->user_id,
@@ -159,24 +141,6 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student)
     {
-        $request->validate([
-            'name' => 'required|string|max:255' . $student->user_id,
-            'email' => 'required|string|email|max:255|unique:users,email,' . $student->user_id,
-            'nis' => 'required|string|max:20|unique:students,nis,' . $student->id,
-            'nisn' => 'nullable|string|max:20|unique:students,nisn,' . $student->id,
-            'place_of_birth' => 'required|string|max:100',
-            'date_of_birth' => 'required|date',
-            'gender' => 'required|in:M,F',
-            'address' => 'required|string',
-            'phone_number' => 'nullable|string|max:15',
-            'father_name' => 'nullable|string|max:255',
-            'mother_name' => 'nullable|string|max:255',
-        ], [
-            'email.unique' => 'Email sudah digunakan, gunakan email yang lain.',
-            'nis.unique' => 'NIS sudah digunakan, gunakan NIS yang lain.',
-            'nisn.unique' => 'NISN sudah digunakan, gunakan NISN yang lain.',
-        ]);
-
         DB::beginTransaction();
 
         try {

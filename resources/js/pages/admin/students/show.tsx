@@ -28,7 +28,7 @@ interface Props {
     student: Student;
 }
 
-export default function Show({ student }: Props) {
+const Show = ({ student }: Props) => {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     function handleDelete() {
@@ -60,11 +60,14 @@ export default function Show({ student }: Props) {
             <Head title={`Siswa - ${student.name}`} />
 
             <div className="flex h-full flex-1 flex-col gap-6 rounded-xl p-6">
-                <div className="glass-card border-glow rounded-xl p-6 shadow-md">
+                <div className="glass-card border-glow rounded-xl p-6 shadow-sm">
                     <h1 className="deco-line text-2xl font-bold" style={{ '--line-color': 'rgba(99, 102, 241, 0.7)' } as React.CSSProperties}>
                         Detail Siswa
                     </h1>
-                    <p className="text-muted-foreground mt-1 max-w-2xl">Informasi lengkap tentang data siswa yang tersimpan dalam sistem.</p>
+                    <p className="text-muted-foreground mt-1">
+                        Informasi detail tentang siswa <span className="font-bold">{student.name}</span>. Anda dapat mengedit atau menghapus data
+                        siswa di bawah ini.
+                    </p>
                 </div>
 
                 <div className="rounded-xl border p-6 shadow-md">
@@ -254,4 +257,6 @@ export default function Show({ student }: Props) {
             </Dialog>
         </AppLayout>
     );
-}
+};
+
+export default Show;

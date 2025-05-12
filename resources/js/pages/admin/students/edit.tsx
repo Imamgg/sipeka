@@ -9,29 +9,48 @@ import { ArrowLeft, Save, School, User, Users } from 'lucide-react';
 import { FormEvent } from 'react';
 import { toast } from 'sonner';
 
-export default function Create() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
+interface Student {
+    id: number;
+    user_id: number;
+    name: string;
+    email: string;
+    nis: string;
+    nisn: string | null;
+    place_of_birth: string;
+    date_of_birth: string;
+    gender: 'M' | 'F';
+    address: string;
+    phone_number: string | null;
+    father_name: string | null;
+    mother_name: string | null;
+}
+
+interface Props {
+    student: Student;
+}
+
+const Edit = ({ student }: Props) => {
+    const { data, setData, patch, processing, errors } = useForm({
+        name: student.name,
+        email: student.email,
         password: '',
         password_confirmation: '',
-        nis: '',
-        nisn: '',
-        place_of_birth: '',
-        date_of_birth: '',
-        gender: '',
-        address: '',
-        phone_number: '',
-        father_name: '',
-        mother_name: '',
+        nis: student.nis,
+        nisn: student.nisn || '',
+        place_of_birth: student.place_of_birth,
+        date_of_birth: student.date_of_birth,
+        gender: student.gender,
+        address: student.address,
+        phone_number: student.phone_number || '',
+        father_name: student.father_name || '',
+        mother_name: student.mother_name || '',
     });
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        post('/students', {
+        patch(`/students/${student.id}`, {
             onSuccess: () => {
-                reset();
-                toast.success('Siswa berhasil ditambahkan');
+                toast.success('Data siswa berhasil diperbarui');
             },
             onError: (errors) => {
                 if (errors.general) {
@@ -43,16 +62,14 @@ export default function Create() {
 
     return (
         <AppLayout>
-            <Head title="Tambah Siswa" />
+            <Head title={`Edit Siswa - ${student.name}`} />
 
             <div className="flex h-full flex-1 flex-col gap-6 rounded-xl p-6">
-                <div className="glass-card border-glow rounded-xl p-6 shadow-md">
+                <div className="glass-card border-glow rounded-xl p-6 shadow-sm">
                     <h1 className="deco-line text-2xl font-bold" style={{ '--line-color': 'rgba(99, 102, 241, 0.7)' } as React.CSSProperties}>
-                        Tambah Siswa Baru
+                        Edit Data Siswa
                     </h1>
-                    <p className="text-muted-foreground mt-1 max-w-2xl">
-                        Lengkapi formulir di bawah untuk menambahkan data siswa baru ke dalam sistem.
-                    </p>
+                    <p className="text-muted-foreground mt-1">Perbarui data siswa dengan mengubah formulir di bawah ini.</p>
                 </div>
 
                 <div className="rounded-xl border p-6 shadow-md">
@@ -64,6 +81,7 @@ export default function Create() {
                             </Link>
                         </Button>
                     </div>
+
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow dark:border-gray-700 dark:bg-gray-800">
                             <div className="mb-4 flex items-center gap-3">
@@ -104,7 +122,7 @@ export default function Create() {
 
                                 <div className="space-y-2">
                                     <Label htmlFor="password" className="text-sm font-medium">
-                                        Password <span className="text-red-500">*</span>
+                                        Password (kosongkan jika tidak diubah)
                                     </Label>
                                     <Input
                                         id="password"
@@ -119,7 +137,7 @@ export default function Create() {
 
                                 <div className="space-y-2">
                                     <Label htmlFor="password_confirmation" className="text-sm font-medium">
-                                        Konfirmasi Password <span className="text-red-500">*</span>
+                                        Konfirmasi Password
                                     </Label>
                                     <Input
                                         id="password_confirmation"
@@ -129,7 +147,7 @@ export default function Create() {
                                         className="rounded-md border-gray-300 transition-all focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                                     />
                                 </div>
-                            </div>{' '}
+                            </div>
                         </div>
 
                         <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow dark:border-gray-700 dark:bg-gray-800">
@@ -201,7 +219,7 @@ export default function Create() {
                                     <Label htmlFor="gender" className="text-sm font-medium">
                                         Jenis Kelamin <span className="text-red-500">*</span>
                                     </Label>
-                                    <Select value={data.gender} onValueChange={(value) => setData('gender', value)}>
+                                    <Select value={data.gender} onValueChange={(value: 'M' | 'F') => setData('gender', value)}>
                                         <SelectTrigger
                                             id="gender"
                                             className={`border-gray-300 transition-all focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 ${errors.gender ? 'border-red-500' : ''}`}
@@ -230,6 +248,7 @@ export default function Create() {
                                     {errors.phone_number && <p className="text-sm text-red-500">{errors.phone_number}</p>}
                                 </div>
                             </div>
+
                             <div className="mt-4 space-y-2">
                                 <Label htmlFor="address" className="text-sm font-medium">
                                     Alamat <span className="text-red-500">*</span>
@@ -242,7 +261,7 @@ export default function Create() {
                                     rows={3}
                                 />
                                 {errors.address && <p className="text-sm text-red-500">{errors.address}</p>}
-                            </div>{' '}
+                            </div>
                         </div>
 
                         <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow dark:border-gray-700 dark:bg-gray-800">
@@ -306,4 +325,6 @@ export default function Create() {
             </div>
         </AppLayout>
     );
-}
+};
+
+export default Edit;

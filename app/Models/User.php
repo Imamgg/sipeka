@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -46,14 +47,26 @@ class User extends Authenticatable
         ];
     }
 
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
+
     public function isTeacher(): bool
     {
         return $this->role === 'teacher';
     }
+
     public function isStudent(): bool
     {
         return $this->role === 'student';
