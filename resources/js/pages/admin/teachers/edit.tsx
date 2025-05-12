@@ -34,7 +34,7 @@ export default function Edit({ teacher }: Props) {
         password_confirmation: '',
         nip: teacher.nip,
         place_of_birth: teacher.place_of_birth,
-        date_of_birth: teacher.date_of_birth,
+        date_of_birth: new Date(teacher.date_of_birth).toISOString().split('T')[0],
         gender: teacher.gender,
         address: teacher.address,
         phone_number: teacher.phone_number || '',

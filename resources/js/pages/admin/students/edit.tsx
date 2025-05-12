@@ -38,7 +38,7 @@ const Edit = ({ student }: Props) => {
         nis: student.nis,
         nisn: student.nisn || '',
         place_of_birth: student.place_of_birth,
-        date_of_birth: student.date_of_birth,
+        date_of_birth: new Date(student.date_of_birth).toISOString().split('T')[0],
         gender: student.gender,
         address: student.address,
         phone_number: student.phone_number || '',
