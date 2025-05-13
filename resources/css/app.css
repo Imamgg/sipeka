@@ -12,6 +12,19 @@
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    /* Color dashboard student and teacher */
+    --color-royal-blue-50: #f0f8ff;
+    --color-royal-blue-100: #e1f0fd;
+    --color-royal-blue-200: #bce0fb;
+    --color-royal-blue-300: #81c9f8;
+    --color-royal-blue-400: #4fb4f3;
+    --color-royal-blue-500: #1592e2;
+    --color-royal-blue-600: #0874c1;
+    --color-royal-blue-700: #085d9c;
+    --color-royal-blue-800: #0b4f81;
+    --color-royal-blue-900: #0f426b;
+    --color-royal-blue-950: #0a2a47;
+
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);

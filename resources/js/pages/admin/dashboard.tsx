@@ -160,13 +160,20 @@ const mockStudents = [
     },
 ];
 
-export default function Dashboard() {
+interface DashboardProps {
+    stats: {
+        totalTeachers: number;
+        totalStudents: number;
+    };
+}
+
+export default function Dashboard({ stats }: DashboardProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-6 rounded-xl p-6">
                 <div className="glass-card border-glow rounded-xl p-6 shadow-sm">
-                    <h1 className="deco-line text-2xl font-bold" style={{ '--line-color': 'rgba(99, 102, 241, 0.7)' } as React.CSSProperties}>
+                    <h1 className="deco-line text-2xl font-bold" style={{ '--line-color': '#6366f1b3' } as React.CSSProperties}>
                         Selamat Datang, Admin!
                     </h1>
                     <p className="text-muted-foreground mt-1">
@@ -178,13 +185,18 @@ export default function Dashboard() {
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     <DashboardCard
                         title="Total Siswa"
-                        value="1,245"
+                        value={stats.totalStudents.toLocaleString()}
                         icon={<Users className="h-8 w-8" />}
                         trend={{ value: 12, isPositive: true }}
                         gradient
                         glowEffect
                     />
-                    <DashboardCard title="Total Guru" value="68" icon={<School className="h-8 w-8" />} glassEffect />
+                    <DashboardCard
+                        title="Total Guru"
+                        value={stats.totalTeachers.toLocaleString()}
+                        icon={<School className="h-8 w-8" />}
+                        glassEffect
+                    />
                     <DashboardCard
                         title="Total Mata Pelajaran"
                         value="96%"

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { useAppearance } from '@/hooks/use-appearance';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
-import { Moon, Search, Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 // Sample notifications data
@@ -65,12 +65,7 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
             </div>
 
             <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                    <Search className="h-5 w-5" />
-                </Button>
-
                 <NotificationMenu notifications={notifications} onMarkAsRead={handleMarkAsRead} onMarkAllAsRead={handleMarkAllAsRead} />
-
                 <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="text-muted-foreground hover:text-foreground">
                     {currentAppearance === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                 </Button>

@@ -5,8 +5,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import AppLayout from '@/layouts/app/app-sidebar-layout';
 import { Head, Link, router } from '@inertiajs/react';
 import { Edit, Eye, Plus, Search, Trash2 } from 'lucide-react';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface Student {
     id: number;
@@ -41,9 +42,14 @@ export default function Index({ students, filters }: Props) {
     const [deleteId, setDeleteId] = useState<number | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-    function handleSearch(e: FormEvent) {
-        e.preventDefault();
-        router.get('/students', { search: searchText }, { preserveState: true });
+    const debouncedSearch = useDebouncedCallback((value: string) => {
+        router.get('/students', { search: value }, { preserveState: true });
+    }, 300); // 300ms delay
+
+    function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value;
+        setSearchText(value);
+        debouncedSearch(value);
     }
 
     function openDeleteDialog(id: number) {
@@ -78,26 +84,18 @@ export default function Index({ students, filters }: Props) {
                         Kelola data siswa dengan mudah. Tambahkan, edit, atau hapus siswa sesuai kebutuhan Anda.
                     </p>
                 </div>
-
                 <div className="rounded-xl border p-6 shadow-md">
                     <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-                        <form onSubmit={handleSearch} className="flex flex-col gap-2 sm:flex-row">
+                        <div className="relative w-full sm:max-w-sm lg:w-72">
                             <Input
                                 type="text"
                                 placeholder="Cari berdasarkan nama atau NIS..."
                                 value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                className="focus:border-primary focus:ring-primary w-full border-gray-300 transition-all sm:max-w-sm lg:w-60 dark:border-gray-600 dark:text-white"
+                                onChange={handleSearchChange}
+                                className="focus:border-primary focus:ring-primary w-full border-gray-300 transition-all dark:border-gray-600 dark:text-white"
                             />
-                            <Button
-                                type="submit"
-                                variant="outline"
-                                className="border-gray-300 transition-all hover:bg-gray-100 hover:shadow-sm dark:border-gray-600 dark:hover:bg-gray-700"
-                            >
-                                <Search className="mr-2 h-4 w-4" />
-                                Cari
-                            </Button>
-                        </form>
+                            <Search className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                        </div>
                         <Button asChild className="bg-primary hover:bg-primary/90 w-full shadow-sm transition-all hover:shadow md:w-auto">
                             <Link href="/students/create">
                                 <Plus className="mr-2 h-4 w-4" />

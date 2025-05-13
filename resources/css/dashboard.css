@@ -17,6 +17,10 @@
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
 }
 
+.dark .gradient-blue {
+    background: linear-gradient(135deg, rgba(var(--color-royal-blue-900-rgb), 0.6) 0%, rgba(var(--color-royal-blue-800-rgb), 0.6) 100%);
+}
+
 .gradient-purple {
     background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
 }
@@ -31,11 +35,43 @@
 
 /* Hover Effects */
 .hover-scale {
-    transition: transform 0.2s ease-in-out;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .hover-scale:hover {
-    transform: scale(1.02);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Ripple Effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple:after {
+    content: '';
+    background: rgba(255, 255, 255, 0.3);
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.5;
+    transition:
+        transform 0.4s,
+        opacity 0.4s;
+}
+
+.ripple:active:after {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
 }
 
 /* Animation Effects */
@@ -46,13 +82,66 @@
 @keyframes pulse {
     0% {
         box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+        opacity: 0.6;
     }
-    70% {
-        box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+    50% {
+        box-shadow: 0 0 0 5px rgba(99, 102, 241, 0);
+        opacity: 1;
     }
     100% {
         box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+        opacity: 0.6;
     }
+}
+
+/* Sidebar Animation */
+.sidebar-transition {
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Custom Scrollbar */
+.sidebar-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-royal-blue-200);
+    border-radius: 20px;
+}
+
+.dark .sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-royal-blue-700);
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 /* Badge with glow effect */
@@ -82,6 +171,10 @@
 
 .badge-glow-error::after {
     --badge-color: rgba(239, 68, 68, 0.7);
+}
+
+.badge-pulse {
+    animation: pulse 2s infinite ease-in-out;
 }
 
 /* Futuristic decorative elements */
@@ -136,4 +229,46 @@
 
 .border-glow:hover::after {
     opacity: 1;
+}
+
+/* Dashboard Specific Styles */
+
+/* Custom scrollbar for a cleaner look */
+.scrollbar-thin {
+    scrollbar-width: thin;
+}
+
+.scrollbar-thumb-blue-300::-webkit-scrollbar-thumb {
+    background-color: var(--color-royal-blue-300);
+    border-radius: 6px;
+}
+
+.scrollbar-track-blue-100::-webkit-scrollbar-track {
+    background-color: var(--color-royal-blue-100);
+}
+
+/* Hide scrollbar but allow scrolling */
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Smooth sidebar transitions */
+.sidebar-transition {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Card responsive adjustments */
+@media (max-width: 640px) {
+    .card-content-responsive {
+        padding: 0.75rem;
+    }
+
+    .card-header-responsive {
+        padding: 1rem 0.75rem;
+    }
 }
