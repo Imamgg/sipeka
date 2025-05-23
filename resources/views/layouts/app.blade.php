@@ -8,10 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
 </head>
 
 <body>
-
+    @include('sweetalert::alert')
     <main>
         <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen">
             <div class="flex flex-col md:flex-row">
@@ -62,7 +63,6 @@
             });
         @endif
     </script>
-    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
 </body>
 
 </html>

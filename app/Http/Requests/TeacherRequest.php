@@ -11,13 +11,20 @@ class TeacherRequest extends FormRequest
   {
     return true;
   }
-
   public function rules(): array
   {
+    $userId = null;
+    if ($this->route('teacher')) {
+      $teacher = $this->route('teacher');
+      $userId = $teacher->user_id;
+    } else {
+      $userId = $this->user_id ?? null;
+    }
+
     $rules = [
       'name' => ['required', 'string', 'max:255'],
-      'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($this->user_id)],
-      'nip' => ['required', 'string', 'max:20', Rule::unique('teachers')->ignore($this->teacher)],
+      'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($userId)],
+      'nip' => ['required', 'string', 'max:20', Rule::unique('teachers')->ignore($this->route('teacher'))],
       'place_of_birth' => ['required', 'string', 'max:255'],
       'date_of_birth' => ['required', 'date'],
       'gender' => ['required', 'in:M,F'],

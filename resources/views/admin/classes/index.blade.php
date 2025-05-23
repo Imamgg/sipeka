@@ -81,7 +81,7 @@
                                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
                                         </a>
-                                        <form action="{{ route('admin.classes.destroy', $class) }}" method="POST"
+                                        <form action="{{ route('admin.classes.destroy', $class->id) }}" method="POST"
                                             class="inline delete-form">
                                             @csrf
                                             @method('DELETE')
@@ -109,7 +109,6 @@
                     </tbody>
                 </table>
             </div>
-
             @if (isset($classes) && method_exists($classes, 'hasPages') && $classes->hasPages())
                 <div class="border-t border-gray-200 px-4 py-3 dark:border-gray-700 sm:px-6">
                     {{ $classes->links() }}
@@ -117,4 +116,31 @@
             @endif
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const form = this.closest('form');
+                        Swal.fire({
+                            title: 'Apakah anda yakin?',
+                            text: 'Data kelas ini akan dihapus secara permanen!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#ef4444',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+    @endpush
 </x-app-layout>

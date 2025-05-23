@@ -73,7 +73,6 @@ class AdminClassesController extends Controller
      */
     public function destroy(Classes $class)
     {
-        // Check if there are students in the class
         if ($class->students()->count() > 0) {
             return redirect()->route('admin.classes.index')
                 ->with('toast_error', 'Tidak dapat menghapus kelas yang memiliki siswa!');
