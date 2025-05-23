@@ -114,16 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center justify-end gap-4">
-                    <a href="{{ route('admin.classes.index') }}"
-                        class="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-gray-400 dark:hover:bg-gray-800 dark:focus:ring-gray-700">
-                        Batal
-                    </a>
-                    <button type="submit"
-                        class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Simpan Kelas
-                    </button>
-                </div>
+                <x-admin-button :title="'Simpan Data'" />
             </form>
         </div>
     </div>

@@ -14,13 +14,14 @@ class Subjects extends Model
 
     public function classSchedules()
     {
-        return $this->hasMany(ClassSchedule::class);
+        return $this->hasMany(ClassSchedule::class, 'subject_id');
     }
-    // belum ada tabel materi
-    //     public function material()
-    //     {
-    //         return $this->belongsTo(Material::class);
-    //     }
+
+    public function material()
+    {
+        return $this->belongsTo(Material::class);
+    }
+
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);

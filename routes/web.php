@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\AdminTeacherController;
 use App\Http\Controllers\Admin\AdminClassesController;
+use App\Http\Controllers\Admin\AdminSubjectController;
 use App\Http\Controllers\Teacher\TeacherDashboardController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::resource('students', AdminStudentController::class);
         Route::resource('teachers', AdminTeacherController::class);
         Route::resource('classes', AdminClassesController::class);
+        Route::resource('subjects', AdminSubjectController::class);
     }
 );
 

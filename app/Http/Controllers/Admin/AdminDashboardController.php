@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\Student;
+use App\Models\Subjects;
 use App\Models\Teacher;
 
 class AdminDashboardController extends Controller
@@ -17,10 +18,12 @@ class AdminDashboardController extends Controller
         $totalStudents = Student::count();
         $totalTeachers = Teacher::count();
         $totalClasses = Classes::count();
+        $totalSubjects = Subjects::count();
         return view('admin.dashboard', [
             'totalStudents' => $totalStudents,
             'totalTeachers' => $totalTeachers,
-            'totalClasses' => $totalClasses
+            'totalClasses' => $totalClasses,
+            'totalSubjects' => $totalSubjects
         ]);
     }
 }

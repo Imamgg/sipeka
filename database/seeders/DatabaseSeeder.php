@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
 
         // Create Students
         $this->createStudents();
+
+        // Create Subjects
+        $this->call(SubjectsSeeder::class);
     }
 
     /**
