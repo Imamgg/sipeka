@@ -47,7 +47,7 @@
                             <input type="text" name="code_subject" id="code_subject"
                                 value="{{ old('code_subject') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                placeholder="Contoh: MTK001" required>
+                                placeholder="Contoh: MTK001">
                             @error('code_subject')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
@@ -61,7 +61,7 @@
                             <input type="text" name="subject_name" id="subject_name"
                                 value="{{ old('subject_name') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                placeholder="Contoh: Matematika" required>
+                                placeholder="Contoh: Matematika">
                             @error('subject_name')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror

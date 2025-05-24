@@ -1,5 +1,5 @@
 @props([
-    'title' => 'Simpan Perubahan',
+    'title' => '',
 ])
 
 <div class="flex justify-end space-x-3">

@@ -136,6 +136,7 @@
     @push('scripts')
         <script>
             let searchTimer;
+
             function performSearch(value) {
                 clearTimeout(searchTimer);
                 searchTimer = setTimeout(() => {

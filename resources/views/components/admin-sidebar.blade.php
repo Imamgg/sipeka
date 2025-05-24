@@ -20,7 +20,7 @@
                     <li>
                         <a href="{{ route('dashboard') }}"
                             class="flex items-center px-3 py-2 rounded-md active-nav-item">
-                            <x-icons.dashboard />
+                            <x-icons.dashboard class="mr-3" />
                             Dashboard
                         </a>
                     </li>
@@ -34,28 +34,28 @@
                     <li>
                         <a href="/admin/students"
                             class="flex items-center px-3 py-2 rounded-md text-gray-300 hover:bg-sidebar-hover hover:text-white">
-                            <x-icons.users />
+                            <x-icons.users class="mr-3" />
                             Siswa
                         </a>
                     </li>
                     <li>
                         <a href="/admin/teachers"
                             class="flex items-center px-3 py-2 rounded-md text-gray-300 hover:bg-sidebar-hover hover:text-white">
-                            <x-icons.user />
+                            <x-icons.user class="mr-3" />
                             Guru
                         </a>
                     </li>
                     <li>
                         <a href="/admin/classes"
                             class="flex items-center px-3 py-2 rounded-md text-gray-300 hover:bg-sidebar-hover hover:text-white">
-                            <x-icons.apartmen />
+                            <x-icons.apartmen class="mr-3" />
                             Kelas
                         </a>
                     </li>
                     <li>
                         <a href="/admin/subjects"
                             class="flex items-center px-3 py-2 rounded-md text-gray-300 hover:bg-sidebar-hover hover:text-white">
-                            <x-icons.books />
+                            <x-icons.books class="mr-3" />
                             Mata Pelajaran
                         </a>
                     </li>
@@ -69,19 +69,8 @@
                     <li>
                         <a href="/admin/schedules"
                             class="flex items-center px-3 py-2 rounded-md text-gray-300 hover:bg-sidebar-hover hover:text-white">
-                            <x-icons.calender />
+                            <x-icons.calender class="mr-3" />
                             Jadwal
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center px-3 py-2 rounded-md text-gray-300 hover:bg-sidebar-hover hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
-                            Kegiatan Akademik
                         </a>
                     </li>
                     <li>
