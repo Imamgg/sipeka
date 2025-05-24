@@ -110,18 +110,6 @@
                     </li>
                 </ul>
             </nav>
-
-            <!-- User Profile -->
-            <div class="p-4 border-t border-gray-700">
-                <a href="#" class="flex items-center">
-                    <div class="flex items-center justify-center h-8 w-8 bg-gray-700 rounded-full">
-                        <span class="text-sm font-medium">I</span>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium">Imamgg</p>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 </aside>
