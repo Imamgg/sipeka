@@ -1,6 +1,22 @@
 <header
-    class="bg-gray-800 bg-opacity-80 backdrop-blur-sm shadow-lg flex items-center justify-between p-4 fixed top-0 z-30 w-full md:w-[calc(100%-16rem)]">
+    class="bg-gray-800 bg-opacity-80 backdrop-blur-sm shadow-lg flex items-center justify-between p-4 fixed top-0 z-30 w-full">
     <div class="flex items-center">
+        <!-- Mobile menu button -->
+        <button id="toggleSidebarMobile" aria-expanded="true" aria-controls="sidebar"
+            class="lg:hidden mr-2 text-gray-300 hover:text-white cursor-pointer p-2 hover:bg-gray-700 focus:bg-gray-700 focus:ring-2 focus:ring-gray-700 rounded">
+            <svg id="toggleSidebarMobileHamburger" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <svg id="toggleSidebarMobileClose" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+        </button>
         <h2 class="ml-2 text-xl font-bold tracking-tight text-white">Admin Dashboard</h2>
     </div>
     <div class="flex items-center space-x-4">
@@ -16,46 +32,47 @@
             </svg>
         </button>
         <div class="relative">
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
+            <div class="flex items-center z-50">
+                <x-dropdown>
                     <x-slot name="trigger">
-                        <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>
-                                @if (Auth::check())
-                                    {{ Auth::user()->name }}
-                                    <span class="text-xs text-gray-400 ml-1">
-                                        ({{ ucfirst(Auth::user()->role) }})
-                                    </span>
-                                @endif
+                        <div class="flex items-center ml-3">
+                            <div class="relative">
+                                <button type="button"
+                                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
+                                    id="user-menu-button" aria-expanded="false">
+                                    <span class="sr-only">Open user menu</span>
+                                    <div
+                                        class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                                        {{ substr(Auth::user()->name, 0, 1) }}
+                                    </div>
+                                </button>
                             </div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
+                        </div>
                     </x-slot>
-
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
+                            id="dropdown-user">
+                            <div class="px-4 py-3">
+                                <p class="text-sm text-gray-900">{{ Auth::user()->name }}</p>
+                                <p class="text-sm font-medium text-gray-900 truncate">
+                                    {{ Auth::user()->email }}
+                                </p>
+                            </div>
+                            <ul class="py-1">
+                                <li>
+                                    <a href="{{ route('student.profile.edit') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit"
+                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign
+                                            out</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </x-slot>
                 </x-dropdown>
             </div>

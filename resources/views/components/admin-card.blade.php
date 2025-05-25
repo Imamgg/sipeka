@@ -81,7 +81,7 @@
                     dibanding semester lalu</p>
             </div>
             <div class="bg-amber-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
-                <x-icons.apartmen
+                <x-icons.apartment
                     class="h-8 w-8 text-amber-500 group-hover:text-white transition-colors duration-300" />
             </div>
         </div>

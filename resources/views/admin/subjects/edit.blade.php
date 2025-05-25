@@ -1,6 +1,6 @@
 @props(['subject'])
 <x-app-layout>
-    <div class="p-6 space-y-6 mt-16 overflow-y-auto">
+    <div class="p-6 space-y-6 overflow-y-auto">
         <div class="glass-card border-glow rounded-xl p-6 shadow-md">
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white deco-line"
                 style="--line-color: rgba(99, 102, 241, 0.7)">Edit Mata Pelajaran</h1>

@@ -13,21 +13,52 @@
 
 <body>
     @include('sweetalert::alert')
-    <main>
-        <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen">
-            <div class="flex flex-col md:flex-row">
-                <div class="flex-1 md:ml-64 w-full flex flex-col">
-                    <x-admin-sidebar />
-                    <x-admin-header />
+    <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 fixed w-full z-30 top-0">
+        <x-admin-header />
 
-                    {{ $slot }}
-                </div>
-            </div>
+        <x-admin-sidebar />
+
+        <div class="flex flex-col flex-1 lg:ml-64">
+            <main class="flex-1 pt-16">
+                {{ $slot }}
+            </main>
         </div>
-    </main>
+
+        <!-- Mobile sidebar backdrop -->
+        <div class="hidden fixed inset-0 z-10 bg-gray-600 bg-opacity-50 lg:hidden" id="sidebarBackdrop"></div>
+    </div>
 
     @stack('scripts')
     <script>
+        // Sidebar toggle functionality
+        const toggleSidebarMobile = document.getElementById('toggleSidebarMobile');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+        const hamburger = document.getElementById('toggleSidebarMobileHamburger');
+        const close = document.getElementById('toggleSidebarMobileClose');
+
+        // Show sidebar on desktop by default
+        if (sidebar) {
+            sidebar.classList.add('flex');
+        }
+
+        if (toggleSidebarMobile && sidebar && sidebarBackdrop && hamburger && close) {
+            toggleSidebarMobile.addEventListener('click', function() {
+                sidebar.classList.toggle('hidden');
+                sidebarBackdrop.classList.toggle('hidden');
+                hamburger.classList.toggle('hidden');
+                close.classList.toggle('hidden');
+            });
+
+            sidebarBackdrop.addEventListener('click', function() {
+                sidebar.classList.add('hidden');
+                sidebarBackdrop.classList.add('hidden');
+                hamburger.classList.remove('hidden');
+                close.classList.add('hidden');
+            });
+        }
+
+        // Toast functionality
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',

@@ -5,7 +5,7 @@
                 Dashboard Siswa
             </h2>
             <div class="text-sm text-gray-600">
-                {{ $student->user->name }} - {{ $student->class->name ?? 'Kelas tidak ditemukan' }}
+                {{ $student->user->name }} - {{ $student->class->class_name ?? 'Kelas tidak ditemukan' }}
             </div>
         </div>
     </x-slot>
