@@ -186,13 +186,6 @@
                                                 </p>
                                             @enderror
                                         </div>
-                                        </label>
-                                        <input type="email" name="email" id="email"
-                                            value="{{ old('email', $student->user->email) }}"
-                                            class="mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 @error('email') border-red-500 @enderror">
-                                        @error('email')
-                                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                        @enderror
                                     </div>
 
                                     <div>
@@ -222,7 +215,7 @@
                                             Kelas
                                         </label>
                                         <input type="text"
-                                            value="{{ $student->class->name ?? 'Belum ditetapkan' }}" readonly
+                                            value="{{ $student->class->class_name ?? 'Belum ditetapkan' }}" readonly
                                             class="mt-1 block w-full rounded-md shadow-sm bg-gray-50 text-gray-500">
                                     </div>
                                 </div>
@@ -312,30 +305,29 @@
                                                     Jenis Kelamin
                                                 </label>
                                                 <input type="text"
-                                                    value="{{ $student->gender ? ucfirst($student->gender) : 'Belum tersedia' }}"
+                                                    value="{{ $student->gender == 'M' ? 'Laki-laki' : ($student->gender == 'F' ? 'Perempuan' : 'Belum tersedia') }}"
                                                     readonly
                                                     class="mt-1 block w-full rounded-md shadow-sm bg-gray-50 text-gray-500">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                        </div>
 
-                        <!-- Action Buttons -->
-                        <div class="mt-8 flex items-center justify-between pt-6 border-t border-gray-200">
-                            <a href="{{ route('student.dashboard') }}"
-                                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition-colors">
-                                Kembali
-                            </a>
+                                <!-- Action Buttons -->
+                                <div class="mt-8 flex items-center justify-between pt-6 border-t border-gray-200">
+                                    <a href="{{ route('student.dashboard') }}"
+                                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                                        Kembali
+                                    </a>
 
-                            <button type="submit"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors">
-                                Update Profil
-                            </button>
+                                    <button type="submit"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors">
+                                        Update Profil
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
-        </div>
 </x-student-layout>

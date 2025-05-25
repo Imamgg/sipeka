@@ -1,25 +1,13 @@
 <x-student-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard Siswa
-            </h2>
-            <div class="text-sm text-gray-600">
-                {{ $student->user->name }} - {{ $student->class->class_name ?? 'Kelas tidak ditemukan' }}
-            </div>
-        </div>
-    </x-slot>
-
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Welcome Section -->
             <div class="bg-gradient-to-r from-blue-500 to-purple-600 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-white">
                     <div class="flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold">Selamat Datang, {{ $student->user->name }}!</h3>
                             <p class="text-blue-100 mt-2">NIS: {{ $student->nis }} | Kelas:
-                                {{ $student->class->name ?? 'Belum ditetapkan' }}</p>
+                                {{ $student->class->class_name ?? 'Belum ditetapkan' }}</p>
                         </div>
                         <div class="hidden md:block">
                             <svg class="w-16 h-16 text-blue-200" fill="currentColor" viewBox="0 0 20 20">
