@@ -25,9 +25,40 @@
 
             <div class="space-y-3 mb-6">
                 <h2 class="text-2xl font-bold text-center text-gray-900">Selamat Datang!</h2>
+
+                @if (!$isServerOnline)
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 text-yellow-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+                                </path>
+                            </svg>
+                            <h3 class="text-sm font-medium text-yellow-800">
+                                Sistem Sedang Dalam Pemeliharaan
+                            </h3>
+                        </div>
+                        <div class="mt-2">
+                            <p class="text-sm text-yellow-700">
+                                {{ $maintenanceMessage ?: 'Sistem sedang dalam mode pemeliharaan. Hanya administrator yang dapat mengakses sistem saat ini.' }}
+                            </p>
+                            @if ($serverStatus->maintenance_started_at)
+                                <p class="text-xs text-yellow-600 mt-1">
+                                    Dimulai: {{ $serverStatus->maintenance_started_at->format('d/m/Y H:i') }}
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+
                 <p class="text-gray-600 text-justify text-sm leading-relaxed">
-                    Silahkan masuk untuk akses ke pengelolaan kegiatan akademik
-                    untuk memudahkan proses belajar mengajar.
+                    @if (!$isServerOnline)
+                        Hanya administrator yang dapat masuk selama periode pemeliharaan sistem.
+                    @else
+                        Silahkan masuk untuk akses ke pengelolaan kegiatan akademik
+                        untuk memudahkan proses belajar mengajar.
+                    @endif
                 </p>
             </div>
 

@@ -109,9 +109,6 @@
                     @endif
                 </a>
 
-                <!-- Divider -->
-                <div class="mx-4 my-4 border-t border-slate-200"></div>
-
                 <!-- Grades/Assessment -->
                 <a href="#"
                     class="{{ request()->is('admin/grades*') ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-rose-50 hover:to-amber-50 hover:text-rose-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
@@ -148,25 +145,24 @@
                     @endif
                 </a>
 
-                <!-- Settings -->
-                <a href="#"
-                    class="{{ request()->is('admin/settings*') ? 'bg-gradient-to-r from-slate-500 to-slate-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-slate-50 hover:to-amber-50 hover:text-slate-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                <!-- Server Management -->
+                <a href="{{ route('admin.server.index') }}"
+                    class="{{ request()->is('admin/server*') ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-amber-50 hover:text-red-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
                     <div
-                        class="{{ request()->is('admin/settings*') ? 'bg-white/20' : 'bg-slate-100 group-hover:bg-slate-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                        <svg class="{{ request()->is('admin/settings*') ? 'text-white' : 'text-slate-600 group-hover:text-slate-700' }} h-5 w-5"
+                        class="{{ request()->is('admin/server*') ? 'bg-white/20' : 'bg-red-100 group-hover:bg-red-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                        <svg class="{{ request()->is('admin/server*') ? 'text-white' : 'text-red-600 group-hover:text-red-700' }} h-5 w-5"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                             </path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </div>
-                    <span class="font-medium">Pengaturan</span>
-                    @if (request()->is('admin/settings*'))
+                    <span class="font-medium">Server</span>
+                    @if (request()->is('admin/server*'))
                         <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
                     @endif
                 </a>
+                <span class="mx-4 my-4 border-t border-slate-200"></span>
             </div>
         </div>
 

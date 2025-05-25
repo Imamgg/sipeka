@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ServerStatusMiddleware;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -52,7 +53,6 @@ class Kernel extends HttpKernel
       \Illuminate\Routing\Middleware\SubstituteBindings::class,
     ],
   ];
-
   /**
    * The application's middleware aliases.
    *
@@ -72,5 +72,7 @@ class Kernel extends HttpKernel
     'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     'sweetalert' => \RealRashid\SweetAlert\ToSweetAlert::class,
+    'role' => \App\Http\Middleware\RoleMiddleware::class,
+    'server.status' => ServerStatusMiddleware::class,
   ];
 }

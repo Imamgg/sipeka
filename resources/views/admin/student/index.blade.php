@@ -292,7 +292,6 @@
                             }
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // Show loading
                                 Swal.fire({
                                     title: 'Menghapus...',
                                     text: 'Sedang memproses penghapusan data',
