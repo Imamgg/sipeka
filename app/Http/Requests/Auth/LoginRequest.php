@@ -43,7 +43,7 @@ class LoginRequest extends FormRequest
 
         $login = $this->input('login');
         $loginType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : (is_numeric($login) ?
-            (strlen($login) >= 18 ? 'nip' : 'nis') : 'email');
+            (strlen($login) >= 10 ? 'nip' : 'nis') : 'email');
 
         $credentials = ['password' => $this->input('password')];
 
