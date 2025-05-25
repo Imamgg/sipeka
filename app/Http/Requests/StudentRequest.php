@@ -27,7 +27,7 @@ class StudentRequest extends FormRequest
         $userId = $studentId ? \App\Models\Student::find($studentId)?->user_id : null;
 
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($userId)],
             'phone_number' => ['nullable', 'string', 'max:15'],
             'password' => [$this->isMethod('POST') ? 'required' : 'nullable', Password::defaults(), 'confirmed'],

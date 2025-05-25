@@ -16,26 +16,48 @@
             </svg>
         </button>
         <div class="relative">
-            <button id="userMenuBtn"
-                class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500">
-                <div class="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
-                    A
-                </div>
-            </button>
-            <!-- User dropdown menu (hidden by default) -->
-            <div id="userMenu"
-                class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <a href="{{ route('profile.update') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your
-                    Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Sign out
-                    </button>
-                </form>
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            <div>
+                                @if (Auth::check())
+                                    {{ Auth::user()->name }}
+                                    <span class="text-xs text-gray-400 ml-1">
+                                        ({{ ucfirst(Auth::user()->role) }})
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="ms-1">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
+                    </x-slot>
+                </x-dropdown>
             </div>
         </div>
     </div>

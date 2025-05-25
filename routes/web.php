@@ -8,11 +8,15 @@ use App\Http\Controllers\Admin\AdminClassesController;
 use App\Http\Controllers\Admin\AdminSubjectController;
 use App\Http\Controllers\Admin\AdminScheduleController;
 use App\Http\Controllers\Teacher\TeacherDashboardController;
-use App\Http\Controllers\Student\StudentDashboardController;
+use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Student\StudentScheduleController;
+use App\Http\Controllers\Student\StudentGradeController;
+use App\Http\Controllers\Student\StudentAttendanceController;
+use App\Http\Controllers\Student\StudentAnnouncementController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-// Redirect root to login
 Route::redirect('/', '/login');
 
 // Admin routes
@@ -33,8 +37,14 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function (
 });
 
 // Student routes
-Route::prefix('student')->middleware(['auth', 'role:student'])->group(function () {
-    Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
+Route::prefix('student')->middleware(['auth', 'role:student'])->name('student.')->group(function () {
+    Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
+    Route::get('profile/edit', [StudentProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [StudentProfileController::class, 'update'])->name('profile.update');
+    Route::resource('schedules', StudentScheduleController::class);
+    Route::resource('grades', StudentGradeController::class);
+    Route::resource('attendances', StudentAttendanceController::class);
+    Route::resource('announcements', StudentAnnouncementController::class);
 });
 
 Route::middleware('auth')->group(function () {
@@ -56,7 +66,6 @@ Route::middleware(['auth'])->group(function () {
                 return redirect()->route('student.dashboard');
             }
         }
-
         return redirect('/');
     })->name('dashboard');
 });
