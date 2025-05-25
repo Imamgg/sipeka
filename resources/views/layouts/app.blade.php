@@ -11,22 +11,26 @@
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
 </head>
 
-<body>
+<body class="bg-gray-50 overflow-x-hidden">
     @include('sweetalert::alert')
-    <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 fixed w-full z-30 top-0">
-        <x-admin-header />
 
-        <x-admin-sidebar />
+    <!-- Admin Header (Fixed) -->
+    <x-admin-header />
 
-        <div class="flex flex-col flex-1 lg:ml-64">
-            <main class="flex-1 pt-16">
+    <!-- Admin Sidebar (Fixed) -->
+    <x-admin-sidebar />
+
+    <!-- Main Content Area -->
+    <div class="lg:ml-64 min-h-screen">
+        <main class="pt-16 pb-6 overflow-y-auto">
+            <div class="w-full min-h-full">
                 {{ $slot }}
-            </main>
-        </div>
-
-        <!-- Mobile sidebar backdrop -->
-        <div class="hidden fixed inset-0 z-10 bg-gray-600 bg-opacity-50 lg:hidden" id="sidebarBackdrop"></div>
+            </div>
+        </main>
     </div>
+
+    <!-- Mobile sidebar backdrop -->
+    <div class="hidden fixed inset-0 z-10 bg-gray-600 bg-opacity-50 lg:hidden" id="sidebarBackdrop"></div>
 
     @stack('scripts')
     <script>

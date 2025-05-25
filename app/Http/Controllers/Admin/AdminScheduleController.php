@@ -79,28 +79,33 @@ class AdminScheduleController extends Controller
 
   /**
    * Store a newly created resource in storage.
-   */
-  public function store(ScheduleRequest $request)
+   */  public function store(ScheduleRequest $request)
   {
     try {
-      DB::beginTransaction();      // Check if a schedule with the same time slot and class already exists
+      DB::beginTransaction();
+
+      // Ensure time formats are correct
+      $startTime = date('H:i:s', strtotime($request->start_time));
+      $endTime = date('H:i:s', strtotime($request->end_time));
+
+      // Check if a schedule with the same time slot and class already exists
       $conflictingSchedule = ClassSchedule::where('class_id', $request->class_id)
         ->where('day', $request->day)
-        ->where(function ($query) use ($request) {
-          $query->where(function ($q) use ($request) {
+        ->where(function ($query) use ($startTime, $endTime) {
+          $query->where(function ($q) use ($startTime, $endTime) {
             // Start time falls within existing schedule
-            $q->where('start_time', '<=', $request->start_time)
-              ->where('end_time', '>', $request->start_time);
+            $q->where('start_time', '<=', $startTime)
+              ->where('end_time', '>', $startTime);
           })
-            ->orWhere(function ($q) use ($request) {
+            ->orWhere(function ($q) use ($startTime, $endTime) {
               // End time falls within existing schedule
-              $q->where('start_time', '<', $request->end_time)
-                ->where('end_time', '>=', $request->end_time);
+              $q->where('start_time', '<', $endTime)
+                ->where('end_time', '>=', $endTime);
             })
-            ->orWhere(function ($q) use ($request) {
+            ->orWhere(function ($q) use ($startTime, $endTime) {
               // Schedule completely contains the new time slot
-              $q->where('start_time', '>=', $request->start_time)
-                ->where('end_time', '<=', $request->end_time);
+              $q->where('start_time', '>=', $startTime)
+                ->where('end_time', '<=', $endTime);
             });
         })->first();
 
@@ -109,24 +114,26 @@ class AdminScheduleController extends Controller
         return redirect()->back()
           ->with('toast_error', 'Jadwal bertabrakan dengan jadwal yang sudah ada')
           ->withInput();
-      }      // Check if the teacher is already scheduled at the same time
+      }
+
+      // Check if the teacher is already scheduled at the same time
       $teacherConflict = ClassSchedule::where('teacher_id', $request->teacher_id)
         ->where('day', $request->day)
-        ->where(function ($query) use ($request) {
-          $query->where(function ($q) use ($request) {
+        ->where(function ($query) use ($startTime, $endTime) {
+          $query->where(function ($q) use ($startTime, $endTime) {
             // Start time falls within existing schedule
-            $q->where('start_time', '<=', $request->start_time)
-              ->where('end_time', '>', $request->start_time);
+            $q->where('start_time', '<=', $startTime)
+              ->where('end_time', '>', $startTime);
           })
-            ->orWhere(function ($q) use ($request) {
+            ->orWhere(function ($q) use ($startTime, $endTime) {
               // End time falls within existing schedule
-              $q->where('start_time', '<', $request->end_time)
-                ->where('end_time', '>=', $request->end_time);
+              $q->where('start_time', '<', $endTime)
+                ->where('end_time', '>=', $endTime);
             })
-            ->orWhere(function ($q) use ($request) {
+            ->orWhere(function ($q) use ($startTime, $endTime) {
               // Schedule completely contains the new time slot
-              $q->where('start_time', '>=', $request->start_time)
-                ->where('end_time', '<=', $request->end_time);
+              $q->where('start_time', '>=', $startTime)
+                ->where('end_time', '<=', $endTime);
             });
         })->first();
 
@@ -137,7 +144,11 @@ class AdminScheduleController extends Controller
           ->withInput();
       }
 
-      $schedule = ClassSchedule::create($request->validated());
+      // Create the schedule with properly formatted times
+      $validatedData = $request->validated();
+      $validatedData['start_time'] = $startTime;
+      $validatedData['end_time'] = $endTime;
+      $schedule = ClassSchedule::create($validatedData);
 
       DB::commit();
 
@@ -184,15 +195,14 @@ class AdminScheduleController extends Controller
   }
   /**
    * Update the specified resource in storage.
-   */
-  public function update(ScheduleRequest $request, ClassSchedule $schedule)
+   */  public function update(ScheduleRequest $request, ClassSchedule $schedule)
   {
     try {
       DB::beginTransaction();
 
       // Ensure time formats are correct
-      $startTime = date('H:i', strtotime($request->start_time));
-      $endTime = date('H:i', strtotime($request->end_time));
+      $startTime = date('H:i:s', strtotime($request->start_time));
+      $endTime = date('H:i:s', strtotime($request->end_time));
 
       // Check if a schedule with the same time slot and class already exists (excluding current schedule)
       $conflictingSchedule = ClassSchedule::where('class_id', $request->class_id)

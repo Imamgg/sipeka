@@ -166,9 +166,8 @@
                             <label for="start_time"
                                 class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Waktu Mulai <span class="text-red-500">*</span>
-                            </label>
-                            <input type="time" name="start_time" id="start_time"
-                                value="{{ old('start_time') ?? $schedule->start_time }}"
+                            </label> <input type="time" name="start_time" id="start_time"
+                                value="{{ old('start_time') ?? \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }}"
                                 class="w-full rounded-xl border-gray-300 bg-white shadow-sm transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-amber-400">
                             @error('start_time')
                                 <p class="mt-1 text-sm text-red-500 flex items-center gap-1">
@@ -185,9 +184,8 @@
                             <label for="end_time"
                                 class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Waktu Selesai <span class="text-red-500">*</span>
-                            </label>
-                            <input type="time" name="end_time" id="end_time"
-                                value="{{ old('end_time') ?? $schedule->end_time }}"
+                            </label> <input type="time" name="end_time" id="end_time"
+                                value="{{ old('end_time') ?? \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}"
                                 class="w-full rounded-xl border-gray-300 bg-white shadow-sm transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-amber-400">
                             @error('end_time')
                                 <p class="mt-1 text-sm text-red-500 flex items-center gap-1">

@@ -16,9 +16,6 @@
                     <span
                         class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+5.2%</span>
                 </div>
-                <p
-                    class="mt-1 text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-100 transition-colors duration-300">
-                    dibanding bulan lalu</p>
             </div>
             <div class="bg-blue-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
                 <x-icons.users height="h-8" width="w-8"
@@ -46,9 +43,6 @@
                     <span
                         class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+1.8%</span>
                 </div>
-                <p
-                    class="mt-1 text-sm text-gray-500 dark:text-gray-400 group-hover:text-purple-100 transition-colors duration-300">
-                    dibanding semester lalu</p>
             </div>
             <div class="bg-purple-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
                 <x-icons.user class="h-8 w-8 text-purple-500 group-hover:text-white transition-colors duration-300" />
@@ -76,9 +70,6 @@
                     <span
                         class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+2.3%</span>
                 </div>
-                <p
-                    class="mt-1 text-sm text-gray-500 dark:text-gray-400 group-hover:text-amber-100 transition-colors duration-300">
-                    dibanding semester lalu</p>
             </div>
             <div class="bg-amber-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
                 <x-icons.apartment
@@ -107,9 +98,6 @@
                     <span
                         class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+0.5%</span>
                 </div>
-                <p
-                    class="mt-1 text-sm text-gray-500 dark:text-gray-400 group-hover:text-emerald-100 transition-colors duration-300">
-                    dibanding semester lalu</p>
             </div>
             <div class="bg-emerald-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
                 <x-icons.books class="h-8 w-8 text-emerald-500 group-hover:text-white transition-colors duration-300" />
