@@ -46,7 +46,7 @@ class AdminScheduleController extends Controller
       $query->where('semester', $request->semester);
     }
 
-    $schedules = $query->latest()->paginate(10);
+    $schedules = $query->latest()->get();
     $classes = Classes::all();
     $teachers = Teacher::with('user')->get();
     $subjects = Subjects::all();
