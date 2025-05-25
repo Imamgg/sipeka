@@ -1,185 +1,297 @@
 <x-app-layout>
-    <div class="p-6 space-y-6 overflow-y-auto">
-        <div class="glass-card border-glow rounded-xl p-6 shadow-md">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white deco-line"
-                style="--line-color: rgba(99, 102, 241, 0.7)">Detail Kelas</h1>
-            <p class="text-muted-foreground mt-1 max-w-2xl text-sm text-gray-600 dark:text-gray-400">Informasi
-                lengkap tentang kelas yang tersimpan dalam sistem.</p>
-        </div>
-
-        <div class="rounded-xl border p-6 shadow-md">
-            <div class="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-                <div class="flex items-center gap-2">
-                    <a href="{{ route('admin.classes.index') }}"
-                        class="rounded-lg transition-all hover:bg-blue-50 dark:hover:bg-blue-900/20 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Kembali
-                    </a>
-                </div>
-            </div>
-
-            <div class="grid gap-6 lg:grid-cols-2">
-                <!-- Informasi Kelas -->
+    <!-- Header Section with Gradient Background -->
+    <div class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <!-- Page Badge -->
                 <div
-                    class="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow dark:border-gray-700 dark:bg-gray-800">
-                    <div class="mb-4 flex items-center gap-3">
-                        <div class="rounded-full bg-blue-100 p-2 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
-                        </div>
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Informasi Kelas</h2>
-                    </div>
-
-                    <dl class="space-y-4">
-                        <div
-                            class="flex items-start gap-3 rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800/60">
-                            <dt class="mt-0.5 w-28 flex-shrink-0 font-medium text-gray-500 dark:text-gray-400">Nama
-                                Kelas</dt>
-                            <dd class="flex-1 text-gray-900 dark:text-white">{{ $class->class_name }}</dd>
-                        </div>
-                        <div
-                            class="flex items-start gap-3 rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800/60">
-                            <dt class="mt-0.5 w-28 flex-shrink-0 font-medium text-gray-500 dark:text-gray-400">Tingkat
-                            </dt>
-                            <dd class="flex-1 text-gray-900 dark:text-white">{{ $class->level }}</dd>
-                        </div>
-                        <div
-                            class="flex items-start gap-3 rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800/60">
-                            <dt class="mt-0.5 w-28 flex-shrink-0 font-medium text-gray-500 dark:text-gray-400">Jurusan
-                            </dt>
-                            <dd class="flex-1 text-gray-900 dark:text-white">{{ $class->major }}</dd>
-                        </div>
-                        <div
-                            class="flex items-start gap-3 rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800/60">
-                            <dt class="mt-0.5 w-28 flex-shrink-0 font-medium text-gray-500 dark:text-gray-400">Tahun
-                                Akademik</dt>
-                            <dd class="flex-1 text-gray-900 dark:text-white">{{ $class->academic_year }}</dd>
-                        </div>
-                        <div
-                            class="flex items-start gap-3 rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800/60">
-                            <dt class="mt-0.5 w-28 flex-shrink-0 font-medium text-gray-500 dark:text-gray-400">Wali
-                                Kelas</dt>
-                            <dd class="flex-1 text-gray-900 dark:text-white">
-                                {{ $class->teacher->user->name ?? 'Belum Ditugaskan' }}
-                                @if ($class->teacher)
-                                    <span class="text-gray-500">(NIP: {{ $class->teacher->nip }})</span>
-                                @endif
-                            </dd>
-                        </div>
-                    </dl>
+                    class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 border border-blue-200 mb-4">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                        </path>
+                    </svg>
+                    Detail Kelas
                 </div>
-            </div>
-        </div>
 
-        <!-- Daftar Siswa -->
-        <div class="rounded-xl border p-6 shadow-md">
-            <div class="mb-6">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Daftar Siswa dalam Kelas</h2>
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Siswa-siswa yang terdaftar dalam kelas ini</p>
-            </div>
-
-            <div class="overflow-hidden rounded-lg border">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-700">
-                            <tr>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                    Nama</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                    NIS</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                    Jenis Kelamin</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                    Tanggal Lahir</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                    Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-                            @forelse ($class->students as $student)
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td
-                                        class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
-                                        {{ $student->user->name }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900 dark:text-white">
-                                        {{ $student->nis }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm">
-                                        <span
-                                            class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 {{ $student->gender === 'M' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }}">
-                                            {{ $student->gender === 'M' ? 'Laki-laki' : 'Perempuan' }}
-                                        </span>
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $student->date_of_birth->format('d-m-Y') }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-center text-sm font-medium"> <a
-                                            href="{{ route('admin.students.show', $student) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
-                                            title="Detail">
-                                            <svg class="h-5 w-5" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5"
-                                        class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                                        Tidak ada siswa dalam kelas ini.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                <!-- Main Title -->
+                <h1 class="text-4xl font-bold text-gray-900 mb-3">
+                    <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        {{ $class->class_name }}
+                    </span>
+                </h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Informasi lengkap tentang kelas dan daftar siswa yang terdaftar
+                </p>
             </div>
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const deleteBtn = document.querySelector('.delete-btn');
-                if (deleteBtn) {
-                    deleteBtn.addEventListener('click', function() {
-                        const form = this.closest('form');
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Back Button and Actions -->
+        <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <a href="{{ route('admin.classes.index') }}"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Kembali ke Daftar Kelas
+            </a>
 
-                        Swal.fire({
-                            title: 'Apakah anda yakin?',
-                            text: "Data kelas yang dihapus tidak dapat dikembalikan!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#ef4444',
-                            cancelButtonColor: '#6b7280',
-                            confirmButtonText: 'Ya, hapus!',
-                            cancelButtonText: 'Batal'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                form.submit();
-                            }
-                        });
-                    });
-                }
-            });
-        </script>
-    @endpush
+            <div class="flex items-center gap-3">
+                <a href="{{ route('admin.classes.edit', $class) }}"
+                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 hover:border-amber-300 transition-all duration-200">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                        </path>
+                    </svg>
+                    Edit Kelas
+                </a>
+            </div>
+        </div> <!-- Class Information Card -->
+        <div class="grid gap-8 lg:grid-cols-3">
+            <!-- Main Class Info -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                    <!-- Card Header -->
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-200">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Informasi Kelas</h3>
+                                <p class="text-sm text-gray-600">Detail lengkap kelas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Content -->
+                    <div class="p-6">
+                        <dl class="space-y-4">
+                            <div class="flex items-start justify-between py-3 border-b border-gray-100">
+                                <dt class="text-sm font-medium text-gray-500 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                                        </path>
+                                    </svg>
+                                    Nama Kelas
+                                </dt>
+                                <dd class="text-sm font-semibold text-gray-900">{{ $class->class_name }}</dd>
+                            </div>
+                            <div class="flex items-start justify-between py-3 border-b border-gray-100">
+                                <dt class="text-sm font-medium text-gray-500 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                        </path>
+                                    </svg>
+                                    Tingkat
+                                </dt>
+                                <dd class="text-sm">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        Kelas {{ $class->level }}
+                                    </span>
+                                </dd>
+                            </div>
+                            <div class="flex items-start justify-between py-3 border-b border-gray-100">
+                                <dt class="text-sm font-medium text-gray-500 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                        </path>
+                                    </svg>
+                                    Jurusan
+                                </dt>
+                                <dd class="text-sm">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                        {{ $class->major == 'IPA' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800' }}">
+                                        {{ $class->major }}
+                                    </span>
+                                </dd>
+                            </div>
+                            <div class="flex items-start justify-between py-3 border-b border-gray-100">
+                                <dt class="text-sm font-medium text-gray-500 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                    Tahun Akademik
+                                </dt>
+                                <dd class="text-sm font-semibold text-gray-900">{{ $class->academic_year }}</dd>
+                            </div>
+                            <div class="flex items-start justify-between py-3">
+                                <dt class="text-sm font-medium text-gray-500 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                        </path>
+                                    </svg>
+                                    Wali Kelas
+                                </dt>
+                                <dd class="text-sm text-right">
+                                    @if ($class->teacher)
+                                        <div class="font-semibold text-gray-900">{{ $class->teacher->user->name }}
+                                        </div>
+                                        <div class="text-xs text-gray-500">NIP: {{ $class->teacher->nip }}</div>
+                                    @else
+                                        <span class="text-gray-400 italic">Belum Ditugaskan</span>
+                                    @endif
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Student Count Card -->
+                <div class="mt-6 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Total Siswa</p>
+                                <p class="text-2xl font-bold text-gray-900">{{ $class->students->count() }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Students List -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                    <!-- Card Header -->
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="w-8 h-8 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-lg font-semibold text-gray-900">Daftar Siswa</h3>
+                                    <p class="text-sm text-gray-600">{{ $class->students->count() }} siswa terdaftar
+                                        dalam kelas ini</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students Content -->
+                    <div class="p-6">
+                        @forelse ($class->students as $student)
+                            <!-- Student Card -->
+                            <div
+                                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 {{ !$loop->last ? 'mb-3' : '' }}">
+                                <div class="flex items-center space-x-4">
+                                    <!-- Student Avatar -->
+                                    <div class="flex-shrink-0">
+                                        <div
+                                            class="w-10 h-10 bg-gradient-to-r {{ $student->gender === 'M' ? 'from-blue-400 to-blue-600' : 'from-pink-400 to-pink-600' }} rounded-full flex items-center justify-center">
+                                            <span class="text-sm font-semibold text-white">
+                                                {{ substr($student->user->name, 0, 1) }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Student Info -->
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3">
+                                            <h4 class="text-sm font-semibold text-gray-900">{{ $student->user->name }}
+                                            </h4>
+                                            <span
+                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {{ $student->gender === 'M' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }}">
+                                                {{ $student->gender === 'M' ? 'Laki-laki' : 'Perempuan' }}
+                                            </span>
+                                        </div>
+                                        <div class="flex items-center space-x-4 mt-1">
+                                            <p class="text-sm text-gray-500">
+                                                <span class="font-medium">NIS:</span> {{ $student->nis }}
+                                            </p>
+                                            <p class="text-sm text-gray-500">
+                                                <span class="font-medium">Lahir:</span>
+                                                {{ $student->date_of_birth->format('d-m-Y') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Action Button -->
+                                <div class="flex-shrink-0">
+                                    <a href="{{ route('admin.students.show', $student) }}"
+                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-all duration-200">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                            </path>
+                                        </svg>
+                                        Lihat Detail
+                                    </a>
+                                </div>
+                            </div>
+                        @empty
+                            <!-- Empty State -->
+                            <div class="text-center py-12">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                    </path>
+                                </svg>
+                                <h3 class="mt-2 text-sm font-medium text-gray-900">Belum Ada Siswa</h3>
+                                <p class="mt-1 text-sm text-gray-500">Kelas ini belum memiliki siswa yang terdaftar.
+                                </p>
+                                <div class="mt-6">
+                                    <a href="{{ route('admin.students.create') }}"
+                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-500 border border-transparent rounded-lg hover:from-blue-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4v16m8-8H4"></path>
+                                        </svg>
+                                        Tambah Siswa Baru
+                                    </a>
+                                </div>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
