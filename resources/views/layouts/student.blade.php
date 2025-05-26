@@ -205,7 +205,7 @@
             <!-- Footer -->
             <div class="px-4 py-4 bg-gradient-to-r from-blue-100 to-blue-50 border-t border-blue-200">
                 <div class="text-center">
-                    <p class="text-xs text-blue-600 font-medium">© 2024 SIPEKA</p>
+                    <p class="text-xs text-blue-600 font-medium">© {{ date('Y') }} SIPEKA</p>
                     <p class="text-xs text-blue-500">Student Learning Portal</p>
                 </div>
             </div>

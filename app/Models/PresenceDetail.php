@@ -10,6 +10,10 @@ class PresenceDetail extends Model
         'presence_id',
         'student_id',
         'status',
+        'verification_status',
+        'verified_by',
+        'verified_at',
+        'verification_note',
     ];
 
     public function presence()
@@ -20,5 +24,10 @@ class PresenceDetail extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function verifier()
+    {
+        return $this->belongsTo(User::class, 'verified_by');
     }
 }

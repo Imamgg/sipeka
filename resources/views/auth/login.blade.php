@@ -45,7 +45,8 @@
                             </p>
                             @if ($serverStatus->maintenance_started_at)
                                 <p class="text-xs text-yellow-600 mt-1">
-                                    Dimulai: {{ $serverStatus->maintenance_started_at->format('d/m/Y H:i') }}
+                                    Dimulai:
+                                    {{ $serverStatus->maintenance_started_at->setTimezone('Asia/Jakarta')->format('d/m/Y H:i') }}
                                 </p>
                             @endif
                         </div>

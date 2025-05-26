@@ -1,7 +1,7 @@
 @props(['students'])
 <x-app-layout>
-    <!-- Header Section dengan design konsisten dashboard -->
-    <div class="bg-gradient-to-br from-indigo-50 via-white to-blue-50 relative overflow-hidden border-b border-gray-100">
+    <div
+        class="bg-gradient-to-br from-indigo-50 via-white to-blue-50 relative overflow-hidden border-b border-gray-100 rounded-xl mb-6">
         <div class="relative px-6 py-8 sm:px-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center">
@@ -18,7 +18,8 @@
                             class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Data
                             Siswa</span>
                     </h1>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Kelola informasi siswa dengan mudah dan efisien
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Kelola informasi siswa dengan mudah dan
+                        efisien
                         melalui sistem terintegrasi SIPEKA</p>
                 </div>
             </div>
@@ -227,9 +228,11 @@
                                                 </svg>
                                             </div>
                                             <div class="text-center">
-                                                <h3 class="text-lg font-medium text-gray-900 mb-1">Belum ada data siswa
+                                                <h3 class="text-lg font-medium text-gray-900 mb-1">Belum ada data
+                                                    siswa
                                                 </h3>
-                                                <p class="text-sm text-gray-500 mb-4">Mulai tambahkan siswa baru untuk
+                                                <p class="text-sm text-gray-500 mb-4">Mulai tambahkan siswa baru
+                                                    untuk
                                                     melihat daftar lengkap</p>
                                                 <a href="{{ route('admin.students.create') }}"
                                                     class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">

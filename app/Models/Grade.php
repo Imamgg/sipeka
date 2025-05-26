@@ -14,6 +14,10 @@ class Grade extends Model
         'grade',
         'semester',
         'description',
+        'verification_status',
+        'verified_by',
+        'verified_at',
+        'verification_note',
     ];
 
     public function student()
@@ -29,5 +33,10 @@ class Grade extends Model
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
+    }
+
+    public function verifier()
+    {
+        return $this->belongsTo(User::class, 'verified_by');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminTeacherController;
 use App\Http\Controllers\Admin\AdminClassesController;
 use App\Http\Controllers\Admin\AdminSubjectController;
 use App\Http\Controllers\Admin\AdminScheduleController;
+use App\Http\Controllers\Admin\AdminGradeController;
 use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\Teacher\TeacherDashboardController;
 use App\Http\Controllers\Student\StudentController;
@@ -29,6 +30,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::resource('classes', AdminClassesController::class);
         Route::resource('subjects', AdminSubjectController::class);
         Route::resource('schedules', AdminScheduleController::class);
+        Route::get('/grades', [AdminGradeController::class, 'index'])->name('grades.index');
+        Route::get('/grades/{grade}', [AdminGradeController::class, 'show'])->name('grades.show');
+        Route::post('/grades/{grade}/verify', [AdminGradeController::class, 'verify'])->name('grades.verify');
+        Route::get('/attendances', [AdminGradeController::class, 'attendance'])->name('attendances.index');
+        Route::get('/attendances/{attendance}', [AdminGradeController::class, 'showAttendance'])->name('attendances.show');
+        Route::post('/attendances/{attendance}/verify', [AdminGradeController::class, 'verifyAttendance'])->name('attendances.verify');
 
         // Server management routes
         Route::get('/server', [ServerController::class, 'index'])->name('server.index');

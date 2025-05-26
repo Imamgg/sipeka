@@ -4,7 +4,7 @@
     <div
         class="relative flex-1 flex flex-col bg-gradient-to-b from-slate-50 via-white to-slate-50 border-r border-slate-200 shadow-xl pt-0">
         <div class="flex-1 flex flex-col pt-6 pb-4 overflow-y-auto">
-            <div class="flex-1 px-4 space-y-2">
+            <div class="flex-1 px-4 space-y-1">
                 <!-- Dashboard -->
                 <a href="{{ route('dashboard') }}"
                     class="{{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-amber-50 hover:to-blue-50 hover:text-amber-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
@@ -109,24 +109,6 @@
                     @endif
                 </a>
 
-                <!-- Grades/Assessment -->
-                <a href="#"
-                    class="{{ request()->is('admin/grades*') ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-rose-50 hover:to-amber-50 hover:text-rose-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
-                    <div
-                        class="{{ request()->is('admin/grades*') ? 'bg-white/20' : 'bg-rose-100 group-hover:bg-rose-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                        <svg class="{{ request()->is('admin/grades*') ? 'text-white' : 'text-rose-600 group-hover:text-rose-700' }} h-5 w-5"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                            </path>
-                        </svg>
-                    </div>
-                    <span class="font-medium">Penilaian</span>
-                    @if (request()->is('admin/grades*'))
-                        <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
-                    @endif
-                </a>
-
                 <!-- Reports -->
                 <a href="#"
                     class="{{ request()->is('admin/reports*') ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 hover:text-orange-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
@@ -145,23 +127,66 @@
                     @endif
                 </a>
 
-                <!-- Server Management -->
-                <a href="{{ route('admin.server.index') }}"
-                    class="{{ request()->is('admin/server*') ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-amber-50 hover:text-red-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
-                    <div
-                        class="{{ request()->is('admin/server*') ? 'bg-white/20' : 'bg-red-100 group-hover:bg-red-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                        <svg class="{{ request()->is('admin/server*') ? 'text-white' : 'text-red-600 group-hover:text-red-700' }} h-5 w-5"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
+                <!-- Verification Menu -->
+                <div x-data="{ open: false }" class="relative">
+                    <!-- Dropdown Toggle Button -->
+                    <button @click="open = !open" type="button"
+                        class="{{ request()->is('admin/grades*') || request()->is('admin/attendances*') ? 'bg-gradient-to-r from-violet-500 to-violet-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-violet-50 hover:to-amber-50 hover:text-violet-700' }} w-full group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                        <div
+                            class="{{ request()->is('admin/grades*') || request()->is('admin/attendances*') ? 'bg-white/20' : 'bg-violet-100 group-hover:bg-violet-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                            <svg class="{{ request()->is('admin/grades*') || request()->is('admin/attendances*') ? 'text-white' : 'text-violet-600 group-hover:text-violet-700' }} h-5 w-5"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <span class="font-medium">Verifikasi</span>
+                        <svg class="ml-auto h-5 w-5 transition-transform duration-200"
+                            :class="{ 'rotate-180': open, 'rotate-0': !open }" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
                         </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div x-show="open" @click.away="open = false"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-100"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-95"
+                        class="absolute left-5 right-5 mt-2 bg-white rounded-xl shadow-lg z-20 border border-gray-100 overflow-hidden">
+                        <!-- Grade Verification -->
+                        <a href="{{ route('admin.grades.index') }}"
+                            class="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-violet-50 hover:text-violet-700 border-b border-gray-100 {{ request()->is('admin/grades*') ? 'bg-violet-50 text-violet-700' : '' }}">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 mr-3 {{ request()->is('admin/grades*') ? 'text-violet-600' : 'text-gray-400' }}"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                    </path>
+                                </svg>
+                                Verifikasi Nilai
+                            </div>
+                        </a>
+                        <!-- Attendance Verification -->
+                        <a href="{{ route('admin.attendances.index') }}"
+                            class="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-violet-50 hover:text-violet-700 {{ request()->is('admin/attendances*') ? 'bg-violet-50 text-violet-700' : '' }}">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 mr-3 {{ request()->is('admin/attendances*') ? 'text-violet-600' : 'text-gray-400' }}"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+                                    </path>
+                                </svg>
+                                Verifikasi Kehadiran
+                            </div>
+                        </a>
                     </div>
-                    <span class="font-medium">Server</span>
-                    @if (request()->is('admin/server*'))
-                        <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
-                    @endif
-                </a>
+                </div>
                 <span class="mx-4 my-4 border-t border-slate-200"></span>
             </div>
         </div>
@@ -169,7 +194,7 @@
         <!-- Footer -->
         <div class="px-4 py-4 bg-gradient-to-r from-slate-100 to-slate-50 border-t border-slate-200">
             <div class="text-center">
-                <p class="text-xs text-slate-500 font-medium">© 2024 SIPEKA</p>
+                <p class="text-xs text-slate-500 font-medium">© {{ date('Y') }} SIPEKA</p>
                 <p class="text-xs text-slate-400">School Management System</p>
             </div>
         </div>

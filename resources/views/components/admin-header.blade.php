@@ -66,8 +66,10 @@
         </div>
 
         <!-- Settings -->
-        <button
-            class="p-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 group">
+        <a href="{{ route('admin.server.index') }}"
+            class="p-2.5 rounded-lg text-slate-300 hover:text-white
+            hover:bg-slate-700/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50
+            group">
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 transition-transform duration-200 group-hover:rotate-90" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
@@ -77,7 +79,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
-        </button>
+        </a>
 
         <!-- User profile dropdown -->
         <div class="relative">
