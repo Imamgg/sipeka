@@ -18,8 +18,8 @@
                 </div>
             </div>
             <div class="bg-blue-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
-                <x-icons.users height="h-8" width="w-8"
-                    class="text-blue-500 group-hover:text-white transition-colors duration-300" />
+                <x-icons.user
+                    class="text-blue-500 h-8 w-8 group-hover:text-white transition-colors duration-300" />
             </div>
         </div>
         <div class="h-1 bg-gradient-to-r from-blue-300 to-blue-600 w-0 group-hover:w-full transition-all duration-500">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="bg-purple-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
-                <x-icons.user class="h-8 w-8 text-purple-500 group-hover:text-white transition-colors duration-300" />
+                <x-icons.users class="h-8 w-8 text-purple-500 group-hover:text-white transition-colors duration-300" />
             </div>
         </div>
         <div
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="bg-emerald-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
-                <x-icons.books class="h-8 w-8 text-emerald-500 group-hover:text-white transition-colors duration-300" />
+                <x-icons.book class="h-8 w-8 text-emerald-500 group-hover:text-white transition-colors duration-300" />
             </div>
         </div>
         <div

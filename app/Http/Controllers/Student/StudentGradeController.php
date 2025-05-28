@@ -16,7 +16,7 @@ class StudentGradeController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $student = Student::with(['class'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
     $currentSemester = request('semester', 1);
 

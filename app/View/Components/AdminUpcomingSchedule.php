@@ -20,17 +20,13 @@ class AdminUpcomingSchedule extends Component
   {
     // Ambil hari ini dan besok dalam format hari bahasa Inggris
     $today = Carbon::now()->format('l'); // Contoh: "Monday"
-    $tomorrow = Carbon::now()->addDay()->format('l'); // Contoh: "Tuesday"
-
-    // Ambil semua jadwal untuk hari ini, urutkan berdasarkan waktu mulai
-    $this->todaySchedules = ClassSchedule::with(['class', 'teacher.user', 'subject'])
+    $tomorrow = Carbon::now()->addDay()->format('l'); // Contoh: "Tuesday"    // Ambil semua jadwal untuk hari ini, urutkan berdasarkan waktu mulai
+    $this->todaySchedules = ClassSchedule::with(['classes', 'teacher.user', 'subject'])
       ->where('day', $today)
       ->orderBy('start_time')
       ->limit(3)
-      ->get();
-
-    // Ambil semua jadwal untuk besok, urutkan berdasarkan waktu mulai
-    $this->tomorrowSchedules = ClassSchedule::with(['class', 'teacher.user', 'subject'])
+      ->get();    // Ambil semua jadwal untuk besok, urutkan berdasarkan waktu mulai
+    $this->tomorrowSchedules = ClassSchedule::with(['classes', 'teacher.user', 'subject'])
       ->where('day', $tomorrow)
       ->orderBy('start_time')
       ->limit(3)

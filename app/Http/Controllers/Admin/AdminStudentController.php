@@ -18,7 +18,7 @@ class AdminStudentController extends Controller
      */
     public function index()
     {
-        $query = Student::with(['class', 'user']);
+        $query = Student::with(['classes', 'user']);
 
         if (request()->has('search') && !empty(request('search'))) {
             $search = request('search');

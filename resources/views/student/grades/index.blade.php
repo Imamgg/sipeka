@@ -1,7 +1,7 @@
 <x-student-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Nilai Siswa - {{ $student->class->name ?? 'Kelas tidak ditemukan' }}
+            Nilai Siswa - {{ $student->classes->class_name ?? 'Kelas tidak ditemukan' }}
         </h2>
     </x-slot>
 
@@ -15,7 +15,7 @@
                                 <h3 class="text-lg font-semibold text-gray-900">Nilai dan Rapor Digital</h3>
                                 <p class="text-sm text-gray-600 mt-1">
                                     {{ $student->user->name }} | NIS: {{ $student->nis }} |
-                                    Kelas: {{ $student->class->name ?? 'Belum ditetapkan' }}
+                                    Kelas: {{ $student->classes->class_name ?? 'Belum ditetapkan' }}
                                 </p>
                             </div>
                             <a href="{{ route('student.dashboard') }}"
@@ -46,13 +46,11 @@
                                 {{ $currentSemester }}</h4>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 @php
-                                    $totalSubjects = $subjectAverages->count();
+                                    $totalSubjects = count($subjectAverages);
                                     $averageGrade =
-                                        $totalSubjects > 0
-                                            ? round(array_sum($subjectAverages->toArray()) / $totalSubjects, 2)
-                                            : 0;
-                                    $highestGrade = $totalSubjects > 0 ? max($subjectAverages->toArray()) : 0;
-                                    $lowestGrade = $totalSubjects > 0 ? min($subjectAverages->toArray()) : 0;
+                                        $totalSubjects > 0 ? round(array_sum($subjectAverages) / $totalSubjects, 2) : 0;
+                                    $highestGrade = $totalSubjects > 0 ? max($subjectAverages) : 0;
+                                    $lowestGrade = $totalSubjects > 0 ? min($subjectAverages) : 0;
                                 @endphp
 
                                 <div class="text-center">

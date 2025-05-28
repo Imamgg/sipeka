@@ -5,7 +5,7 @@
             <div class="flex items-center space-x-3">
                 <div
                     class="w-10 h-10 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                    <x-icons.calender class="h-5 w-5 text-white" />
+                    <x-icons.calendar class="h-5 w-5 text-white" />
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold text-gray-900">Jadwal Mendatang</h3>
@@ -96,22 +96,17 @@
                         <div class="flex items-center space-x-3">
                             <div
                                 class="flex-shrink-0 h-11 w-11 rounded-xl bg-{{ $colorScheme['icon'] }} flex items-center justify-center border border-{{ $colorScheme['border'] }} group-hover:scale-110 transition-transform">
-                                <x-icons.books height="h-5" width="w-5" class="text-{{ $colorScheme['text'] }}" />
+                                <x-icons.book class="h-5 w-5 text-{{ $colorScheme['text'] }}" />
                             </div>
                             <div>
                                 <h4
                                     class="text-sm font-semibold text-gray-900 group-hover:text-{{ $colorScheme['text'] }} transition-colors">
                                     {{ $schedule->subject->subject_name }}
                                 </h4>
-                                <p class="text-xs text-gray-500 mt-1 flex items-center">
-                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                    </svg>
-                                    {{ $schedule->class->class_name }}
-                                    <span class="mx-2">•</span>
-                                    {{ $schedule->teacher->user->name }}
-                                </p>
+                                <div class="mt-1 flex flex-col">
+                                    <p class="text-xs text-gray-500">{{ $schedule->classes->class_name }}</p>
+                                    <p class="text-xs text-gray-500">{{ $schedule->teacher->user->name }}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="flex flex-col items-end space-y-1">
@@ -210,16 +205,16 @@
                         <div class="flex items-center space-x-3">
                             <div
                                 class="flex-shrink-0 h-11 w-11 rounded-xl bg-{{ $colorScheme['icon'] }} flex items-center justify-center border border-{{ $colorScheme['border'] }} group-hover:scale-110 transition-transform">
-                                <x-icons.books height="h-5" width="w-5" class="text-{{ $colorScheme['text'] }}" />
+                                <x-icons.book class="h-5 w-5 text-{{ $colorScheme['text'] }}" />
                             </div>
                             <div>
                                 <h4
                                     class="text-sm font-semibold text-gray-900 group-hover:text-{{ $colorScheme['text'] }} transition-colors">
                                     {{ $schedule->subject->subject_name }}
                                 </h4>
-                                <div class="">
-                                    <p class="text-xs text-gray-500 mt-1">{{ $schedule->class->class_name }}</p>
-                                    <p class="text-xs text-gray-500 mt-1">{{ $schedule->teacher->user->name }}</p>
+                                <div class="mt-1 flex flex-col">
+                                    <p class="text-xs text-gray-500">{{ $schedule->classes->class_name }}</p>
+                                    <p class="text-xs text-gray-500">{{ $schedule->teacher->user->name }}</p>
                                 </div>
                             </div>
                         </div>

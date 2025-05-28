@@ -9,9 +9,12 @@ class Material extends Model
     protected $fillable = [
         'subject_id',
         'teacher_id',
+        'class_id',
         'title',
         'description',
         'file_path',
+        'file_name',
+        'file_size',
         'type', // 'material' or 'assignment'
         'published_at',
         'due_date',
@@ -34,9 +37,6 @@ class Material extends Model
 
     public function classes()
     {
-        return $this->belongsToMany(
-            Classes::class,
-            'material_id',
-        );
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 }

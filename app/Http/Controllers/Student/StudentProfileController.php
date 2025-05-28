@@ -18,7 +18,7 @@ class StudentProfileController extends Controller
   public function edit()
   {
     $user = Auth::user();
-    $student = Student::with(['class', 'user'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes', 'user'])->where('user_id', $user->id)->first();
 
     return view('student.profile.edit', compact('student'));
   }

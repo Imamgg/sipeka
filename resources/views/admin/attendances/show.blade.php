@@ -21,7 +21,7 @@
                     <div class="text-sm text-gray-900">{{ $attendance->student->user->name }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Kelas:</div>
-                    <div class="text-sm text-gray-900">{{ $attendance->student->class->name }}</div>
+                    <div class="text-sm text-gray-900">{{ $attendance->student->classes->name }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Mata Pelajaran:</div>
                     <div class="text-sm text-gray-900">{{ $attendance->presence->classSchedule->subject->name }}

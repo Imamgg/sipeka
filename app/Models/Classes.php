@@ -18,6 +18,11 @@ class Classes extends Model
         'academic_year',
     ];
 
+    public function getNameAttribute()
+    {
+        return $this->class_name;
+    }
+
     public function students(): HasMany
     {
         return $this->hasMany(Student::class, 'class_id');
@@ -31,5 +36,10 @@ class Classes extends Model
     public function presences(): HasMany
     {
         return $this->hasMany(Presence::class);
+    }
+
+    public function classSchedules(): HasMany
+    {
+        return $this->hasMany(ClassSchedule::class, 'class_id');
     }
 }

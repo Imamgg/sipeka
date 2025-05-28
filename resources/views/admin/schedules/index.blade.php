@@ -169,7 +169,7 @@
                                 </div>
                                 <div>
                                     <h3 class="font-semibold text-gray-900 dark:text-white">
-                                        {{ $schedule->class->class_name ?? 'N/A' }}</h3>
+                                        {{ $schedule->classes->class_name ?? 'N/A' }}</h3>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ $schedule->subject->subject_name ?? 'N/A' }}</p>
                                 </div>

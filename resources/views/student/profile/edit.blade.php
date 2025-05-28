@@ -215,7 +215,7 @@
                                             Kelas
                                         </label>
                                         <input type="text"
-                                            value="{{ $student->class->class_name ?? 'Belum ditetapkan' }}" readonly
+                                            value="{{ $student->classes->class_name ?? 'Belum ditetapkan' }}" readonly
                                             class="mt-1 block w-full rounded-md shadow-sm bg-gray-50 text-gray-500">
                                     </div>
                                 </div>

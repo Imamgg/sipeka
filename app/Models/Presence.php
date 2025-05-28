@@ -8,6 +8,10 @@ class Presence extends Model
 {
     protected $fillable = [
         'class_schedule_id',
+        'class_id',
+        'subject_id',
+        'student_id',
+        'teacher_id',
         'date',
         'topic',
         'note',
@@ -15,6 +19,8 @@ class Presence extends Model
         'start_time',
         'end_time',
         'is_active',
+        'status',
+        'notes',
     ];
 
     protected $casts = [
@@ -30,6 +36,21 @@ class Presence extends Model
     public function presenceDetails()
     {
         return $this->hasMany(PresenceDetail::class);
+    }
+
+    public function classes()
+    {
+        return $this->belongsTo(Classes::class, 'class_id');
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subjects::class, 'subject_id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
     }
 
     public function generateQrCodeToken()

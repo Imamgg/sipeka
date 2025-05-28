@@ -40,7 +40,7 @@
                         @foreach ($subjects as $subject)
                             <option value="{{ $subject->id }}"
                                 {{ request('subject_id') == $subject->id ? 'selected' : '' }}>
-                                {{ $subject->name }}
+                                {{ $subject->subject_name }}
                             </option>
                         @endforeach
                     </select>
@@ -53,7 +53,7 @@
                         @foreach ($classes as $class)
                             <option value="{{ $class->id }}"
                                 {{ request('class_id') == $class->id ? 'selected' : '' }}>
-                                {{ $class->name }}
+                                {{ $class->class_name }}
                             </option>
                         @endforeach
                     </select>
@@ -123,7 +123,7 @@
                                 {{ $grade->student->user->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $grade->student->class->name }}
+                                {{ $grade->student->classes->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $grade->subject->name }}

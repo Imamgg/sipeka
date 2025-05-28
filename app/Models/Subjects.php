@@ -14,6 +14,11 @@ class Subjects extends Model
         'description',
     ];
 
+    public function getNameAttribute()
+    {
+        return $this->subject_name;
+    }
+
     public function classSchedules()
     {
         return $this->hasMany(ClassSchedule::class, 'subject_id');

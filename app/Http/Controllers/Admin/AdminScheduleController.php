@@ -19,7 +19,7 @@ class AdminScheduleController extends Controller
    */
   public function index(Request $request)
   {
-    $query = ClassSchedule::with(['class', 'teacher.user', 'subject']);
+    $query = ClassSchedule::with(['classes', 'teacher.user', 'subject']);
 
     // Filter by class if specified
     if ($request->has('class_id') && $request->class_id) {
@@ -167,7 +167,7 @@ class AdminScheduleController extends Controller
    */
   public function show(ClassSchedule $schedule)
   {
-    $schedule->load(['class', 'teacher.user', 'subject']);
+    $schedule->load(['classes', 'teacher.user', 'subject']);
     return view('admin.schedules.show', compact('schedule'));
   }
 

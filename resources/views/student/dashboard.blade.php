@@ -7,7 +7,7 @@
                         <div>
                             <h3 class="text-xl font-bold">Selamat Datang, {{ $student->user->name }}!</h3>
                             <p class="text-blue-100 mt-2">NIS: {{ $student->nis }} | Kelas:
-                                {{ $student->class->class_name ?? 'Belum ditetapkan' }}</p>
+                                {{ $student->classes->class_name ?? 'Belum ditetapkan' }}</p>
                         </div>
                         <div class="hidden md:block">
                             <svg class="w-16 h-16 text-blue-200" fill="currentColor" viewBox="0 0 20 20">

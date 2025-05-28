@@ -108,15 +108,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="flex-1 flex flex-col pt-6 pb-4 overflow-y-auto">
                 <div class="flex-1 px-4 space-y-2">
                     <!-- Dashboard -->
-                    <a href="{{ route('student.dashboard') }}"
-                        class="{{ request()->routeIs('student.dashboard') ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-amber-50 hover:text-blue-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                    <a href="{{ route('teacher.dashboard') }}"
+                        class="{{ request()->routeIs('teacher.dashboard') ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-amber-50 hover:text-blue-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
                         <div
-                            class="{{ request()->routeIs('student.dashboard') ? 'bg-white/20' : 'bg-blue-100 group-hover:bg-blue-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                            <svg class="{{ request()->routeIs('student.dashboard') ? 'text-white' : 'text-blue-600 group-hover:text-blue-700' }} h-5 w-5"
+                            class="{{ request()->routeIs('teacher.dashboard') ? 'bg-white/20' : 'bg-blue-100 group-hover:bg-blue-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                            <svg class="{{ request()->routeIs('teacher.dashboard') ? 'text-white' : 'text-blue-600 group-hover:text-blue-700' }} h-5 w-5"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
@@ -125,80 +124,93 @@
                             </svg>
                         </div>
                         <span class="font-medium">Dashboard</span>
-                        @if (request()->routeIs('student.dashboard'))
+                        @if (request()->routeIs('teacher.dashboard'))
                             <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
                         @endif
-                    </a> <!-- Schedule -->
-                    <a href="{{ route('student.schedules.index') }}"
-                        class="{{ request()->routeIs('student.schedule*') ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-amber-50 hover:text-emerald-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                    </a> <!-- Students -->
+                    <a href="{{ route('teacher.students.index') }}"
+                        class="{{ request()->routeIs('teacher.students*') ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-amber-50 hover:text-emerald-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
                         <div
-                            class="{{ request()->routeIs('student.schedule*') ? 'bg-white/20' : 'bg-emerald-100 group-hover:bg-emerald-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                            <svg class="{{ request()->routeIs('student.schedule*') ? 'text-white' : 'text-emerald-600 group-hover:text-emerald-700' }} h-5 w-5"
+                            class="{{ request()->routeIs('teacher.students*') ? 'bg-white/20' : 'bg-emerald-100 group-hover:bg-emerald-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                            <svg class="{{ request()->routeIs('teacher.students*') ? 'text-white' : 'text-emerald-600 group-hover:text-emerald-700' }} h-5 w-5"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
                                 </path>
                             </svg>
                         </div>
-                        <span class="font-medium">Jadwal Pelajaran</span>
-                        @if (request()->routeIs('student.schedule*'))
+                        <span class="font-medium">Data Siswa</span>
+                        @if (request()->routeIs('teacher.students*'))
                             <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
                         @endif
                     </a>
 
                     <!-- Grades -->
-                    <a href="{{ route('student.grades.index') }}"
-                        class="{{ request()->routeIs('student.grades*') ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-amber-50 hover:to-blue-50 hover:text-amber-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                    <a href="{{ route('teacher.grades.index') }}"
+                        class="{{ request()->routeIs('teacher.grades*') ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-amber-50 hover:text-purple-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
                         <div
-                            class="{{ request()->routeIs('student.grades*') ? 'bg-white/20' : 'bg-amber-100 group-hover:bg-amber-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                            <svg class="{{ request()->routeIs('student.grades*') ? 'text-white' : 'text-amber-600 group-hover:text-amber-700' }} h-5 w-5"
+                            class="{{ request()->routeIs('teacher.grades*') ? 'bg-white/20' : 'bg-purple-100 group-hover:bg-purple-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                            <svg class="{{ request()->routeIs('teacher.grades*') ? 'text-white' : 'text-purple-600 group-hover:text-purple-700' }} h-5 w-5"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
                                 </path>
                             </svg>
                         </div>
-                        <span class="font-medium">Nilai & Rapor</span>
-                        @if (request()->routeIs('student.grades*'))
+                        <span class="font-medium">Input Nilai</span>
+                        @if (request()->routeIs('teacher.grades*'))
                             <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
-                        @endif
-                    </a>
+                        @endif <!-- Attendance -->
+                        <a href="{{ route('teacher.attendance.index') }}"
+                            class="{{ request()->routeIs('teacher.attendance*') ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-amber-50 hover:text-indigo-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                            <div
+                                class="{{ request()->routeIs('teacher.attendance*') ? 'bg-white/20' : 'bg-indigo-100 group-hover:bg-indigo-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                                <svg class="{{ request()->routeIs('teacher.attendance*') ? 'text-white' : 'text-indigo-600 group-hover:text-indigo-700' }} h-5 w-5"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                    </path>
+                                </svg>
+                            </div>
+                            <span class="font-medium">Absensi Siswa</span>
+                            @if (request()->routeIs('teacher.attendance*'))
+                                <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                            @endif
+                        </a><!-- Materials -->
+                        <a href="{{ route('teacher.materials.index') }}"
+                            class="{{ request()->routeIs('teacher.materials*') ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-rose-50 hover:to-amber-50 hover:text-rose-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                            <div
+                                class="{{ request()->routeIs('teacher.materials*') ? 'bg-white/20' : 'bg-rose-100 group-hover:bg-rose-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                                <svg class="{{ request()->routeIs('teacher.materials*') ? 'text-white' : 'text-rose-600 group-hover:text-rose-700' }} h-5 w-5"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                    </path>
+                                </svg>
+                            </div>
+                            <span class="font-medium">Materi & Tugas</span>
+                            @if (request()->routeIs('teacher.materials*'))
+                                <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                            @endif
+                        </a>
 
-                    <!-- Attendance -->
-                    <a href="{{ route('student.attendances.index') }}"
-                        class="{{ request()->routeIs('student.attendance*') ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-amber-50 hover:text-purple-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
-                        <div
-                            class="{{ request()->routeIs('student.attendance*') ? 'bg-white/20' : 'bg-purple-100 group-hover:bg-purple-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                            <svg class="{{ request()->routeIs('student.attendance*') ? 'text-white' : 'text-purple-600 group-hover:text-purple-700' }} h-5 w-5"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                                </path>
-                            </svg>
-                        </div>
-                        <span class="font-medium">Absensi</span>
-                        @if (request()->routeIs('student.attendance*'))
-                            <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
-                        @endif
-                    </a>
-
-                    <!-- Announcements -->
-                    <a href="{{ route('student.announcements.index') }}"
-                        class="{{ request()->routeIs('student.announcements*') ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-rose-50 hover:to-amber-50 hover:text-rose-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
-                        <div
-                            class="{{ request()->routeIs('student.announcements*') ? 'bg-white/20' : 'bg-rose-100 group-hover:bg-rose-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                            <svg class="{{ request()->routeIs('student.announcements*') ? 'text-white' : 'text-rose-600 group-hover:text-rose-700' }} h-5 w-5"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
-                                </path>
-                            </svg>
-                        </div>
-                        <span class="font-medium">Pengumuman</span>
-                        @if (request()->routeIs('student.announcements*'))
-                            <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
-                        @endif
-                    </a>
+                        <!-- Reports -->
+                        <a href="{{ route('teacher.reports.index') }}"
+                            class="{{ request()->routeIs('teacher.reports*') ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-cyan-50 hover:to-amber-50 hover:text-cyan-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                            <div
+                                class="{{ request()->routeIs('teacher.reports*') ? 'bg-white/20' : 'bg-cyan-100 group-hover:bg-cyan-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                                <svg class="{{ request()->routeIs('teacher.reports*') ? 'text-white' : 'text-cyan-600 group-hover:text-cyan-700' }} h-5 w-5"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <span class="font-medium">Laporan</span>
+                            @if (request()->routeIs('teacher.reports*'))
+                                <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                            @endif
+                        </a>
                 </div>
             </div>
 

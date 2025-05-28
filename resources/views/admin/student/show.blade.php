@@ -2,6 +2,7 @@
 <x-app-layout>
     <!-- Header Section with Gradient Background -->
     <div class="bg-gradient-to-br from-indigo-50 via-white to-blue-50 border-b border-gray-200">
+        {{ $student->classes->class_name }}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center">
                 <!-- Page Badge -->
@@ -36,7 +37,7 @@
                             <span class="text-sm font-semibold text-gray-900">NIS: {{ $student->nis }}</span>
                             @if ($student->class)
                                 <span class="text-gray-300">•</span>
-                                <span class="text-sm text-gray-600">{{ $student->class->class_name }}</span>
+                                <span class="text-sm text-gray-600">{{ $student->classes->class_name }}</span>
                             @endif
                         </div>
                     </div>
@@ -182,10 +183,10 @@
                                 <div class="flex-1 min-w-0">
                                     <dt class="text-sm font-medium text-gray-500">Kelas</dt>
                                     <dd class="text-lg font-semibold text-gray-900">
-                                        @if ($student->class)
+                                        @if ($student->classes)
                                             <span
                                                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                                                {{ $student->class->class_name }}
+                                                {{ $student->classes->class_name }}
                                             </span>
                                         @else
                                             <span class="text-gray-400">Belum ditentukan</span>

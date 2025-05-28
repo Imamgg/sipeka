@@ -18,7 +18,7 @@ class StudentAttendanceController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $student = Student::with(['class'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
     $attendances = PresenceDetail::with(['presence.classSchedule.subject'])
       ->where('student_id', $student->id)
@@ -36,7 +36,7 @@ class StudentAttendanceController extends Controller
   public function create()
   {
     $user = Auth::user();
-    $student = Student::with(['class'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
     // Get active presence sessions for today
     $today = Carbon::today();

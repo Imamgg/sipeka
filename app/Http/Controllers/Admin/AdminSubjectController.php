@@ -98,6 +98,7 @@ class AdminSubjectController extends Controller
 
       // Check if the subject is used in class schedules before deleting
       if ($subject->classSchedules()->count() > 0) {
+        DB::rollBack();
         return redirect()->back()
           ->with('toast_error', 'Mata pelajaran tidak dapat dihapus karena masih digunakan dalam jadwal kelas');
       }

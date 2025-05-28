@@ -16,14 +16,14 @@ class StudentAnnouncementController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $student = Student::with(['class'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
     $announcements = Announcement::where('is_active', true)
       ->where(function ($query) use ($student) {
         $query->where('target', 'all')
           ->orWhere('target', 'students')
           ->orWhere(function ($q) use ($student) {
-            $q->where('target', 'class')
+            $q->where('target', 'classes')
               ->whereJsonContains('class_target', $student->class_id);
           });
       })
@@ -44,7 +44,7 @@ class StudentAnnouncementController extends Controller
   public function show($id)
   {
     $user = Auth::user();
-    $student = Student::with(['class'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
     $announcement = Announcement::where('id', $id)
       ->where('is_active', true)
@@ -52,7 +52,7 @@ class StudentAnnouncementController extends Controller
         $query->where('target', 'all')
           ->orWhere('target', 'students')
           ->orWhere(function ($q) use ($student) {
-            $q->where('target', 'class')
+            $q->where('target', 'classes')
               ->whereJsonContains('class_target', $student->class_id);
           });
       })

@@ -16,7 +16,7 @@ class StudentScheduleController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $student = Student::with(['class'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
     $schedules = ClassSchedule::with(['subject', 'teacher.user'])
       ->where('class_id', $student->class_id)

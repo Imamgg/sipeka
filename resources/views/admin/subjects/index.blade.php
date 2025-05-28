@@ -116,7 +116,6 @@
                                     Edit
                                 </a>
                             </div>
-
                             <!-- Delete Button -->
                             <form action="{{ route('admin.subjects.destroy', $subject->id) }}" method="POST"
                                 class="inline delete-form">

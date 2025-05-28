@@ -21,7 +21,7 @@
                     <div class="text-sm text-gray-900">{{ $grade->student->user->name }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Kelas:</div>
-                    <div class="text-sm text-gray-900">{{ $grade->student->class->name }}</div>
+                    <div class="text-sm text-gray-900">{{ $grade->student->classes->class_name }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Mata Pelajaran:</div>
                     <div class="text-sm text-gray-900">{{ $grade->subject->name }}</div>

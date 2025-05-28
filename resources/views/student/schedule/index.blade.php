@@ -1,7 +1,7 @@
 <x-student-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Jadwal Pelajaran - {{ $student->class->name ?? 'Kelas tidak ditemukan' }}
+            Jadwal Pelajaran - {{ $student->classes->name ?? 'Kelas tidak ditemukan' }}
         </h2>
     </x-slot>
 
@@ -14,7 +14,7 @@
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Jadwal Pelajaran Mingguan</h3>
                                 <p class="text-sm text-gray-600 mt-1">
-                                    Kelas: {{ $student->class->name ?? 'Belum ditetapkan' }} |
+                                    Kelas: {{ $student->classes->name ?? 'Belum ditetapkan' }} |
                                     NIS: {{ $student->nis }}
                                 </p>
                             </div>

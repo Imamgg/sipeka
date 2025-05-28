@@ -18,14 +18,14 @@ class ClassSchedule extends Model
         'semester',
     ];
 
-    public function class()
+    public function classes()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 
     public function subject()
     {
-        return $this->belongsTo(Subjects::class);
+        return $this->belongsTo(Subjects::class, 'subject_id');
     }
 
     public function teacher()

@@ -19,7 +19,7 @@ class StudentController extends Controller
   public function dashboard()
   {
     $user = Auth::user();
-    $student = Student::with(['class', 'user'])->where('user_id', $user->id)->first();
+    $student = Student::with(['classes', 'user'])->where('user_id', $user->id)->first();
 
     if (!$student) {
       return redirect()->route('login')->with('error', 'Student profile not found.');
@@ -56,7 +56,7 @@ class StudentController extends Controller
         $query->where('target', 'all')
           ->orWhere('target', 'students')
           ->orWhere(function ($q) use ($student) {
-            $q->where('target', 'class')
+            $q->where('target', 'classes')
               ->whereJsonContains('class_target', $student->class_id);
           });
       })

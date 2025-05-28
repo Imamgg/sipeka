@@ -160,11 +160,11 @@
                                         {{ $student->user->email }}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-4">
-                                        @if ($student->class)
+                                        @if ($student->classes)
                                             <div
                                                 class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
                                                 <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5"></span>
-                                                {{ $student->class->class_name }}
+                                                {{ $student->classes->class_name }}
                                             </div>
                                         @else
                                             <span

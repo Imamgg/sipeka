@@ -10,6 +10,13 @@ use App\Http\Controllers\Admin\AdminScheduleController;
 use App\Http\Controllers\Admin\AdminGradeController;
 use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\Teacher\TeacherDashboardController;
+use App\Http\Controllers\Teacher\TeacherProfileController;
+use App\Http\Controllers\Teacher\TeacherStudentController;
+use App\Http\Controllers\Teacher\TeacherGradeController;
+use App\Http\Controllers\Teacher\TeacherAttendanceController;
+use App\Http\Controllers\Teacher\TeacherMaterialController;
+use App\Http\Controllers\Teacher\TeacherReportController;
+use App\Http\Controllers\Teacher\TeacherScheduleController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentScheduleController;
@@ -44,8 +51,24 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
 );
 
 // Teacher routes
-Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])->group(function () {
-    Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
+Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])->name('teacher.')->group(function () {
+    Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('dashboard');
+    Route::get('profile/edit', [TeacherProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [TeacherProfileController::class, 'update'])->name('profile.update');
+    Route::resource('schedules', TeacherScheduleController::class)->only(['index', 'show']);
+    Route::resource('students', TeacherStudentController::class)->only(['index', 'show']);
+    Route::resource('grades', TeacherGradeController::class);
+    Route::get('grades/students/ajax', [TeacherGradeController::class, 'getStudents'])->name('grades.students');
+    Route::resource('attendance', TeacherAttendanceController::class)->except(['show']);
+    Route::get('attendance/students/ajax', [TeacherAttendanceController::class, 'getStudents'])->name('attendance.students');
+    Route::resource('materials', TeacherMaterialController::class);
+    Route::get('materials/{material}/download', [TeacherMaterialController::class, 'download'])->name('materials.download');
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/', [TeacherReportController::class, 'index'])->name('index');
+        Route::get('/grades', [TeacherReportController::class, 'gradeReport'])->name('grades');
+        Route::get('/attendance', [TeacherReportController::class, 'attendanceReport'])->name('attendance');
+        Route::get('/class-performance', [TeacherReportController::class, 'classPerformance'])->name('class-performance');
+    });
 });
 
 // Student routes
@@ -81,5 +104,11 @@ Route::middleware(['auth', 'server.status'])->group(function () {
         return redirect('/');
     })->name('dashboard');
 });
+
+// Test route untuk debugging toast
+Route::get('/test-toast', function () {
+    return redirect()->route('admin.subjects.index')
+        ->with('toast_error', 'Test error message - subject cannot be deleted');
+})->name('test.toast');
 
 require __DIR__ . '/auth.php';

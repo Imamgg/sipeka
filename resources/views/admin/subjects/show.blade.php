@@ -147,7 +147,7 @@
                                             </div>
                                             <div>
                                                 <h4 class="text-sm font-semibold text-gray-900">
-                                                    {{ $schedule->class->class_name ?? 'N/A' }}</h4>
+                                                    {{ $schedule->classes->class_name ?? 'N/A' }}</h4>
                                                 <p class="text-xs text-gray-500">
                                                     @php
                                                         $days = [
