@@ -17,4 +17,13 @@ class Admin extends Model
         'password',
         'remember_token',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class, 'user_id');
+    }
 }

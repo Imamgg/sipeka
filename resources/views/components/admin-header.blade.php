@@ -23,11 +23,8 @@
         <div class="flex items-center space-x-3">
             <div
                 class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                    </path>
-                </svg>
+                <img src="{{ asset('images/sipeka-logo.png') }}" alt="Logo SIPEKA"
+                    class="w-full h-full object-cover rounded-lg">
             </div>
             <div>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
@@ -51,21 +48,18 @@
         </div>
 
         <div class="relative">
-            <button
-                class="relative p-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 group"
-                data-tooltip="Notifications">
-                <span
-                    class="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-xs text-white font-medium shadow-lg animate-pulse">2</span>
+            <a href="{{ route('admin.announcements.index') }}"
+                class="relative rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     class="h-5 w-5 transition-transform duration-200 group-hover:scale-110" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        d=" M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
                 </svg>
-            </button>
+            </a>
         </div>
 
-        <!-- Settings -->
+        <!-- Settings Status Server -->
         <a href="{{ route('admin.server.index') }}"
             class="p-2.5 rounded-lg text-slate-300 hover:text-white
             hover:bg-slate-700/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\User;
 use App\Models\Teacher;
 use App\Models\Student;
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'role' => 'admin'
         ]);
+
 
         // Create Teachers
         $this->createTeachers();

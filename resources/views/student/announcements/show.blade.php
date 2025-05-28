@@ -1,9 +1,5 @@
-@extends('layouts.student')
-
-@section('title', $announcement->title)
-
-@section('content')
-    <div class="container mx-auto px-4 py-6"> <!-- Back Button -->
+<x-student-layout>
+    <div class="container mx-auto px-4 py-6">
         <div class="mb-6">
             <a href="{{ route('student.announcements.index') }}"
                 class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors">
@@ -30,10 +26,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                     </path>
-                                </svg>
-                                <span class="font-medium">Dipublikasi:</span>
+                                </svg> <span class="font-medium">Dipublikasi:</span>
                                 <span
-                                    class="ml-1">{{ \Carbon\Carbon::parse($announcement->published_at)->format('d M Y, H:i') }}</span>
+                                    class="ml-1">{{ \Carbon\Carbon::parse($announcement->published_at)->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                    WIB</span>
                             </div>
 
                             @if ($announcement->expires_at)
@@ -41,10 +37,10 @@
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span class="font-medium">Berakhir:</span>
+                                    </svg> <span class="font-medium">Berakhir:</span>
                                     <span
-                                        class="ml-1">{{ \Carbon\Carbon::parse($announcement->expires_at)->format('d M Y, H:i') }}</span>
+                                        class="ml-1">{{ \Carbon\Carbon::parse($announcement->expires_at)->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                        WIB</span>
                                 </div>
                             @endif
 
@@ -203,7 +199,6 @@
             </div>
         </div>
     </div>
-
     <script>
         function shareAnnouncement() {
             if (navigator.share) {
@@ -235,7 +230,6 @@
             });
         }
     </script>
-
     <style>
         @media print {
             .no-print {
@@ -292,4 +286,4 @@
             color: #6b7280;
         }
     </style>
-@endsection
+</x-student-layout>

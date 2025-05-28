@@ -318,10 +318,30 @@
                             </div>
                             <span
                                 class="relative text-sm font-semibold text-gray-700 group-hover:text-emerald-700 text-center transition-colors duration-300">Buat
-                                Jadwal</span>
-                            <span
+                                Jadwal</span> <span
                                 class="relative text-xs text-gray-500 group-hover:text-emerald-600 text-center mt-1 transition-colors duration-300">Penjadwalan
                                 kelas</span>
+                        </a>
+
+                        <a href="{{ route('admin.announcements.create') }}"
+                            class="group relative overflow-hidden flex flex-col items-center p-6 rounded-2xl border-2 border-red-100 hover:border-red-300 bg-gradient-to-br from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-red-500 to-pink-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300">
+                            </div>
+                            <div
+                                class="relative w-14 h-14 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                                </svg>
+                            </div>
+                            <span
+                                class="relative text-sm font-semibold text-gray-700 group-hover:text-red-700 text-center transition-colors duration-300">Buat
+                                Pengumuman</span>
+                            <span
+                                class="relative text-xs text-gray-500 group-hover:text-red-600 text-center mt-1 transition-colors duration-300">Informasi
+                                untuk seluruh sekolah</span>
                         </a>
                     </div>
                 </div>

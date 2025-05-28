@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminClassesController;
 use App\Http\Controllers\Admin\AdminSubjectController;
 use App\Http\Controllers\Admin\AdminScheduleController;
 use App\Http\Controllers\Admin\AdminGradeController;
+use App\Http\Controllers\Admin\AdminAnnouncementController;
 use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\Teacher\TeacherDashboardController;
 use App\Http\Controllers\Teacher\TeacherProfileController;
@@ -43,6 +44,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::get('/attendances', [AdminGradeController::class, 'attendance'])->name('attendances.index');
         Route::get('/attendances/{attendance}', [AdminGradeController::class, 'showAttendance'])->name('attendances.show');
         Route::post('/attendances/{attendance}/verify', [AdminGradeController::class, 'verifyAttendance'])->name('attendances.verify');
+        Route::resource('announcements', AdminAnnouncementController::class);
+        Route::post('/announcements/{announcement}/toggle-status', [AdminAnnouncementController::class, 'toggleStatus'])->name('announcements.toggle-status');
+        Route::get('/announcements/{announcement}/download', [AdminAnnouncementController::class, 'download'])->name('announcements.download');
 
         // Server management routes
         Route::get('/server', [ServerController::class, 'index'])->name('server.index');

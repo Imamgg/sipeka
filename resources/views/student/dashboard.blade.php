@@ -217,7 +217,8 @@
                                             {{ Str::limit($announcement->title, 50) }}
                                         </div>
                                         <div class="text-xs text-gray-500 mb-2">
-                                            {{ $announcement->published_at->format('d M Y, H:i') }}
+                                            {{ $announcement->published_at->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                            WIB
                                         </div>
                                         <div class="text-xs text-gray-600">
                                             {{ Str::limit(strip_tags($announcement->content), 100) }}
