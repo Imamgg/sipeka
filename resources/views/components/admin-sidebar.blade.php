@@ -90,7 +90,7 @@
                 </a>
 
                 <!-- Reports -->
-                <a href="#"
+                <a href="/admin/reports"
                     class="{{ request()->is('admin/reports*') ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 hover:text-orange-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
                     <div
                         class="{{ request()->is('admin/reports*') ? 'bg-white/20' : 'bg-orange-100 group-hover:bg-orange-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">

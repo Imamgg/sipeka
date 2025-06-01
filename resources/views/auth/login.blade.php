@@ -122,7 +122,7 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full h-12 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg font-medium transition-all duration-300 shadow-md hover:shadow-lg mt-6">
+                    class="w-full cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
                     Masuk
                 </button>
             </form>

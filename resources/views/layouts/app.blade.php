@@ -8,16 +8,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
 </head>
 
 <body class="bg-gray-50 overflow-x-hidden">
     @include('sweetalert::alert')
 
-    <!-- Admin Header (Fixed) -->
-    <x-admin-header />
+    <!-- Admin Navbar -->
+    <x-admin-navbar />
 
-    <!-- Admin Sidebar (Fixed) -->
+    <!-- Admin Sidebar -->
     <x-admin-sidebar />
 
     <!-- Main Content Area -->
@@ -34,14 +35,12 @@
 
     @stack('scripts')
     <script>
-        // Sidebar toggle functionality
         const toggleSidebarMobile = document.getElementById('toggleSidebarMobile');
         const sidebar = document.getElementById('sidebar');
         const sidebarBackdrop = document.getElementById('sidebarBackdrop');
         const hamburger = document.getElementById('toggleSidebarMobileHamburger');
         const close = document.getElementById('toggleSidebarMobileClose');
 
-        // Show sidebar on desktop by default
         if (sidebar) {
             sidebar.classList.add('flex');
         }

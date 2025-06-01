@@ -18,6 +18,7 @@ use App\Http\Controllers\Teacher\TeacherAttendanceController;
 use App\Http\Controllers\Teacher\TeacherMaterialController;
 use App\Http\Controllers\Teacher\TeacherReportController;
 use App\Http\Controllers\Teacher\TeacherScheduleController;
+use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentScheduleController;
@@ -51,6 +52,15 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         // Server management routes
         Route::get('/server', [ServerController::class, 'index'])->name('server.index');
         Route::post('/server/update-status', [ServerController::class, 'updateStatus'])->name('server.update-status');
+
+        // Admin Reports routes
+        Route::prefix('reports')->name('reports.')->group(function () {
+            Route::get('/', [AdminReportController::class, 'index'])->name('index');
+            Route::get('/student-performance', [AdminReportController::class, 'studentPerformance'])->name('student-performance');
+            Route::get('/teacher-performance', [AdminReportController::class, 'teacherPerformance'])->name('teacher-performance');
+            Route::get('/attendance-statistics', [AdminReportController::class, 'attendanceStatistics'])->name('attendance-statistics');
+            Route::get('/grade-distribution', [AdminReportController::class, 'gradeDistribution'])->name('grade-distribution');
+        });
     }
 );
 

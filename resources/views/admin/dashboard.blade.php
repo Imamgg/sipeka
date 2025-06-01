@@ -1,212 +1,299 @@
 @props(['totalStudents', 'totalTeachers', 'totalClasses', 'totalSubjects'])
 <x-app-layout>
-    <div class="bg-gradient-to-br from-indigo-50 via-white to-blue-50 relative overflow-hidden border-b border-gray-100">
-        <div class="relative px-6 py-12 sm:px-10">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center">
-                    <div
-                        class="inline-flex items-center px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-sm font-medium mb-6">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Dashboard Administrator
-                    </div>
-                    <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-                        Selamat Datang, <span
-                            class="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">Admin</span>
-                    </h1>
-                    <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Kelola sistem pendidikan SIPEKA dengan
-                        efisien dan mudah melalui dashboard yang terintegrasi</p>
-                    <div
-                        class="inline-flex items-center space-x-8 bg-white rounded-2xl shadow-lg px-8 py-6 border border-gray-200">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-gray-900" id="current-date">
-                                {{ \Carbon\Carbon::now()->format('d') }}</div>
-                            <div class="text-gray-500 text-sm font-medium">
-                                {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</div>
-                        </div>
-                        <div class="w-px bg-gray-300 h-12"></div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-gray-900" id="current-time">
-                                {{ \Carbon\Carbon::now()->translatedFormat('H:i') }}</div>
-                            <div class="text-gray-500 text-sm font-medium">
-                                {{ \Carbon\Carbon::now()->translatedFormat('l') }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-admin-header />
 
     <div class="px-6 py-8 space-y-8 bg-gray-50">
         <div class="max-w-7xl mx-auto">
             <x-admin-card :totalStudents="$totalStudents" :totalTeachers="$totalTeachers" :totalClasses="$totalClasses" :totalSubjects="$totalSubjects" />
         </div>
-
         <!-- Main Content Grid -->
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2">
-                <div
-                    class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
-                    <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-                        <div class="flex items-center justify-between">
+            <div class="lg:col-span-2 space-y-6"> <!-- Real-time Overview Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> <!-- Weather & Time Widget -->
+                    <div
+                        class="bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-600 rounded-2xl shadow-lg text-white overflow-hidden relative">
+                        <!-- Animated Weather Elements -->
+                        <div class="absolute top-2 right-4 w-8 h-8 bg-yellow-300 rounded-full opacity-80 animate-pulse">
+                        </div>
+                        <div class="absolute top-6 right-12 w-6 h-6 bg-white/30 rounded-full animate-bounce delay-100">
+                        </div>
+                        <div class="absolute top-4 right-20 w-4 h-4 bg-white/20 rounded-full animate-bounce delay-200">
+                        </div>
+
+                        <div class="relative p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                    <h3 class="text-sm font-semibold">Cuaca Hari Ini</h3>
+                                </div>
+                                <div class="text-lg">☀️</div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div id="live-time" class="text-2xl font-bold">{{ date('H:i:s') }}</div>
+                                <div class="text-sm opacity-90">{{ date('d F Y') }}</div>
+                                <div class="flex items-center justify-between mt-3">
+                                    <span class="text-xs opacity-75">{{ date('l') }}</span>
+                                    <div class="flex items-center text-xs">
+                                        <span class="mr-1">🌡️</span>
+                                        <span>28°C</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Statistics -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 bg-gradient-to-r from-orange-50 to-red-50 border-b border-gray-100">
                             <div class="flex items-center space-x-3">
                                 <div
-                                    class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                    class="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-semibold text-gray-900">Aktivitas Terbaru</h3>
-                                    <p class="text-sm text-gray-500">Pantau aktivitas sistem secara real-time</p>
+                                    <h3 class="text-sm font-semibold text-gray-900">Aktivitas Hari Ini</h3>
+                                    <p class="text-xs text-gray-500">Data real-time sekolah</p>
                                 </div>
                             </div>
-                            <a href="#"
-                                class="inline-flex items-center text-sm text-indigo-600 hover:text-indigo-700 font-medium transition-colors group">
-                                Lihat Semua
-                                <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-600">Kelas Aktif</span>
+                                <span class="text-sm font-semibold text-orange-600">{{ $totalClasses }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-600">Guru Mengajar</span>
+                                <span class="text-sm font-semibold text-orange-600">{{ $totalTeachers - 2 }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-600">Siswa Hadir</span>
+                                <span class="text-sm font-semibold text-orange-600">{{ $totalStudents - 15 }}</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <div class="space-y-4">
-                            <div
-                                class="flex items-start space-x-4 p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 group hover:from-blue-100 hover:to-indigo-100 transition-all duration-200">
+
+                    <!-- Attendance Overview -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 bg-gradient-to-r from-emerald-50 to-green-50 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
                                 <div
-                                    class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                    class="w-8 h-8 bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                 </div>
-                                <div class="flex-1 min-w-0">
-                                    <p
-                                        class="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">
-                                        Ahmad Budi ditambahkan ke kelas X IPA 2
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1 flex items-center">
-                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        2 jam yang lalu
-                                    </p>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Kehadiran Hari Ini</h3>
+                                    <p class="text-xs text-gray-500">Persentase kehadiran</p>
                                 </div>
-                                <div class="flex-shrink-0">
-                                    <span
-                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
-                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5"></span>
-                                        Siswa Baru
-                                    </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-center">
+                                <div class="relative inline-flex items-center justify-center w-20 h-20">
+                                    <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                                        <path class="text-gray-200" stroke="currentColor" stroke-width="2"
+                                            fill="none"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831">
+                                        </path>
+                                        <path class="text-emerald-500" stroke="currentColor" stroke-width="2"
+                                            fill="none" stroke-linecap="round" stroke-dasharray="87, 100"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831">
+                                        </path>
+                                    </svg>
+                                    <div class="absolute text-lg font-bold text-emerald-600">87%</div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">{{ $totalStudents - 15 }} dari
+                                    {{ $totalStudents }} siswa hadir</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Charts & Calendar Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Mini Calendar Widget -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 bg-gradient-to-r from-rose-50 to-pink-50 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <div
+                                    class="w-8 h-8 bg-gradient-to-r from-rose-500 to-pink-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Kalendar Juni 2025</h3>
+                                    <p class="text-xs text-gray-500">Agenda dan jadwal penting</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <!-- Mini Calendar -->
+                            <div class="grid grid-cols-7 gap-1 text-center text-xs mb-4">
+                                <div class="font-semibold text-gray-600 py-2">Min</div>
+                                <div class="font-semibold text-gray-600 py-2">Sen</div>
+                                <div class="font-semibold text-gray-600 py-2">Sel</div>
+                                <div class="font-semibold text-gray-600 py-2">Rab</div>
+                                <div class="font-semibold text-gray-600 py-2">Kam</div>
+                                <div class="font-semibold text-gray-600 py-2">Jum</div>
+                                <div class="font-semibold text-gray-600 py-2">Sab</div>
+
+                                <!-- June 2025 Calendar -->
+                                <div class="py-2 text-gray-400">1</div>
+                                <div class="py-2 text-gray-400">2</div>
+                                <div class="py-2 text-gray-400">3</div>
+                                <div class="py-2 text-gray-400">4</div>
+                                <div class="py-2 text-gray-400">5</div>
+                                <div class="py-2 text-gray-400">6</div>
+                                <div class="py-2 text-gray-400">7</div>
+
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">8</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">9</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">10</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">11</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">12</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">13</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">14</div>
+
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">15</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">16</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">17</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">18</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">19</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">20</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">21</div>
+
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">22</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">23</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">24</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">25</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">26</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">27</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">28</div>
+
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">29</div>
+                                <div class="py-2 hover:bg-rose-100 rounded cursor-pointer">30</div>
+                                <div class="py-2 text-gray-400">1</div>
+                                <div class="py-2 text-gray-400">2</div>
+                                <div class="py-2 text-gray-400">3</div>
+                                <div class="py-2 text-gray-400">4</div>
+                                <div class="py-2 text-gray-400">5</div>
+                            </div>
+
+                            <!-- Today's Events -->
+                            <div class="pt-4 border-t border-gray-100">
+                                <h4 class="text-xs font-semibold text-gray-700 mb-2">Acara Hari Ini</h4>
+                                <div class="space-y-2">
+                                    <div class="flex items-center text-xs">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                                        <span>Rapat Guru - 09:00</span>
+                                    </div>
+                                    <div class="flex items-center text-xs">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                        <span>Ujian Matematika - 10:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Statistics Dashboard -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 bg-gradient-to-r from-teal-50 to-cyan-50 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <div
+                                    class="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Grafik Pembelajaran</h3>
+                                    <p class="text-xs text-gray-500">Visualisasi data akademik</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <!-- Visual Chart Representation -->
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Tingkat Kehadiran</span>
+                                    <span class="text-sm font-semibold text-teal-600">87%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-gradient-to-r from-teal-500 to-cyan-500 h-3 rounded-full relative"
+                                        style="width: 87%">
+                                        <div
+                                            class="absolute right-0 top-0 w-3 h-3 bg-white rounded-full border-2 border-teal-500 transform translate-x-1.5">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between mt-4">
+                                    <span class="text-sm text-gray-600">Prestasi Akademik</span>
+                                    <span class="text-sm font-semibold text-emerald-600">92%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-gradient-to-r from-emerald-500 to-green-500 h-3 rounded-full relative"
+                                        style="width: 92%">
+                                        <div
+                                            class="absolute right-0 top-0 w-3 h-3 bg-white rounded-full border-2 border-emerald-500 transform translate-x-1.5">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between mt-4">
+                                    <span class="text-sm text-gray-600">Keterlibatan Siswa</span>
+                                    <span class="text-sm font-semibold text-blue-600">78%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full relative"
+                                        style="width: 78%">
+                                        <div
+                                            class="absolute right-0 top-0 w-3 h-3 bg-white rounded-full border-2 border-blue-500 transform translate-x-1.5">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div
-                                class="flex items-start space-x-4 p-4 rounded-xl bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100 group hover:from-purple-100 hover:to-violet-100 transition-all duration-200">
-                                <div
-                                    class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                    </svg>
+                            <!-- Mini Bar Chart -->
+                            <div class="mt-6 pt-4 border-t border-gray-100">
+                                <h4 class="text-xs font-semibold text-gray-700 mb-3">Aktivitas Mingguan</h4>
+                                <div class="flex items-end justify-between h-20 space-x-1">
+                                    <div class="bg-gradient-to-t from-teal-500 to-teal-300 rounded-t w-8"
+                                        style="height: 60%"></div>
+                                    <div class="bg-gradient-to-t from-blue-500 to-blue-300 rounded-t w-8"
+                                        style="height: 80%"></div>
+                                    <div class="bg-gradient-to-t from-purple-500 to-purple-300 rounded-t w-8"
+                                        style="height: 45%"></div>
+                                    <div class="bg-gradient-to-t from-pink-500 to-pink-300 rounded-t w-8"
+                                        style="height: 70%"></div>
+                                    <div class="bg-gradient-to-t from-orange-500 to-orange-300 rounded-t w-8"
+                                        style="height: 90%"></div>
+                                    <div class="bg-gradient-to-t from-green-500 to-green-300 rounded-t w-8"
+                                        style="height: 65%"></div>
+                                    <div class="bg-gradient-to-t from-indigo-500 to-indigo-300 rounded-t w-8"
+                                        style="height: 85%"></div>
                                 </div>
-                                <div class="flex-1 min-w-0">
-                                    <p
-                                        class="text-sm font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">
-                                        Jadwal kelas XI IPS 1 diperbarui
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1 flex items-center">
-                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        5 jam yang lalu
-                                    </p>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <span
-                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
-                                        <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mr-1.5"></span>
-                                        Jadwal
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div
-                                class="flex items-start space-x-4 p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-100 group hover:from-amber-100 hover:to-orange-100 transition-all duration-200">
-                                <div
-                                    class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p
-                                        class="text-sm font-semibold text-gray-900 group-hover:text-amber-700 transition-colors">
-                                        Nilai semester 1 telah difinalisasi
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1 flex items-center">
-                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        1 hari yang lalu
-                                    </p>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <span
-                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
-                                        <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-1.5"></span>
-                                        Penilaian
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div
-                                class="flex items-start space-x-4 p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-100 group hover:from-emerald-100 hover:to-green-100 transition-all duration-200">
-                                <div
-                                    class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p
-                                        class="text-sm font-semibold text-gray-900 group-hover:text-emerald-700 transition-colors">
-                                        Bu Siti Nurjanah menjadi wali kelas X IPA 1
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1 flex items-center">
-                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        2 hari yang lalu
-                                    </p>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <span
-                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
-                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5"></span>
-                                        Wali Kelas
-                                    </span>
+                                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                                    <span>S</span><span>S</span><span>S</span><span>R</span><span>K</span><span>J</span><span>S</span>
                                 </div>
                             </div>
                         </div>
@@ -214,139 +301,13 @@
                 </div>
             </div>
 
-            <!-- Upcoming Schedule - Takes 1 column -->
+            <!-- Upcoming Schedule -->
             <div class="lg:col-span-1">
                 <x-admin-upcoming-schedule />
             </div>
-        </div> <!-- Quick Actions -->
-        <div class="max-w-7xl mx-auto">
-            <div
-                class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
-                <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-                    <div class="flex items-center space-x-3">
-                        <div
-                            class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900">Aksi Cepat</h3>
-                            <p class="text-sm text-gray-500">Akses cepat ke fungsi utama sistem</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <a href="{{ route('admin.students.create') }}"
-                            class="group relative overflow-hidden flex flex-col items-center p-6 rounded-2xl border-2 border-blue-100 hover:border-blue-300 bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300">
-                            </div>
-                            <div
-                                class="relative w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                                </svg>
-                            </div>
-                            <span
-                                class="relative text-sm font-semibold text-gray-700 group-hover:text-blue-700 text-center transition-colors duration-300">Tambah
-                                Siswa</span>
-                            <span
-                                class="relative text-xs text-gray-500 group-hover:text-blue-600 text-center mt-1 transition-colors duration-300">Data
-                                siswa baru</span>
-                        </a>
-
-                        <a href="{{ route('admin.teachers.create') }}"
-                            class="group relative overflow-hidden flex flex-col items-center p-6 rounded-2xl border-2 border-purple-100 hover:border-purple-300 bg-gradient-to-br from-purple-50 to-violet-50 hover:from-purple-100 hover:to-violet-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-purple-500 to-violet-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300">
-                            </div>
-                            <div
-                                class="relative w-14 h-14 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </div>
-                            <span
-                                class="relative text-sm font-semibold text-gray-700 group-hover:text-purple-700 text-center transition-colors duration-300">Tambah
-                                Guru</span>
-                            <span
-                                class="relative text-xs text-gray-500 group-hover:text-purple-600 text-center mt-1 transition-colors duration-300">Data
-                                tenaga pengajar</span>
-                        </a>
-
-                        <a href="{{ route('admin.classes.create') }}"
-                            class="group relative overflow-hidden flex flex-col items-center p-6 rounded-2xl border-2 border-amber-100 hover:border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300">
-                            </div>
-                            <div
-                                class="relative w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                </svg>
-                            </div>
-                            <span
-                                class="relative text-sm font-semibold text-gray-700 group-hover:text-amber-700 text-center transition-colors duration-300">Tambah
-                                Kelas</span>
-                            <span
-                                class="relative text-xs text-gray-500 group-hover:text-amber-600 text-center mt-1 transition-colors duration-300">Manajemen
-                                kelas</span>
-                        </a>
-
-                        <a href="{{ route('admin.schedules.create') }}"
-                            class="group relative overflow-hidden flex flex-col items-center p-6 rounded-2xl border-2 border-emerald-100 hover:border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 hover:from-emerald-100 hover:to-green-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-green-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300">
-                            </div>
-                            <div
-                                class="relative w-14 h-14 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <span
-                                class="relative text-sm font-semibold text-gray-700 group-hover:text-emerald-700 text-center transition-colors duration-300">Buat
-                                Jadwal</span> <span
-                                class="relative text-xs text-gray-500 group-hover:text-emerald-600 text-center mt-1 transition-colors duration-300">Penjadwalan
-                                kelas</span>
-                        </a>
-
-                        <a href="{{ route('admin.announcements.create') }}"
-                            class="group relative overflow-hidden flex flex-col items-center p-6 rounded-2xl border-2 border-red-100 hover:border-red-300 bg-gradient-to-br from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-red-500 to-pink-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300">
-                            </div>
-                            <div
-                                class="relative w-14 h-14 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-                                </svg>
-                            </div>
-                            <span
-                                class="relative text-sm font-semibold text-gray-700 group-hover:text-red-700 text-center transition-colors duration-300">Buat
-                                Pengumuman</span>
-                            <span
-                                class="relative text-xs text-gray-500 group-hover:text-red-600 text-center mt-1 transition-colors duration-300">Informasi
-                                untuk seluruh sekolah</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
+        <!-- Quick Actions -->
+        <x-admin-quick-actions />
     </div>
 
     <script>

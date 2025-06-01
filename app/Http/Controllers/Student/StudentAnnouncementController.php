@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\Announcement;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,5 +65,22 @@ class StudentAnnouncementController extends Controller
       ->firstOrFail();
 
     return view('student.announcements.show', compact('student', 'announcement'));
+  }
+
+  /**
+   * Download the attachment of the specified announcement.
+   */
+  /**
+   * Download attachment file.
+   */  public function download(Announcement $announcement)
+  {
+    if (!$announcement->attachment || !Storage::disk('public')->exists($announcement->attachment)) {
+      abort(404, 'File tidak ditemukan');
+    }
+
+    $filePath = Storage::disk('public')->path($announcement->attachment);
+    $fileName = basename($announcement->attachment);
+
+    return response()->download($filePath, $fileName);
   }
 }

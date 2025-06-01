@@ -147,7 +147,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
-                        Dipublikasi oleh {{ $announcement->author ?? 'Admin' }}
+                        Dipublikasi oleh {{ $announcement->author->full_name ?? 'Admin' }}
                     </div>
 
                     @if ($announcement->expires_at && \Carbon\Carbon::parse($announcement->expires_at)->lt(now()))
@@ -167,7 +167,7 @@
 
         <!-- Action Buttons -->
         <div class="mt-6 flex justify-between items-center">
-            <a href="{{ route('student.announcements') }}"
+            <a href="{{ route('student.announcements.index') }}"
                 class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
