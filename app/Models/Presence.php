@@ -7,20 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Presence extends Model
 {
     protected $fillable = [
-        'class_schedule_id',
         'class_id',
         'subject_id',
         'student_id',
         'teacher_id',
+        'status',
+        'notes',
         'date',
-        'topic',
-        'note',
         'qr_code_token',
         'start_time',
         'end_time',
         'is_active',
-        'status',
-        'notes',
     ];
 
     protected $casts = [

@@ -7,7 +7,7 @@
                     <h1 class="text-3xl font-bold text-gray-900">Rekap Absensi</h1>
                     <p class="text-gray-600 mt-1">Pantau kehadiran dan riwayat absensi Anda</p>
                 </div>
-                <a href="{{ route('student.attendances.create') }}"
+                <a href="{{ route('student.attendances.scan') }}"
                     class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -138,7 +138,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">
-                                        {{ $attendance->presence->classSchedule->subject->name ?? 'N/A' }}
+                                        {{ $attendance->presence->subject->subject_name ?? 'N/A' }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

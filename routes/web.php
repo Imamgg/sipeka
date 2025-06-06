@@ -73,8 +73,21 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])-
     Route::resource('students', TeacherStudentController::class)->only(['index', 'show']);
     Route::resource('grades', TeacherGradeController::class);
     Route::get('grades/students/ajax', [TeacherGradeController::class, 'getStudents'])->name('grades.students');
-    Route::resource('attendance', TeacherAttendanceController::class)->except(['show']);
+
+    // QR Code Attendance routes
+    Route::get('attendance', [TeacherAttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('attendance/create', [TeacherAttendanceController::class, 'create'])->name('attendance.create');
+    Route::post('attendance', [TeacherAttendanceController::class, 'store'])->name('attendance.store');
+    Route::get('attendance/create-qr', [TeacherAttendanceController::class, 'createQrSession'])->name('attendance.create-qr');
+    Route::post('attendance/create-qr', [TeacherAttendanceController::class, 'storeQrSession'])->name('attendance.store-qr');
+    Route::get('attendance/{id}', [TeacherAttendanceController::class, 'show'])->name('attendance.show');
+    Route::post('attendance/{id}/toggle', [TeacherAttendanceController::class, 'toggleStatus'])->name('attendance.toggle');
+    Route::delete('attendance/{id}', [TeacherAttendanceController::class, 'destroy'])->name('attendance.destroy');
+    Route::post('attendance/{id}/update-student', [TeacherAttendanceController::class, 'updateStudentStatus'])->name('attendance.update-student');
+    Route::post('attendance/{id}/send-notifications', [TeacherAttendanceController::class, 'sendAbsenceNotifications'])->name('attendance.send-notifications');
     Route::get('attendance/students/ajax', [TeacherAttendanceController::class, 'getStudents'])->name('attendance.students');
+    Route::get('attendance/export', [TeacherAttendanceController::class, 'export'])->name('attendance.export');
+    Route::get('attendance/{id}/export', [TeacherAttendanceController::class, 'exportSession'])->name('attendance.export-session');
     Route::resource('materials', TeacherMaterialController::class);
     Route::get('materials/{material}/download', [TeacherMaterialController::class, 'download'])->name('materials.download');
     Route::prefix('reports')->name('reports.')->group(function () {
@@ -92,7 +105,13 @@ Route::prefix('student')->middleware(['auth', 'role:student', 'server.status'])-
     Route::put('profile', [StudentProfileController::class, 'update'])->name('profile.update');
     Route::resource('schedules', StudentScheduleController::class);
     Route::resource('grades', StudentGradeController::class);
-    Route::resource('attendances', StudentAttendanceController::class);
+
+    // QR Attendance routes for students
+    Route::get('attendances', [StudentAttendanceController::class, 'index'])->name('attendances.index');
+    Route::get('attendances/scan', [StudentAttendanceController::class, 'scanQr'])->name('attendances.scan');
+    Route::post('attendances/scan', [StudentAttendanceController::class, 'processScan'])->name('attendances.process-scan');
+    Route::get('attendances/success/{id}', [StudentAttendanceController::class, 'scanSuccess'])->name('attendances.success');
+
     Route::resource('announcements', StudentAnnouncementController::class);
 });
 
@@ -118,11 +137,5 @@ Route::middleware(['auth', 'server.status'])->group(function () {
         return redirect('/');
     })->name('dashboard');
 });
-
-// Test route untuk debugging toast
-Route::get('/test-toast', function () {
-    return redirect()->route('admin.subjects.index')
-        ->with('toast_error', 'Test error message - subject cannot be deleted');
-})->name('test.toast');
 
 require __DIR__ . '/auth.php';

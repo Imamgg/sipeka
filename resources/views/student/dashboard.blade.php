@@ -327,7 +327,7 @@
                             <span class="text-sm font-medium text-yellow-600">Nilai</span>
                         </a>
 
-                        <a href="{{ route('student.attendances.create') }}"
+                        <a href="#"
                             class="flex flex-col items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
                             <svg class="w-8 h-8 text-purple-600 mb-2" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
