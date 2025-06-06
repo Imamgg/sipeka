@@ -57,4 +57,13 @@ class Student extends Model
     {
         return 'qr_code:' . $this->id . '_' . now()->format('Y-m-d');
     }
+
+    /**
+     * Get the route key for the model.
+     * This ensures proper route model binding
+     */
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
 }

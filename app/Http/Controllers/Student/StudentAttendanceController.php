@@ -210,7 +210,7 @@ class StudentAttendanceController extends Controller
         $presenceDetail->save();
       } catch (\Exception $e) {
         Log::error('Error saving presence detail: ' . $e->getMessage());
-        throw $e; // Re-throw to be caught by outer try-catch
+        throw $e;
       }
 
       return redirect()->route('student.attendances.success', ['id' => $presenceDetail->id])
@@ -240,7 +240,7 @@ class StudentAttendanceController extends Controller
     $student = Student::where('user_id', $user->id)->first();
 
     if (!$student) {
-      return redirect()->route('student.dashboard')->with('error', 'Student data not found.');
+      return redirect()->route('student.dashboard')->with('error', 'Data siswa tidak ditemukan.');
     }
 
     $presenceDetail = PresenceDetail::with(['presence', 'presence.classes', 'presence.subject'])

@@ -131,24 +131,12 @@
                                 </td>
                                 <td class="py-4 px-6">
                                     <div class="font-semibold text-gray-900">
-                                        {{ \Carbon\Carbon::parse($attendance->date)->format('d M Y') }}</div>
-                                    <div class="text-sm text-gray-500">{{ $attendance->start_time }} -
-                                        {{ $attendance->end_time }}</div>
-                                    <div class="text-xs text-gray-400">
-                                        @php
-                                            try {
-                                                $startDateTime = \Carbon\Carbon::parse(
-                                                    $attendance->date . ' ' . substr($attendance->start_time, 0, 5),
-                                                );
-                                                $endDateTime = \Carbon\Carbon::parse(
-                                                    $attendance->date . ' ' . substr($attendance->end_time, 0, 5),
-                                                );
-                                                $diffMinutes = $startDateTime->diffInMinutes($endDateTime);
-                                                echo $diffMinutes . ' menit';
-                                            } catch (\Exception $e) {
-                                                echo 'Durasi tidak tersedia';
-                                            }
-                                        @endphp
+                                        {{ \Carbon\Carbon::parse($attendance->date)->timezone('Asia/Jakarta')->format('d M Y') }}
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        {{ \Carbon\Carbon::parse($attendance->start_time)->timezone('Asia/Jakarta')->format('H:i') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($attendance->end_time)->timezone('Asia/Jakarta')->format('H:i') }}
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
@@ -231,11 +219,6 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
-
-            <!-- Pagination -->
-            <div class="px-6 py-4 border-t border-gray-200">
-                {{ $attendances->links() }}
             </div>
         </div>
     </div>

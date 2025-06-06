@@ -29,7 +29,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     // Get teacher's classes
@@ -105,7 +105,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     // Get teacher's classes and subjects
@@ -124,13 +124,8 @@ class TeacherAttendanceController extends Controller
     // If class is pre-selected, get students
     $students = collect();
     if ($request->has('class_id')) {
-      $classId = $request->get('class_id');
-      $students = Student::with('user')
-        ->where('class_id', $classId)
-        ->join('users', 'students.user_id', '=', 'users.id')
-        ->orderBy('users.name')
-        ->select('students.*')
-        ->get();
+      $studentsResponse = $this->getStudents($request);
+      $students = json_decode($studentsResponse->getContent());
     }
 
     return view('teacher.attendance.create', compact('classes', 'subjects', 'students', 'teacher'));
@@ -145,7 +140,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     $request->validate([
@@ -163,7 +158,7 @@ class TeacherAttendanceController extends Controller
       ->exists();
 
     if (!$hasAccess) {
-      return back()->withErrors(['error' => 'You do not have permission to record attendance for this class and subject.']);
+      return back()->withErrors(['error' => 'Anda tidak memiliki izin untuk membuat absensi untuk kelas dan mata pelajaran ini.']);
     }
 
     // Check if attendance already exists for this date, class, and subject
@@ -173,7 +168,7 @@ class TeacherAttendanceController extends Controller
       ->exists();
 
     if ($existingAttendance) {
-      return back()->withErrors(['error' => 'Attendance for this class, subject, and date already exists.']);
+      return back()->withErrors(['error' => 'Absensi untuk kelas, mata pelajaran, dan tanggal ini sudah ada.']);
     }
 
     // Create attendance records
@@ -190,7 +185,7 @@ class TeacherAttendanceController extends Controller
     }
 
     return redirect()->route('teacher.attendance.index')
-      ->with('success', 'Attendance recorded successfully!');
+      ->with('success', 'Absensi berhasil dicatat!');
   }
 
   /**
@@ -202,7 +197,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     $classId = $request->get('class_id');
@@ -211,7 +206,7 @@ class TeacherAttendanceController extends Controller
 
     if (!$classId || !$subjectId || !$date) {
       return redirect()->route('teacher.attendance.index')
-        ->with('error', 'Missing required parameters.');
+        ->with('error', 'Parameter yang dibutuhkan tidak lengkap.');
     }
 
     // Verify teacher has access
@@ -222,7 +217,7 @@ class TeacherAttendanceController extends Controller
 
     if (!$hasAccess) {
       return redirect()->route('teacher.attendance.index')
-        ->with('error', 'You do not have permission to edit this attendance.');
+        ->with('error', 'Anda tidak memiliki izin untuk mengedit absensi ini.');
     }
 
     // Get attendance records
@@ -255,7 +250,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     $request->validate([
@@ -274,7 +269,7 @@ class TeacherAttendanceController extends Controller
 
     if (!$hasAccess) {
       return redirect()->route('teacher.attendance.index')
-        ->with('error', 'You do not have permission to edit this attendance.');
+        ->with('error', 'Anda tidak memiliki izin untuk mengedit absensi ini.');
     }
 
     // Update attendance records
@@ -291,7 +286,7 @@ class TeacherAttendanceController extends Controller
     }
 
     return redirect()->route('teacher.attendance.index')
-      ->with('success', 'Attendance updated successfully!');
+      ->with('success', 'Absensi berhasil diperbarui!');
   }
 
   /**
@@ -341,7 +336,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     // Get teacher's classes and subjects
@@ -369,7 +364,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     // Validate the request
@@ -390,7 +385,7 @@ class TeacherAttendanceController extends Controller
       ->first();
 
     if (!$classSchedule) {
-      return back()->withErrors(['error' => 'You do not have permission to create attendance for this class and subject.']);
+      return back()->withErrors(['error' => 'Anda tidak memiliki izin untuk membuat absensi untuk kelas dan mata pelajaran ini.']);
     }
 
     // Generate QR Code token
@@ -422,7 +417,7 @@ class TeacherAttendanceController extends Controller
     }
 
     return redirect()->route('teacher.attendance.show', $attendance->id)
-      ->with('success', 'QR attendance session created successfully!');
+      ->with('success', 'Sesi absensi QR berhasil dibuat!');
   }
 
   /**
@@ -434,7 +429,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     $attendance = Presence::with(['classes', 'subject', 'presenceDetails', 'presenceDetails.student', 'presenceDetails.student.user'])
@@ -479,7 +474,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     $attendance = Presence::where('id', $id)
@@ -507,10 +502,10 @@ class TeacherAttendanceController extends Controller
 
     $attendance->save();
 
-    $status = $attendance->is_active ? 'activated' : 'deactivated';
+    $status = $attendance->is_active ? 'diaktifkan' : 'dinonaktifkan';
 
     return redirect()->route('teacher.attendance.show', $attendance->id)
-      ->with('success', "QR attendance session {$status} successfully!");
+      ->with('success', "Sesi absensi QR berhasil {$status}!");
   }
 
   /**
@@ -522,7 +517,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     $attendance = Presence::where('id', $id)
@@ -536,7 +531,7 @@ class TeacherAttendanceController extends Controller
     $attendance->delete();
 
     return redirect()->route('teacher.attendance.index')
-      ->with('success', 'QR attendance session deleted successfully!');
+      ->with('success', 'Sesi absensi QR berhasil dihapus!');
   }
 
   /**
@@ -548,12 +543,12 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     $request->validate([
       'student_id' => 'required|exists:students,id',
-      'status' => 'required|in:present,late,absent,sick,permit',
+      'status' => 'required|in:present,absent,permission,sick',
     ]);
 
     $attendance = Presence::where('id', $id)
@@ -565,18 +560,18 @@ class TeacherAttendanceController extends Controller
       ->first();
 
     if (!$presenceDetail) {
-      return back()->withErrors(['error' => 'Student attendance record not found.']);
+      return back()->withErrors(['error' => 'Data kehadiran siswa tidak ditemukan.']);
     }
 
     $presenceDetail->status = $request->status;
     $presenceDetail->verification_status = 'verified';
     $presenceDetail->verified_by = $user->id;
     $presenceDetail->verified_at = now();
-    $presenceDetail->verification_note = $request->note ?? 'Manually updated by teacher';
+    $presenceDetail->verification_note = $request->note ?? 'Diperbarui manual oleh guru';
     $presenceDetail->save();
 
     return redirect()->route('teacher.attendance.show', $attendance->id)
-      ->with('success', 'Student attendance status updated successfully!');
+      ->with('success', 'Status kehadiran siswa berhasil diperbarui!');
   }
 
   /**
@@ -588,7 +583,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     // Filter parameters
@@ -670,7 +665,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     // Get attendance session
@@ -726,7 +721,7 @@ class TeacherAttendanceController extends Controller
     $teacher = $user->teacher;
 
     if (!$teacher) {
-      return redirect()->route('teacher.dashboard')->with('error', 'Teacher data not found.');
+      return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
     }
 
     // Get attendance session
@@ -748,13 +743,13 @@ class TeacherAttendanceController extends Controller
             Mail::to($parent->email)->send(new \App\Mail\AbsenceNotification($student, $attendance, $parent));
             $absentCount++;
           } catch (\Exception $e) {
-            Log::error('Failed to send absence notification: ' . $e->getMessage());
+            Log::error('Gagal mengirim notifikasi ketidakhadiran: ' . $e->getMessage());
           }
         }
       }
     }
 
     return redirect()->route('teacher.attendance.show', $id)
-      ->with('success', "Notifications sent to {$absentCount} parents of absent students.");
+      ->with('success', "Notifikasi berhasil dikirim kepada {$absentCount} orang tua siswa yang tidak hadir.");
   }
 }

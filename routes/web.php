@@ -71,6 +71,7 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])-
     Route::put('profile', [TeacherProfileController::class, 'update'])->name('profile.update');
     Route::resource('schedules', TeacherScheduleController::class)->only(['index', 'show']);
     Route::resource('students', TeacherStudentController::class)->only(['index', 'show']);
+    Route::get('students/by-class', [TeacherStudentController::class, 'getStudentsByClass'])->name('students.by-class');
     Route::resource('grades', TeacherGradeController::class);
     Route::get('grades/students/ajax', [TeacherGradeController::class, 'getStudents'])->name('grades.students');
 

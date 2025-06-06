@@ -142,7 +142,7 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    {{ \Carbon\Carbon::parse($attendance->created_at)->format('H:i') }}
+                                    {{ \Carbon\Carbon::parse($attendance->created_at)->timezone('Asia/Jakarta')->format('H:i') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($attendance->status === 'present')

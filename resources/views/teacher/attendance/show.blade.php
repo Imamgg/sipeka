@@ -30,27 +30,7 @@
                     <p class="text-sm text-gray-500 mb-4">Token: <span
                             class="font-mono">{{ $attendance->qr_code_token }}</span></p>
 
-                    <div class="flex justify-center space-x-2">
-                        <button onclick="window.print()"
-                            class="bg-indigo-100 hover:bg-indigo-200 text-indigo-800 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                            <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
-                                </path>
-                            </svg>
-                            Cetak
-                        </button>
-                        <a href="{{ $qrUrl }}" target="_blank"
-                            class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                            <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
-                                </path>
-                            </svg>
-                            Buka URL
-                        </a>
+                    <div>
                         <a href="{{ route('teacher.attendance.export-session', $attendance->id) }}"
                             class="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                             <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor"
@@ -109,28 +89,17 @@
 
                     <div>
                         <h3 class="text-sm font-semibold text-gray-500">Tanggal</h3>
-                        <p class="text-gray-900">{{ \Carbon\Carbon::parse($attendance->date)->format('d F Y') }}</p>
+                        <p class="text-gray-900">
+                            {{ \Carbon\Carbon::parse($attendance->date)->timezone('Asia/Jakarta')->format('d F Y') }}
+                        </p>
                     </div>
 
                     <div>
                         <h3 class="text-sm font-semibold text-gray-500">Waktu</h3>
-                        <p class="text-gray-900">{{ $attendance->start_time }} - {{ $attendance->end_time }}
-                            <span class="text-sm text-gray-500">
-                                @php
-                                    try {
-                                        $startDateTime = \Carbon\Carbon::parse(
-                                            $attendance->date . ' ' . substr($attendance->start_time, 0, 5),
-                                        );
-                                        $endDateTime = \Carbon\Carbon::parse(
-                                            $attendance->date . ' ' . substr($attendance->end_time, 0, 5),
-                                        );
-                                        $diffMinutes = $startDateTime->diffInMinutes($endDateTime);
-                                        echo '(' . $diffMinutes . ' menit)';
-                                    } catch (\Exception $e) {
-                                        echo '(Durasi tidak tersedia)';
-                                    }
-                                @endphp
-                            </span>
+                        <p class="text-gray-900">
+                            {{ \Carbon\Carbon::parse($attendance->start_time)->timezone('Asia/Jakarta')->format('H:i') }}
+                            -
+                            {{ \Carbon\Carbon::parse($attendance->end_time)->timezone('Asia/Jakarta')->format('H:i') }}
                         </p>
                     </div>
 
@@ -144,7 +113,7 @@
 
                     <div>
                         <h3 class="text-sm font-semibold text-gray-500">Deskripsi</h3>
-                        <p class="text-gray-900">{{ $attendance->note ?? 'Tidak ada deskripsi' }}</p>
+                        <p class="text-gray-900">{{ $attendance->note ?? '-' }}</p>
                     </div>
                 </div>
 
@@ -178,7 +147,7 @@
             <!-- Student List Card -->
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6 h-full">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">Monitoring Kehadiran Real-time</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Daftar Siswa</h2>
 
                     <div class="relative overflow-y-auto" style="max-height: 500px;">
                         <table class="w-full">
@@ -201,9 +170,6 @@
                                             @if ($detail->status == 'present')
                                                 <span
                                                     class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Hadir</span>
-                                            @elseif($detail->status == 'late')
-                                                <span
-                                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Terlambat</span>
                                             @elseif($detail->status == 'absent')
                                                 <span
                                                     class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">Tidak
@@ -211,14 +177,14 @@
                                             @elseif($detail->status == 'sick')
                                                 <span
                                                     class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Sakit</span>
-                                            @elseif($detail->status == 'permit')
+                                            @elseif($detail->status == 'permission')
                                                 <span
                                                     class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium">Izin</span>
                                             @endif
 
                                             @if ($detail->verification_status == 'verified')
                                                 <div class="text-xs text-gray-500 mt-1">
-                                                    {{ \Carbon\Carbon::parse($detail->verified_at)->format('H:i') }}
+                                                    {{ \Carbon\Carbon::parse($detail->verified_at)->timezone('Asia/Jakarta')->format('H:i') }}
                                                 </div>
                                             @endif
                                         </td>
@@ -243,11 +209,8 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Update Status Modal -->
-    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center"
-        style="display: none;">
+    </div> <!-- Update Status Modal -->
+    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
         <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-4">
@@ -267,15 +230,14 @@
                     @csrf
                     <input type="hidden" id="studentId" name="student_id">
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Status Kehadiran</label>
+                    <div class="mb-4"> <label class="block text-sm font-semibold text-gray-700 mb-2">Status
+                            Kehadiran</label>
                         <select name="status"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             <option value="present">Hadir</option>
-                            <option value="late">Terlambat</option>
                             <option value="absent">Tidak Hadir</option>
+                            <option value="permission">Izin</option>
                             <option value="sick">Sakit</option>
-                            <option value="permit">Izin</option>
                         </select>
                     </div>
 
@@ -299,18 +261,21 @@
             </div>
         </div>
     </div>
-
     <script>
         function showUpdateModal(studentId, studentName) {
             document.getElementById('studentId').value = studentId;
             document.getElementById('studentName').textContent = studentName;
             document.getElementById('updateStatusForm').action =
                 "{{ route('teacher.attendance.update-student', $attendance->id) }}";
-            document.getElementById('updateModal').classList.remove('hidden');
+            const modal = document.getElementById('updateModal');
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
         }
 
         function hideUpdateModal() {
-            document.getElementById('updateModal').classList.add('hidden');
+            const modal = document.getElementById('updateModal');
+            modal.classList.add('hidden');
+            modal.style.display = 'none';
         }
 
         // Close modal when clicking outside
