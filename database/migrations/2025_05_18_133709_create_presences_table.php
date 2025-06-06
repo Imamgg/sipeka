@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('class_schedule_id')->constrained('class_schedules')->onDelete('cascade');
+            $table->foreignId('class_id')->nullable()->constrained('classes');
+            $table->foreignId('subject_id')->nullable()->constrained('subjects');
+            $table->foreignId('student_id')->nullable()->constrained('students');
+            $table->foreignId('teacher_id')->nullable()->constrained('teachers');
+            $table->string('status')->default('present'); // e.g., 'present', 'absent', 'permission', 'sick'
+            $table->text('notes')->nullable();
             $table->date('date');
-            $table->string('topic')->nullable();
-            $table->string('note')->nullable();
             $table->string('qr_code_token')->unique();
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();

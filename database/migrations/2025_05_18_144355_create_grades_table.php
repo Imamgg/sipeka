@@ -16,10 +16,17 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
             $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
             $table->foreignId('teacher_id')->constrained('teachers')->onDelete('cascade');
-            $table->string('type_assessment'); // e.g., 'Midterm', 'Final', 'Quiz'
+            $table->string('grade_type')->nullable();
             $table->decimal('grade', 5, 2);
+            $table->decimal('score', 5, 2);
+            $table->string('type_assessment'); // e.g., 'Midterm', 'Final', 'Quiz'
             $table->enum('semester', ['Odd', 'Even']);
+            $table->date('date')->nullable();
             $table->text('description')->nullable();
+            $table->enum('verification_status', ['pending', 'verified', 'rejected'])->default('pending');
+            $table->foreignId('verified_by')->nullable()->constrained('users');
+            $table->timestamp('verified_at')->nullable();
+            $table->text('verification_note')->nullable();
             $table->timestamps();
         });
     }

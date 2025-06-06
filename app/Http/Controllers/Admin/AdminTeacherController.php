@@ -140,7 +140,7 @@ class AdminTeacherController extends Controller
         ->with('toast_success', 'Data guru berhasil dihapus!');
     } catch (\Exception $e) {
       DB::rollback();
-      return back()->with('toast_error', 'Terjadi kesalahan: ' . $e->getMessage());
+      return back()->with('toast_error', 'Tidak dapat menghapus guru yang masih memiliki jadwal kelas. Hapus atau transfer jadwal terlebih dahulu.');
     }
   }
 }

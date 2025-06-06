@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->enum('target', ['all', 'students', 'teachers'])->default('all');
             $table->string('class_target')->nullable();
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->string('attachment')->nullable(); // lampiran file path for attachments
             $table->timestamps();
         });
