@@ -194,7 +194,7 @@
                                 studentsList.innerHTML = html;
                             } else {
                                 studentsList.innerHTML =
-                                    '<div class="text-center py-4 text-red-500">Gagal memuat daftar siswa</div>';
+                                    '<div class="text-center py-4 text-red-500">Tidak ada siswa dalam kelas ini</div>';
                             }
                         })
                         .catch(error => {
@@ -210,7 +210,6 @@
             classSelect.addEventListener('change', loadStudents);
             subjectSelect.addEventListener('change', loadStudents);
 
-            // Load students if both are already selected (e.g., from old input)
             if (classSelect.value && subjectSelect.value) {
                 loadStudents();
             }
