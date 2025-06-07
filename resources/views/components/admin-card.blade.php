@@ -1,3 +1,5 @@
+@props(['totalStudents', 'totalTeachers', 'totalClasses', 'totalSubjects', 'todayAttendance', 'growthMetrics'])
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     <!-- Card Siswa -->
     <div class="group relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
@@ -14,12 +16,13 @@
                         class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-white transition-colors duration-300">
                         {{ $totalStudents }}</h3>
                     <span
-                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+5.2%</span>
+                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">
+                        {{ $growthMetrics['student_growth'] ?? '+5.2%' }}
+                    </span>
                 </div>
             </div>
             <div class="bg-blue-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
-                <x-icons.user
-                    class="text-blue-500 h-8 w-8 group-hover:text-white transition-colors duration-300" />
+                <x-icons.user class="text-blue-500 h-8 w-8 group-hover:text-white transition-colors duration-300" />
             </div>
         </div>
         <div class="h-1 bg-gradient-to-r from-blue-300 to-blue-600 w-0 group-hover:w-full transition-all duration-500">
@@ -41,7 +44,9 @@
                         class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-white transition-colors duration-300">
                         {{ $totalTeachers }}</h3>
                     <span
-                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+1.8%</span>
+                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">
+                        {{ $growthMetrics['teacher_growth'] ?? '+1.8%' }}
+                    </span>
                 </div>
             </div>
             <div class="bg-purple-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
@@ -68,7 +73,9 @@
                         class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-white transition-colors duration-300">
                         {{ $totalClasses }}</h3>
                     <span
-                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+2.3%</span>
+                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">
+                        {{ $growthMetrics['class_growth'] ?? '+2.3%' }}
+                    </span>
                 </div>
             </div>
             <div class="bg-amber-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">
@@ -96,7 +103,9 @@
                         class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-white transition-colors duration-300">
                         {{ $totalSubjects }}</h3>
                     <span
-                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">+0.5%</span>
+                        class="ml-2 text-xs font-medium text-green-500 group-hover:text-green-200 transition-colors duration-300">
+                        {{ $growthMetrics['subject_growth'] ?? '+0.5%' }}
+                    </span>
                 </div>
             </div>
             <div class="bg-emerald-100 group-hover:bg-white/20 p-3 rounded-xl transition-colors duration-300">

@@ -129,7 +129,7 @@
 
             <div class="mt-8 text-center block">
                 <p class="text-sm text-gray-600 dark:text-gray-400">
-                    &copy; {{ date('Y') }} SIPEKA. All rights reserved.
+                    &copy; {{ date('Y') }} SIPEKA | SMA HANGTUAH 2 SIDOARJO.
                 </p>
             </div>
         </div>
