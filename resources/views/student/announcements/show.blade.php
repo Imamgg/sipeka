@@ -28,8 +28,8 @@
                                     </path>
                                 </svg> <span class="font-medium">Dipublikasi:</span>
                                 <span
-                                    class="ml-1">{{ \Carbon\Carbon::parse($announcement->published_at)->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
-                                    WIB</span>
+                                    class="ml-1">{{ \Carbon\Carbon::parse($announcement->published_at)->setTimezone('Asia/Jakarta')->format('d M Y') }}
+                                </span>
                             </div>
 
                             @if ($announcement->expires_at)
@@ -39,8 +39,8 @@
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg> <span class="font-medium">Berakhir:</span>
                                     <span
-                                        class="ml-1">{{ \Carbon\Carbon::parse($announcement->expires_at)->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
-                                        WIB</span>
+                                        class="ml-1">{{ \Carbon\Carbon::parse($announcement->expires_at)->setTimezone('Asia/Jakarta')->format('d M Y') }}
+                                    </span>
                                 </div>
                             @endif
 

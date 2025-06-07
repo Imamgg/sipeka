@@ -23,10 +23,15 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Imamgg',
             'email' => 'admin@gmail.com',
+            'phone_number' => '085335355129',
             'password' => Hash::make('admin123'),
             'role' => 'admin'
         ]);
 
+        Admin::create([
+            'user_id' => 1,
+            'full_name' => 'Imam Syafii',
+        ]);
 
         // Create Teachers
         $this->createTeachers();

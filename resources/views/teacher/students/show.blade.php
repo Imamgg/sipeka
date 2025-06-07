@@ -80,7 +80,7 @@
                                 @if ($student->gender)
                                     <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg">
                                         <span class="text-sm font-medium text-gray-500">Jenis Kelamin:</span>
-                                        <span class="text-sm text-gray-900">{{ ucfirst($student->gender) }}</span>
+                                        <span class="text-sm text-gray-900">{{ $student->gender == 'M' ? 'Laki-laki' : 'Perempuan' }}</span>
                                     </div>
                                 @endif
                                 @if ($student->phone_number)

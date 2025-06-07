@@ -198,15 +198,15 @@
                         <div>
                             <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Dibuat
                                 Pada</label>
-                            <p class="text-sm text-gray-900 mt-1">{{ $subject->created_at->format('d F Y') }}</p>
-                            <p class="text-xs text-gray-500">{{ $subject->created_at->format('H:i') }} WIB</p>
+                            <p class="text-sm text-gray-900 mt-1">{{ $subject->created_at->timezone('Asia/Jakarta')->format('d F Y') }}</p>
+                            <p class="text-xs text-gray-500">{{ $subject->created_at->timezone('Asia/Jakarta')->format('H:i') }} WIB</p>
                         </div>
                         <hr class="border-gray-200">
                         <div>
                             <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Terakhir
                                 Diperbarui</label>
-                            <p class="text-sm text-gray-900 mt-1">{{ $subject->updated_at->format('d F Y') }}</p>
-                            <p class="text-xs text-gray-500">{{ $subject->updated_at->format('H:i') }} WIB</p>
+                            <p class="text-sm text-gray-900 mt-1">{{ $subject->updated_at->timezone('Asia/Jakarta')->format('d F Y') }}</p>
+                            <p class="text-xs text-gray-500">{{ $subject->updated_at->timezone('Asia/Jakarta')->format('H:i') }} WIB</p>
                         </div>
                     </div>
                 </div>

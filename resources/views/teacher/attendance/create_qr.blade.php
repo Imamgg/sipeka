@@ -83,7 +83,7 @@
                         <label for="date" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal <span
                                 class="text-red-500">*</span></label>
                         <input type="date" id="date" name="date"
-                            value="{{ old('date', now()->format('Y-m-d')) }}" required
+                            value="{{ old('date', now()->timezone('Asia/Jakarta')->format('Y-m-d')) }}" required
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                         @error('date')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -95,8 +95,8 @@
                             <label for="start_time" class="block text-sm font-semibold text-gray-700 mb-2">Waktu Mulai
                                 <span class="text-red-500">*</span></label>
                             <input type="time" id="start_time" name="start_time"
-                                value="{{ old('start_time', now()->format('H:i')) }}" required
-                                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                                value="{{ old('start_time', now()->timezone('Asia/Jakarta')->format('H:i')) }}"
+                                required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             @error('start_time')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -106,8 +106,8 @@
                             <label for="end_time" class="block text-sm font-semibold text-gray-700 mb-2">Waktu Berakhir
                                 <span class="text-red-500">*</span></label>
                             <input type="time" id="end_time" name="end_time"
-                                value="{{ old('end_time', now()->addMinutes(45)->format('H:i')) }}" required
-                                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                                value="{{ old('end_time', now()->addMinutes(45)->timezone('Asia/Jakarta')->format('H:i')) }}"
+                                required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             @error('end_time')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror

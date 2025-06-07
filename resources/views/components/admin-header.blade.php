@@ -12,7 +12,7 @@
                 </div>
                 <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
                     Selamat Datang, <span
-                        class="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">Admin</span>
+                        class="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">{{ auth()->user()->name }}</span>
                 </h1>
                 <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Kelola sistem pendidikan SIPEKA dengan
                     efisien dan mudah melalui dashboard yang terintegrasi</p>
@@ -20,16 +20,16 @@
                     class="inline-flex items-center space-x-8 bg-white rounded-2xl shadow-lg px-8 py-6 border border-gray-200">
                     <div class="text-center">
                         <div class="text-3xl font-bold text-gray-900" id="current-date">
-                            {{ \Carbon\Carbon::now()->format('d') }}</div>
+                            {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('d') }}</div>
                         <div class="text-gray-500 text-sm font-medium">
-                            {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</div>
+                            {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('F Y') }}</div>
                     </div>
                     <div class="w-px bg-gray-300 h-12"></div>
                     <div class="text-center">
                         <div class="text-3xl font-bold text-gray-900" id="current-time">
-                            {{ \Carbon\Carbon::now()->translatedFormat('H:i') }}</div>
+                            {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('H:i') }}</div>
                         <div class="text-gray-500 text-sm font-medium">
-                            {{ \Carbon\Carbon::now()->translatedFormat('l') }}</div>
+                            {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('l') }}</div>
                     </div>
                 </div>
             </div>

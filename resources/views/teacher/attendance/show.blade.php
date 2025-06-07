@@ -90,16 +90,16 @@
                     <div>
                         <h3 class="text-sm font-semibold text-gray-500">Tanggal</h3>
                         <p class="text-gray-900">
-                            {{ \Carbon\Carbon::parse($attendance->date)->timezone('Asia/Jakarta')->format('d F Y') }}
+                            {{ \Carbon\Carbon::parse($attendance->date)->format('d F Y') }}
                         </p>
                     </div>
 
                     <div>
                         <h3 class="text-sm font-semibold text-gray-500">Waktu</h3>
                         <p class="text-gray-900">
-                            {{ \Carbon\Carbon::parse($attendance->start_time)->timezone('Asia/Jakarta')->format('H:i') }}
+                            {{ \Carbon\Carbon::parse($attendance->start_time)->format('H:i') }}
                             -
-                            {{ \Carbon\Carbon::parse($attendance->end_time)->timezone('Asia/Jakarta')->format('H:i') }}
+                            {{ \Carbon\Carbon::parse($attendance->end_time)->format('H:i') }}
                         </p>
                     </div>
 

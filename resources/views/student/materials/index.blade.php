@@ -258,7 +258,7 @@
                                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
                                                 </path>
                                             </svg>
-                                            Deadline: {{ $material->due_date->format('d M Y, H:i') }}
+                                            Deadline: {{ $material->due_date->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
                                             @if ($material->due_date->isPast())
                                                 (Terlambat)
                                             @endif
@@ -271,7 +271,7 @@
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
                                             </path>
                                         </svg>
-                                        {{ $material->created_at->format('d M Y, H:i') }}
+                                        {{ $material->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
                                     </div>
                                 </div>
 

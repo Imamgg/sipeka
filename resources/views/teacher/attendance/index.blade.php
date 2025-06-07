@@ -8,21 +8,6 @@
                     <p class="text-gray-600">Kelola sesi absensi dengan QR code untuk siswa</p>
                 </div>
                 <div class="flex space-x-3">
-                    <a href="{{ route('teacher.attendance.export', [
-                        'class_id' => $selectedClass,
-                        'subject_id' => $selectedSubject,
-                        'date_from' => $dateFrom,
-                        'date_to' => $dateTo,
-                        'status' => $status,
-                    ]) }}"
-                        class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-lg font-semibold shadow-md flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                            </path>
-                        </svg>
-                        Export CSV
-                    </a>
                     <a href="{{ route('teacher.attendance.create-qr') }}"
                         class="bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-6 py-3 rounded-lg font-semibold transform hover:scale-105 transition-all duration-200 shadow-lg flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,9 +119,9 @@
                                         {{ \Carbon\Carbon::parse($attendance->date)->timezone('Asia/Jakarta')->format('d M Y') }}
                                     </div>
                                     <div class="text-sm text-gray-500">
-                                        {{ \Carbon\Carbon::parse($attendance->start_time)->timezone('Asia/Jakarta')->format('H:i') }}
+                                        {{ \Carbon\Carbon::parse($attendance->start_time)->format('H:i') }}
                                         -
-                                        {{ \Carbon\Carbon::parse($attendance->end_time)->timezone('Asia/Jakarta')->format('H:i') }}
+                                        {{ \Carbon\Carbon::parse($attendance->end_time)->format('H:i') }}
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">

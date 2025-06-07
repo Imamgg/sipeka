@@ -8,44 +8,9 @@
         </div>
         <!-- Main Content Grid -->
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-6"> <!-- Real-time Overview Section -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> <!-- Weather & Time Widget -->
-                    <div
-                        class="bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-600 rounded-2xl shadow-lg text-white overflow-hidden relative">
-                        <!-- Animated Weather Elements -->
-                        <div class="absolute top-2 right-4 w-8 h-8 bg-yellow-300 rounded-full opacity-80 animate-pulse">
-                        </div>
-                        <div class="absolute top-6 right-12 w-6 h-6 bg-white/30 rounded-full animate-bounce delay-100">
-                        </div>
-                        <div class="absolute top-4 right-20 w-4 h-4 bg-white/20 rounded-full animate-bounce delay-200">
-                        </div>
-
-                        <div class="relative p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                    </svg>
-                                    <h3 class="text-sm font-semibold">Cuaca Hari Ini</h3>
-                                </div>
-                                <div class="text-lg">☀️</div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <div id="live-time" class="text-2xl font-bold">{{ date('H:i:s') }}</div>
-                                <div class="text-sm opacity-90">{{ date('d F Y') }}</div>
-                                <div class="flex items-center justify-between mt-3">
-                                    <span class="text-xs opacity-75">{{ date('l') }}</span>
-                                    <div class="flex items-center text-xs">
-                                        <span class="mr-1">🌡️</span>
-                                        <span>28°C</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Real-time Overview Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Quick Statistics -->
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="px-6 py-4 bg-gradient-to-r from-orange-50 to-red-50 border-b border-gray-100">
