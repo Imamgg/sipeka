@@ -182,6 +182,24 @@
                         @endif
                     </a>
 
+                    <!-- Materials -->
+                    <a href="{{ route('student.materials.index') }}"
+                        class="{{ request()->routeIs('student.materials*') ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-amber-50 hover:text-indigo-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
+                        <div
+                            class="{{ request()->routeIs('student.materials*') ? 'bg-white/20' : 'bg-indigo-100 group-hover:bg-indigo-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
+                            <svg class="{{ request()->routeIs('student.materials*') ? 'text-white' : 'text-indigo-600 group-hover:text-indigo-700' }} h-5 w-5"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                </path>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Materi & Tugas</span>
+                        @if (request()->routeIs('student.materials*'))
+                            <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                        @endif
+                    </a>
+
                     <!-- Announcements -->
                     <a href="{{ route('student.announcements.index') }}"
                         class="{{ request()->routeIs('student.announcements*') ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-rose-50 hover:to-amber-50 hover:text-rose-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">

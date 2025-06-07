@@ -25,6 +25,7 @@ use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentScheduleController;
 use App\Http\Controllers\Student\StudentGradeController;
 use App\Http\Controllers\Student\StudentAttendanceController;
+use App\Http\Controllers\Student\StudentMaterialController;
 use App\Http\Controllers\Student\StudentAnnouncementController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -117,6 +118,11 @@ Route::prefix('student')->middleware(['auth', 'role:student', 'server.status'])-
     Route::get('attendances/scan', [StudentAttendanceController::class, 'scanQr'])->name('attendances.scan');
     Route::post('attendances/scan', [StudentAttendanceController::class, 'processScan'])->name('attendances.process-scan');
     Route::get('attendances/success/{id}', [StudentAttendanceController::class, 'scanSuccess'])->name('attendances.success');
+
+    // Materials routes for students
+    Route::get('materials', [StudentMaterialController::class, 'index'])->name('materials.index');
+    Route::get('materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
+    Route::get('materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
 
     Route::resource('announcements', StudentAnnouncementController::class);
 });

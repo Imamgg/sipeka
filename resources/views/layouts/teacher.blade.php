@@ -216,24 +216,6 @@
                             <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
                         @endif
                     </a>
-
-                    <!-- Reports -->
-                    <a href="{{ route('teacher.reports.index') }}"
-                        class="{{ request()->routeIs('teacher.reports*') ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-white shadow-lg border-0' : 'text-slate-700 hover:bg-gradient-to-r hover:from-cyan-50 hover:to-amber-50 hover:text-cyan-700' }} group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md">
-                        <div
-                            class="{{ request()->routeIs('teacher.reports*') ? 'bg-white/20' : 'bg-cyan-100 group-hover:bg-cyan-200' }} p-2 rounded-lg mr-3 transition-colors duration-200">
-                            <svg class="{{ request()->routeIs('teacher.reports*') ? 'text-white' : 'text-cyan-600 group-hover:text-cyan-700' }} h-5 w-5"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z">
-                                </path>
-                            </svg>
-                        </div>
-                        <span class="font-medium">Laporan</span>
-                        @if (request()->routeIs('teacher.reports*'))
-                            <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
-                        @endif
-                    </a>
                 </div>
             </div>
 

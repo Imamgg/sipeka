@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\ClassSchedule;
 use App\Models\Grade;
+use App\Models\Material;
 use App\Models\PresenceDetail;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +70,13 @@ class StudentController extends Controller
       ->take(5)
       ->get();
 
+    // Get recent materials
+    $recentMaterials = Material::with(['subject', 'teacher.user'])
+      ->where('class_id', $student->class_id)
+      ->orderBy('created_at', 'desc')
+      ->take(5)
+      ->get();
+
     // Get attendance statistics
     $attendanceStats = $this->getAttendanceStats($student->id);
 
@@ -78,6 +86,7 @@ class StudentController extends Controller
       'upcomingSchedule',
       'recentGrades',
       'announcements',
+      'recentMaterials',
       'attendanceStats'
     ));
   }

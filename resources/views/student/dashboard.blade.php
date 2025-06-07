@@ -109,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Today's Schedule -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
@@ -151,6 +151,51 @@
                                         d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4M8 7h8l1 12H7L8 7z" />
                                 </svg>
                                 <p class="mt-2">Tidak ada jadwal untuk hari ini</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Recent Materials -->
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Materi Terbaru</h3>
+                            <a href="{{ route('student.materials.index') }}"
+                                class="text-blue-600 hover:text-blue-800 text-sm">
+                                Lihat Semua
+                            </a>
+                        </div>
+
+                        @if (isset($recentMaterials) && $recentMaterials->count() > 0)
+                            <div class="space-y-3">
+                                @foreach ($recentMaterials as $material)
+                                    <div class="p-3 bg-gray-50 rounded-lg">
+                                        <div class="text-sm font-medium text-gray-900 mb-1">
+                                            {{ Str::limit($material->title, 30) }}
+                                        </div>
+                                        <div class="text-xs text-gray-500 mb-1">
+                                            {{ $material->subject->name }} - {{ $material->teacher->user->name }}
+                                        </div>
+                                        <div class="flex items-center text-xs text-gray-500">
+                                            <span
+                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
+                                                {{ $material->type === 'materi' ? 'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800' }}">
+                                                {{ ucfirst($material->type) }}
+                                            </span>
+                                            <span class="ml-2">{{ $material->created_at->diffForHumans() }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="text-center py-8 text-gray-500">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <p class="mt-2">Belum ada materi tersedia</p>
                             </div>
                         @endif
                     </div>
@@ -199,7 +244,7 @@
                 </div>
 
                 <!-- Recent Announcements -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg lg:col-span-2">
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold text-gray-900">Pengumuman Terbaru</h3>
@@ -327,7 +372,18 @@
                             <span class="text-sm font-medium text-yellow-600">Nilai</span>
                         </a>
 
-                        <a href="#"
+                        <a href="{{ route('student.materials.index') }}"
+                            class="flex flex-col items-center p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
+                            <svg class="w-8 h-8 text-indigo-600 mb-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                </path>
+                            </svg>
+                            <span class="text-sm font-medium text-indigo-600">Materi</span>
+                        </a>
+
+                        <a href="{{ route('student.attendances.scan') }}"
                             class="flex flex-col items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
                             <svg class="w-8 h-8 text-purple-600 mb-2" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
