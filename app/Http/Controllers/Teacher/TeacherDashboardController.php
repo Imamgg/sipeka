@@ -88,11 +88,18 @@ class TeacherDashboardController extends Controller
         }
 
         // Get recent announcements
-        $announcements = Announcement::where('is_active', true)
+        $announcements = Announcement::with('author.user')
+            ->where('is_active', true)
             ->where(function ($query) {
                 $query->where('target', 'all')
                     ->orWhere('target', 'teachers');
             })
+            ->where('published_at', '<=', now())
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhere('expires_at', '>=', now());
+            })
+            ->orderByRaw("FIELD(priority, 'high', 'medium', 'low')")
             ->orderBy('published_at', 'desc')
             ->take(5)
             ->get();

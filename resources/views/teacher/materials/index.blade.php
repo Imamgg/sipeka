@@ -55,8 +55,12 @@
                 <select id="type_filter" name="type"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent bg-gray-50">
                     <option value="">Semua Jenis</option>
-                    <option value="material" {{ request('type') == 'material' ? 'selected' : '' }}>Materi</option>
-                    <option value="assignment" {{ request('type') == 'assignment' ? 'selected' : '' }}>Tugas</option>
+                    <option value="lesson" {{ request('type') == 'lesson' ? 'selected' : '' }}>📚 Materi Pelajaran
+                    </option>
+                    <option value="assignment" {{ request('type') == 'assignment' ? 'selected' : '' }}>📝 Tugas</option>
+                    <option value="quiz" {{ request('type') == 'quiz' ? 'selected' : '' }}>🧩 Kuis</option>
+                    <option value="reference" {{ request('type') == 'reference' ? 'selected' : '' }}>📖 Referensi
+                    </option>
                 </select>
             </div>
         </div>
@@ -151,13 +155,35 @@
                                 <div class="flex items-start justify-between mb-4">
                                     <div class="flex items-center">
                                         <div
-                                            class="p-3 rounded-lg {{ $material->type === 'assignment' ? 'bg-green-100' : 'bg-blue-100' }}">
+                                            class="p-3 rounded-lg {{ $material->type === 'assignment'
+                                                ? 'bg-green-100 text-green-600'
+                                                : ($material->type === 'quiz'
+                                                    ? 'bg-purple-100 text-purple-600'
+                                                    : ($material->type === 'reference'
+                                                        ? 'bg-orange-100 text-orange-600'
+                                                        : 'bg-blue-100 text-blue-600')) }} mr-3">
                                             @if ($material->type === 'assignment')
                                                 <svg class="w-6 h-6 text-green-600" fill="none"
                                                     stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
                                                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                                    </path>
+                                                </svg>
+                                            @elseif ($material->type === 'quiz')
+                                                <svg class="w-6 h-6 text-purple-600" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                    </path>
+                                                </svg>
+                                            @elseif ($material->type === 'reference')
+                                                <svg class="w-6 h-6 text-orange-600" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
                                                     </path>
                                                 </svg>
                                             @else
@@ -172,8 +198,23 @@
                                         </div>
                                     </div>
                                     <span
-                                        class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {{ $material->type === 'assignment' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">
-                                        {{ $material->type === 'assignment' ? 'Tugas' : 'Materi' }}
+                                        class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
+                                        {{ $material->type === 'assignment'
+                                            ? 'bg-green-100 text-green-600'
+                                            : ($material->type === 'quiz'
+                                                ? 'bg-purple-100 text-purple-600'
+                                                : ($material->type === 'reference'
+                                                    ? 'bg-orange-100 text-orange-600'
+                                                    : 'bg-blue-100 text-blue-600')) }}">
+                                        @if ($material->type === 'assignment')
+                                            📝 Tugas
+                                        @elseif($material->type === 'quiz')
+                                            🧩 Kuis
+                                        @elseif($material->type === 'reference')
+                                            📖 Referensi
+                                        @else
+                                            📚 Materi Pelajaran
+                                        @endif
                                     </span>
                                 </div>
 

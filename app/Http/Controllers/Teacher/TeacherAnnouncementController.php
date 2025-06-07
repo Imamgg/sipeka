@@ -47,7 +47,9 @@ class TeacherAnnouncementController extends Controller
     // Filter by priority
     if ($request->filled('priority')) {
       $query->where('priority', $request->priority);
-    }    // Order by priority and publication date
+    }
+
+    // Order by priority and publication date
     $announcements = $query->with('author.user')
       ->orderByRaw("FIELD(priority, 'high', 'medium', 'low')")
       ->orderBy('published_at', 'desc')

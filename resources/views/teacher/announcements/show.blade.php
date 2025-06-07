@@ -1,17 +1,6 @@
 <x-teacher-layout>
     <div class="py-6">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <!-- Back Button -->
-            <div class="mb-6">
-                <a href="{{ route('teacher.announcements.index') }}"
-                    class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Kembali ke Daftar Pengumuman
-                </a>
-            </div>
-
             <!-- Announcement Detail -->
             <div
                 class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-l-4 {{ $announcement->priority === 'high' ? 'border-red-500' : ($announcement->priority === 'medium' ? 'border-yellow-500' : 'border-green-500') }}">
@@ -91,7 +80,8 @@
                                         d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                Dipublikasikan: {{ $announcement->published_at->format('d M Y, H:i') }}
+                                Dipublikasikan:
+                                {{ $announcement->published_at->timezone('Asia/Jakarta')->format('d M Y') }}
                             </div>
 
                             @if ($announcement->expires_at)
@@ -101,7 +91,7 @@
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    Berakhir: {{ $announcement->expires_at->format('d M Y, H:i') }}
+                                    Berakhir: {{ $announcement->expires_at->timezone('Asia/Jakarta')->format('d M Y') }}
                                 </div>
                             @endif
                         </div>
@@ -157,7 +147,7 @@
                 </a>
 
                 <div class="text-sm text-gray-500">
-                    Terakhir diperbarui: {{ $announcement->updated_at->format('d M Y, H:i') }}
+                    Terakhir diperbarui: {{ $announcement->updated_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
                 </div>
             </div>
         </div>
