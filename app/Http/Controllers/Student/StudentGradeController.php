@@ -18,7 +18,7 @@ class StudentGradeController extends Controller
     $user = Auth::user();
     $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
-    $currentSemester = request('semester', 1);
+    $currentSemester = request('semester', 'Ganjil');
 
     $grades = Grade::with(['subject'])
       ->where('student_id', $student->id)

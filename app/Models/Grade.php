@@ -42,4 +42,17 @@ class Grade extends Model
     {
         return $this->belongsTo(User::class, 'verified_by');
     }
+
+    /**
+     * Get letter grade based on score.
+     */
+    public function getLetterGradeAttribute()
+    {
+        $score = $this->score;
+        if ($score >= 90) return 'A';
+        if ($score >= 80) return 'B';
+        if ($score >= 70) return 'C';
+        if ($score >= 60) return 'D';
+        return 'E';
+    }
 }

@@ -74,8 +74,16 @@ class AdminAnnouncementController extends Controller
       'attachment' => 'nullable|file|mimes:pdf,doc,docx,png,jpg,jpeg|max:5120', // 5MB
     ]);
 
+    // Get the admin record for the current user
+    $admin = \App\Models\Admin::where('user_id', Auth::id())->first();
+
+    if (!$admin) {
+      return redirect()->route('admin.announcements.index')
+        ->with('toast_error', 'Data admin tidak ditemukan.');
+    }
+
     $data = $request->all();
-    $data['user_id'] = Auth::id();
+    $data['user_id'] = $admin->id; // Use admin ID, not user ID
     $data['is_active'] = true;
 
     // Handle file upload

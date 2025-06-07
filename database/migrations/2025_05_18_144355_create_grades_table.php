@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('grade', 5, 2);
             $table->decimal('score', 5, 2);
             $table->string('type_assessment'); // e.g., 'Midterm', 'Final', 'Quiz'
-            $table->enum('semester', ['Odd', 'Even']);
+            $table->enum('semester', ['Ganjil', 'Genap']);
             $table->date('date')->nullable();
             $table->text('description')->nullable();
             $table->enum('verification_status', ['pending', 'verified', 'rejected'])->default('pending');

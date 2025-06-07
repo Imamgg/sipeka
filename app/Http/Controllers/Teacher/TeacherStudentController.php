@@ -136,7 +136,10 @@ class TeacherStudentController extends Controller
         ];
       });
 
-    return response()->json($students);
+    return response()->json([
+      'success' => true,
+      'students' => $students
+    ]);
   }
 
   /**

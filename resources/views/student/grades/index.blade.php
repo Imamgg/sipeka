@@ -28,13 +28,13 @@
                     <!-- Semester Selector -->
                     <div class="mb-6">
                         <div class="flex space-x-4">
-                            <a href="{{ route('student.grades.index', ['semester' => 1]) }}"
-                                class="px-4 py-2 rounded-lg {{ $currentSemester == 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition-colors">
-                                Semester 1
+                            <a href="{{ route('student.grades.index', ['semester' => 'Ganjil']) }}"
+                                class="px-4 py-2 rounded-lg {{ $currentSemester == 'Ganjil' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition-colors">
+                                Semester Ganjil
                             </a>
-                            <a href="{{ route('student.grades.index', ['semester' => 2]) }}"
-                                class="px-4 py-2 rounded-lg {{ $currentSemester == 2 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition-colors">
-                                Semester 2
+                            <a href="{{ route('student.grades.index', ['semester' => 'Genap']) }}"
+                                class="px-4 py-2 rounded-lg {{ $currentSemester == 'Genap' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition-colors">
+                                Semester Genap
                             </a>
                         </div>
                     </div>

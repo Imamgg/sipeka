@@ -7,21 +7,21 @@
                     <h1 class="text-3xl font-bold text-gray-900 mb-2">Input Nilai</h1>
                     <p class="text-gray-600">Kelola nilai siswa untuk mata pelajaran yang Anda ampu</p>
                 </div>
-                <div class="mt-4 sm:mt-0">
+                <div class="mt-4 sm:mt-0 flex space-x-3">
                     <a href="{{ route('teacher.grades.create') }}"
                         class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
-                        Input Nilai Baru
+                        Input Nilai Siswa
                     </a>
                 </div>
             </div>
         </div>
 
         <!-- Filter Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
                 <label for="class_filter" class="block text-sm font-semibold text-gray-700 mb-3">Filter Kelas</label>
                 <select id="class_filter" name="class_id"
@@ -29,7 +29,7 @@
                     <option value="">Semua Kelas</option>
                     @foreach ($classes as $class)
                         <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>
-                            {{ $class->name }}
+                            {{ $class->class_name }}
                         </option>
                     @endforeach
                 </select>
@@ -62,6 +62,24 @@
                     <option value="uas" {{ request('grade_type') == 'uas' ? 'selected' : '' }}>UAS</option>
                 </select>
             </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                <label for="semester_filter" class="block text-sm font-semibold text-gray-700 mb-3">Filter
+                    Semester</label>
+                <select id="semester_filter" name="semester"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50">
+                    <option value="">Semua Semester</option>
+                    <option value="Ganjil" {{ request('semester') == 'Ganjil' ? 'selected' : '' }}>Semester Ganjil
+                    </option>
+                    <option value="Genap" {{ request('semester') == 'Genap' ? 'selected' : '' }}>Semester Genap
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Statistics Dashboard -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" id="statistics-dashboard">
+            <!-- Statistics cards will be loaded here -->
         </div>
 
         <!-- Grades List -->
@@ -133,22 +151,34 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span
-                                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium">
-                                            {{-- @if ($grade->grade_type === 'tugas') bg-green-100 text-green-800
-                                        @elseif($grade->grade_type === 'kuis') bg-yellow-100 text-yellow-800
-                                        @elseif($grade->grade_type === 'uts') bg-orange-100 text-orange-800
-                                        @elseif($grade->grade_type === 'uas') bg-red-100 text-red-800
-                                        @else bg-gray-100 text-gray-800 @endif"> --}}
+                                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {{ $grade->grade_type === 'tugas'
+                                                ? 'bg-green-100 text-green-800'
+                                                : ($grade->grade_type === 'kuis'
+                                                    ? 'bg-yellow-100 text-yellow-800'
+                                                    : ($grade->grade_type === 'uts'
+                                                        ? 'bg-orange-100 text-orange-800'
+                                                        : ($grade->grade_type === 'uas'
+                                                            ? 'bg-red-100 text-red-800'
+                                                            : 'bg-gray-100 text-gray-800'))) }}">
                                             {{ ucfirst($grade->grade_type) }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-lg font-bold">
-                                            {{-- @if ($grade->grade >= 80) text-green-600
-                                        @elseif($grade->grade >= 70) text-yellow-600
-                                        @elseif($grade->grade >= 60) text-orange-600
-                                        @else text-red-600 @endif"> --}}
-                                            {{ $grade->grade }}
+                                        <div>
+                                            <span
+                                                class="text-lg font-bold {{ $grade->score >= 90
+                                                    ? 'text-green-600'
+                                                    : ($grade->score >= 80
+                                                        ? 'text-blue-600'
+                                                        : ($grade->score >= 70
+                                                            ? 'text-yellow-600'
+                                                            : ($grade->score >= 60
+                                                                ? 'text-orange-600'
+                                                                : 'text-red-600'))) }}">
+                                                {{ $grade->score }}
+                                            </span>
+                                            <span
+                                                class="text-sm font-medium text-gray-500">({{ $grade->grade }})</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -166,8 +196,8 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <form action="{{ route('teacher.grades.destroy', $grade) }}" method="POST"
-                                                class="inline"
+                                            <form action="{{ route('teacher.grades.destroy', $grade) }}"
+                                                method="POST" class="inline"
                                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus nilai ini?')">
                                                 @csrf
                                                 @method('DELETE')
@@ -222,6 +252,7 @@
             const classFilter = document.getElementById('class_filter');
             const subjectFilter = document.getElementById('subject_filter');
             const gradeTypeFilter = document.getElementById('grade_type_filter');
+            const semesterFilter = document.getElementById('semester_filter');
 
             function updateFilters() {
                 const params = new URLSearchParams();
@@ -229,13 +260,120 @@
                 if (classFilter.value) params.set('class_id', classFilter.value);
                 if (subjectFilter.value) params.set('subject_id', subjectFilter.value);
                 if (gradeTypeFilter.value) params.set('grade_type', gradeTypeFilter.value);
+                if (semesterFilter.value) params.set('semester', semesterFilter.value);
 
-                window.location.href = '{{ route('teacher.grades.index') }}?' + params.toString();
+                const queryString = params.toString();
+                const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location
+                    .pathname;
+
+                window.location.href = newUrl;
             }
 
-            classFilter.addEventListener('change', updateFilters);
-            subjectFilter.addEventListener('change', updateFilters);
-            gradeTypeFilter.addEventListener('change', updateFilters);
+            function loadStatistics() {
+                const params = new URLSearchParams();
+
+                if (classFilter.value) params.append('class_id', classFilter.value);
+                if (subjectFilter.value) params.append('subject_id', subjectFilter.value);
+                if (gradeTypeFilter.value) params.append('grade_type', gradeTypeFilter.value);
+                if (semesterFilter.value) params.append('semester', semesterFilter.value);
+
+                const queryString = params.toString();
+                const url = `{{ route('teacher.grades.statistics') }}${queryString ? '?' + queryString : ''}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        updateStatisticsDashboard(data);
+                    })
+                    .catch(error => {
+                        console.error('Error loading statistics:', error);
+                    });
+            }
+
+            function updateStatisticsDashboard(stats) {
+                const dashboard = document.getElementById('statistics-dashboard');
+
+                const html = `
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-100 text-sm font-medium">Total Nilai</p>
+                                <p class="text-3xl font-bold">${stats.total_grades}</p>
+                            </div>
+                            <div class="bg-blue-400 bg-opacity-50 rounded-full p-3">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-green-100 text-sm font-medium">Rata-rata</p>
+                                <p class="text-3xl font-bold">${stats.average_score ? Math.round(stats.average_score * 10) / 10 : 0}</p>
+                            </div>
+                            <div class="bg-green-400 bg-opacity-50 rounded-full p-3">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl shadow-lg p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-yellow-100 text-sm font-medium">Nilai Tertinggi</p>
+                                <p class="text-3xl font-bold">${stats.highest_score || 0}</p>
+                            </div>
+                            <div class="bg-yellow-400 bg-opacity-50 rounded-full p-3">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-lg p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-red-100 text-sm font-medium">Nilai Terendah</p>
+                                <p class="text-3xl font-bold">${stats.lowest_score !== null ? stats.lowest_score : 0}</p>
+                            </div>
+                            <div class="bg-red-400 bg-opacity-50 rounded-full p-3">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                dashboard.innerHTML = html;
+            }
+
+            // Event listeners for all filters
+            classFilter.addEventListener('change', function() {
+                updateFilters();
+                loadStatistics();
+            });
+            subjectFilter.addEventListener('change', function() {
+                updateFilters();
+                loadStatistics();
+            });
+            gradeTypeFilter.addEventListener('change', function() {
+                updateFilters();
+                loadStatistics();
+            });
+            semesterFilter.addEventListener('change', function() {
+                updateFilters();
+                loadStatistics();
+            });
+
+            // Load initial statistics
+            loadStatistics();
         });
     </script>
 </x-teacher-layout>

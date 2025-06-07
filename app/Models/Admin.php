@@ -9,8 +9,6 @@ class Admin extends Model
     protected $fillable = [
         'user_id',
         'full_name',
-        'email',
-        'password',
     ];
 
     protected $hidden = [

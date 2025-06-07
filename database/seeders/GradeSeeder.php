@@ -18,7 +18,7 @@ class GradeSeeder extends Seeder
     public function run(): void
     {
         // Get sample teachers, students, and subjects
-        $teachers = Teacher::with(['classSchedules.subject', 'classSchedules.class'])->get();
+        $teachers = Teacher::with(['classSchedules.subject', 'classSchedules.classes'])->get();
         $gradeTypes = ['assignment', 'quiz', 'midterm', 'final', 'daily'];
 
         foreach ($teachers as $teacher) {
@@ -39,7 +39,7 @@ class GradeSeeder extends Seeder
                             'grade_type' => $gradeTypes[array_rand($gradeTypes)],
                             'grade' => rand(60, 100),
                             'score' => rand(60, 100),
-                            'semester' => rand(0, 1) ? 'Odd' : 'Even',
+                            'semester' => rand(0, 1) ? 'Ganjil' : 'Genap',
                             'date' => Carbon::now()->subDays(rand(1, 30)),
                             'description' => 'Sample grade entry for ' . $gradeTypes[array_rand($gradeTypes)],
                         ]);

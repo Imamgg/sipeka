@@ -18,6 +18,7 @@ use App\Http\Controllers\Teacher\TeacherAttendanceController;
 use App\Http\Controllers\Teacher\TeacherMaterialController;
 use App\Http\Controllers\Teacher\TeacherReportController;
 use App\Http\Controllers\Teacher\TeacherScheduleController;
+use App\Http\Controllers\Teacher\TeacherAnnouncementController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Student\StudentProfileController;
@@ -48,12 +49,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::resource('announcements', AdminAnnouncementController::class);
         Route::post('/announcements/{announcement}/toggle-status', [AdminAnnouncementController::class, 'toggleStatus'])->name('announcements.toggle-status');
         Route::get('/announcements/{announcement}/download', [AdminAnnouncementController::class, 'download'])->name('announcements.download');
-
-        // Server management routes
-        Route::get('/server', [ServerController::class, 'index'])->name('server.index');
         Route::post('/server/update-status', [ServerController::class, 'updateStatus'])->name('server.update-status');
-
-        // Admin Reports routes
         Route::prefix('reports')->name('reports.')->group(function () {
             Route::get('/', [AdminReportController::class, 'index'])->name('index');
             Route::get('/student-performance', [AdminReportController::class, 'studentPerformance'])->name('student-performance');
@@ -61,6 +57,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
             Route::get('/attendance-statistics', [AdminReportController::class, 'attendanceStatistics'])->name('attendance-statistics');
             Route::get('/grade-distribution', [AdminReportController::class, 'gradeDistribution'])->name('grade-distribution');
         });
+        // Server Management routes
+        Route::get('/server', [ServerController::class, 'index'])->name('server.index');
     }
 );
 
@@ -73,6 +71,11 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])-
     Route::resource('students', TeacherStudentController::class)->only(['index', 'show']);
     Route::get('students/by-class', [TeacherStudentController::class, 'getStudentsByClass'])->name('students.by-class');
     Route::resource('grades', TeacherGradeController::class);
+    Route::post('grades/load-students', [TeacherGradeController::class, 'loadStudents'])->name('grades.load-students');
+    Route::get('grades/export', [TeacherGradeController::class, 'export'])->name('grades.export');
+    Route::get('grades/import', [TeacherGradeController::class, 'import'])->name('grades.import');
+    Route::post('grades/import', [TeacherGradeController::class, 'processImport'])->name('grades.import.process');
+    Route::get('grades/statistics', [TeacherGradeController::class, 'getStatistics'])->name('grades.statistics');
     Route::get('grades/students/ajax', [TeacherGradeController::class, 'getStudents'])->name('grades.students');
 
     // QR Code Attendance routes
@@ -91,6 +94,8 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])-
     Route::get('attendance/{id}/export', [TeacherAttendanceController::class, 'exportSession'])->name('attendance.export-session');
     Route::resource('materials', TeacherMaterialController::class);
     Route::get('materials/{material}/download', [TeacherMaterialController::class, 'download'])->name('materials.download');
+    Route::resource('announcements', TeacherAnnouncementController::class)->only(['index', 'show']);
+    Route::get('announcements/{announcement}/download', [TeacherAnnouncementController::class, 'download'])->name('announcements.download');
     Route::prefix('reports')->name('reports.')->group(function () {
         Route::get('/', [TeacherReportController::class, 'index'])->name('index');
         Route::get('/grades', [TeacherReportController::class, 'gradeReport'])->name('grades');

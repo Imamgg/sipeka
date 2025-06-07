@@ -263,7 +263,8 @@
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold text-gray-900">Pengumuman Terbaru</h3>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm">
+                            <a href="{{ route('teacher.announcements.index') }}"
+                                class="text-indigo-600 hover:text-indigo-800 text-sm">
                                 Lihat Semua
                             </a>
                         </div>
@@ -352,7 +353,7 @@
             <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Aksi Cepat</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
                         <a href="{{ route('teacher.students.index') }}"
                             class="flex flex-col items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
                             <svg class="w-8 h-8 text-blue-600 mb-2" fill="none" stroke="currentColor"
@@ -405,6 +406,17 @@
                                 </path>
                             </svg>
                             <span class="text-sm font-medium text-red-600">Materi & Tugas</span>
+                        </a>
+
+                        <a href="{{ route('teacher.announcements.index') }}"
+                            class="flex flex-col items-center p-4 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors">
+                            <svg class="w-8 h-8 text-orange-600 mb-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
+                                </path>
+                            </svg>
+                            <span class="text-sm font-medium text-orange-600">Pengumuman</span>
                         </a>
                     </div>
                 </div>
