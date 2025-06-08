@@ -1,6 +1,5 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 py-6">
-        <!-- Header -->
         <div
             class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 mb-6 border-b-2 border-gray-200">
             <div class="mb-4 md:mb-0">
@@ -152,7 +151,8 @@
                     <canvas id="gradeTrendChart" height="300"></canvas>
                 </div>
             </div>
-        </div> <!-- Grade Performance by Subject -->
+        </div>
+        <!-- Grade Performance by Subject -->
         <div class="mb-8">
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200">
@@ -191,7 +191,7 @@
                                     D (60-69)</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    E (<60)< /th>
+                                    {{ 'E (<60)' }}</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status</th>
@@ -411,123 +411,9 @@
                     </table>
                 </div>
             </div>
-        </div> <!-- Students Needing Attention -->
-        <div class="mb-8">
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h5 class="text-gray-800 font-semibold text-lg">Siswa yang Memerlukan Perhatian</h5>
-                    <p class="text-gray-500 text-sm mt-1">Siswa dengan rata-rata nilai di bawah 70</p>
-                </div>
-                <div>
-                    @if (count($studentsNeedingAttention) > 0)
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Siswa</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Kelas</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Rata-rata Nilai</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Mata Pelajaran Bermasalah</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Trend</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach ($studentsNeedingAttention as $student)
-                                        <tr class="hover:bg-gray-50">
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex items-center">
-                                                    <div
-                                                        class="flex-shrink-0 h-10 w-10 rounded-full bg-red-600 flex items-center justify-center text-white font-medium">
-                                                        {{ substr($student['name'], 0, 2) }}
-                                                    </div>
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ $student['name'] }}</div>
-                                                        <div class="text-sm text-gray-500">
-                                                            {{ $student['student_id'] }}</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $student['class_name'] }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <span
-                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                    {{ number_format($student['average_grade'], 1) }}
-                                                </span>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex flex-wrap gap-1">
-                                                    @foreach ($student['problematic_subjects'] as $subject)
-                                                        <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                            {{ $subject }}
-                                                        </span>
-                                                    @endforeach
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                @if ($student['trend'] == 'improving')
-                                                    <span
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                        <i class="fas fa-arrow-up mr-1"></i> Membaik
-                                                    </span>
-                                                @elseif($student['trend'] == 'declining')
-                                                    <span
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                        <i class="fas fa-arrow-down mr-1"></i> Menurun
-                                                    </span>
-                                                @else
-                                                    <span
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                        <i class="fas fa-minus mr-1"></i> Stabil
-                                                    </span>
-                                                @endif
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex space-x-2">
-                                                    <button
-                                                        class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded bg-blue-600 hover:bg-blue-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                                        onclick="counselStudent('{{ $student['id'] }}')">
-                                                        <i class="fas fa-user-tie mr-1"></i>Konseling
-                                                    </button>
-                                                    <button
-                                                        class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded bg-cyan-600 hover:bg-cyan-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
-                                                        onclick="contactParent('{{ $student['id'] }}')">
-                                                        <i class="fas fa-phone mr-1"></i>Hubungi Ortu
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="flex flex-col items-center justify-center py-16 px-4 text-center">
-                            <i class="fas fa-thumbs-up text-green-500 text-5xl mb-4"></i>
-                            <h5 class="text-xl font-medium text-gray-800 mb-2">Semua Siswa Memiliki Performa Baik</h5>
-                            <p class="text-gray-500">Tidak ada siswa yang memerlukan perhatian khusus saat ini!</p>
-                        </div>
-                    @endif
-                </div>
-            </div>
         </div>
-    </div> @push('scripts')
+    </div>
+    @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const gradeRangeCtx = document.getElementById('gradeRangeChart').getContext('2d');

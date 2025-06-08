@@ -27,7 +27,7 @@
                     <div>
                         <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Judul Sesi <span
                                 class="text-red-500">*</span></label>
-                        <input type="text" id="title" name="title" value="{{ old('title') }}" required
+                        <input type="text" id="title" name="title" value="{{ old('title') }}"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500"
                             placeholder="Contoh: Absensi Fisika Bab Cahaya">
                         @error('title')
@@ -46,7 +46,7 @@
                     <div>
                         <label for="class_id" class="block text-sm font-semibold text-gray-700 mb-2">Kelas <span
                                 class="text-red-500">*</span></label>
-                        <select id="class_id" name="class_id" required
+                        <select id="class_id" name="class_id"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             <option value="">Pilih Kelas</option>
                             @foreach ($classes as $class)
@@ -64,7 +64,7 @@
                     <div>
                         <label for="subject_id" class="block text-sm font-semibold text-gray-700 mb-2">Mata Pelajaran
                             <span class="text-red-500">*</span></label>
-                        <select id="subject_id" name="subject_id" required
+                        <select id="subject_id" name="subject_id"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             <option value="">Pilih Mata Pelajaran</option>
                             @foreach ($subjects as $subject)
@@ -83,7 +83,7 @@
                         <label for="date" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal <span
                                 class="text-red-500">*</span></label>
                         <input type="date" id="date" name="date"
-                            value="{{ old('date', now()->timezone('Asia/Jakarta')->format('Y-m-d')) }}" required
+                            value="{{ old('date', now()->timezone('Asia/Jakarta')->format('Y-m-d')) }}"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                         @error('date')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -96,7 +96,7 @@
                                 <span class="text-red-500">*</span></label>
                             <input type="time" id="start_time" name="start_time"
                                 value="{{ old('start_time', now()->timezone('Asia/Jakarta')->format('H:i')) }}"
-                                required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             @error('start_time')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -107,7 +107,7 @@
                                 <span class="text-red-500">*</span></label>
                             <input type="time" id="end_time" name="end_time"
                                 value="{{ old('end_time', now()->addMinutes(45)->timezone('Asia/Jakarta')->format('H:i')) }}"
-                                required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             @error('end_time')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror

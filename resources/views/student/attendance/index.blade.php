@@ -1,107 +1,139 @@
 <x-student-layout>
-    <div class="container mx-auto px-4 py-6">
-        <!-- Header -->
-        <div class="mb-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Rekap Absensi</h1>
-                    <p class="text-gray-600 mt-1">Pantau kehadiran dan riwayat absensi Anda</p>
-                </div>
-                <a href="{{ route('student.attendances.scan') }}"
-                    class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z">
-                        </path>
-                    </svg>
-                    Scan QR Code
-                </a>
-            </div>
-        </div>
-
-        <!-- Statistics Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <!-- Total Presence -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                            </path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Total Sesi</p>
-                        <p class="text-2xl font-bold text-gray-900">{{ $stats['total'] }}</p>
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Header Section -->
+            <div class="mb-8">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h1 class="text-3xl font-bold text-gray-900">Rekap Absensi</h1>
+                                    <p class="text-gray-600">Pantau riwayat kehadiran dan performa absensi Anda</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="{{ route('student.attendances.scan') }}"
+                                class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z">
+                                    </path>
+                                </svg>
+                                Scan QR Code
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Present -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-full bg-green-100 text-green-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
-                            </path>
-                        </svg>
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Sessions -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-200">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-r from-slate-500 to-slate-600 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Sesi</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ $stats['total'] }}</p>
+                        </div>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Hadir</p>
-                        <p class="text-2xl font-bold text-green-600">{{ $stats['present'] }}</p>
+                </div>
+
+                <!-- Present -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-200">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Hadir</p>
+                            <p class="text-2xl font-bold text-emerald-600">{{ $stats['present'] }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Absent -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-200">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Tidak Hadir</p>
+                            <p class="text-2xl font-bold text-red-600">{{ $stats['absent'] }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Percentage -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-200">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Tingkat Kehadiran</p>
+                            <p class="text-2xl font-bold text-indigo-600">{{ $stats['percentage'] }}%</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Absent -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-full bg-red-100 text-red-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12">
-                            </path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Tidak Hadir</p>
-                        <p class="text-2xl font-bold text-red-600">{{ $stats['absent'] }}</p>
+            <!-- Attendance Progress -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-900">Progress Kehadiran</h3>
+                    <div class="text-sm text-gray-500">
+                        {{ $stats['present'] }}/{{ $stats['total'] }} Sesi
                     </div>
                 </div>
-            </div>
-
-            <!-- Percentage -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                            </path>
-                        </svg>
+                <div class="w-full bg-gray-100 rounded-full h-4 mb-4 overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-500 to-green-600 h-4 rounded-full transition-all duration-500 ease-out"
+                        style="width: {{ $stats['percentage'] }}%"></div>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-500">0%</span>
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-gray-900">{{ $stats['percentage'] }}%</span>
+                        <div class="flex items-center text-xs">
+                            @if($stats['percentage'] >= 90)
+                                <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">Sangat Baik</span>
+                            @elseif($stats['percentage'] >= 80)
+                                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Baik</span>
+                            @elseif($stats['percentage'] >= 70)
+                                <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Cukup</span>
+                            @else
+                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full">Perlu Perbaikan</span>
+                            @endif
+                        </div>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Persentase Kehadiran</p>
-                        <p class="text-2xl font-bold text-purple-600">{{ $stats['percentage'] }}%</p>
-                    </div>
+                    <span class="text-gray-500">100%</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Attendance Progress -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Progress Kehadiran</h3>
-            <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
-                <div class="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-300"
-                    style="width: {{ $stats['percentage'] }}%"></div>
-            </div>
-            <div class="flex justify-between text-sm text-gray-600">
-                <span>0%</span>
-                <span class="font-medium text-gray-900">{{ $stats['percentage'] }}%</span>
-                <span>100%</span>
-            </div>
-        </div>
 
         <!-- Attendance History -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200">

@@ -126,19 +126,19 @@
                     @forelse ($attendances as $attendance)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $attendance->presence->date->format('d M Y') }}
+                                {{ $attendance->presence->date?->format('d M Y') ?? 'N/A' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $attendance->student->user->name }}
+                                {{ $attendance->student->user?->name ?? 'N/A' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $attendance->student->classes->name }}
+                                {{ $attendance->student->classes?->name ?? 'N/A' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $attendance->presence->classSchedule->subject->name }}
+                                {{ $attendance->presence->classSchedule?->subject?->name ?? ($attendance->presence->subject?->name ?? 'N/A') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $attendance->presence->classSchedule->teacher->user->name }}
+                                {{ $attendance->presence->classSchedule?->teacher?->user?->name ?? ($attendance->presence->teacher?->user?->name ?? 'N/A') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($attendance->status == 'present')

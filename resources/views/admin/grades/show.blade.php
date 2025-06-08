@@ -18,16 +18,16 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="text-sm font-medium text-gray-500">Siswa:</div>
-                    <div class="text-sm text-gray-900">{{ $grade->student->user->name }}</div>
+                    <div class="text-sm text-gray-900">{{ $grade->student->user->name ?? 'N/A' }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Kelas:</div>
-                    <div class="text-sm text-gray-900">{{ $grade->student->classes->class_name }}</div>
+                    <div class="text-sm text-gray-900">{{ $grade->student->classes->class_name ?? 'N/A' }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Mata Pelajaran:</div>
-                    <div class="text-sm text-gray-900">{{ $grade->subject->name }}</div>
+                    <div class="text-sm text-gray-900">{{ $grade->subject->subject_name ?? 'N/A' }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Guru:</div>
-                    <div class="text-sm text-gray-900">{{ $grade->teacher->user->name }}</div>
+                    <div class="text-sm text-gray-900">{{ $grade->teacher->user->name ?? 'N/A' }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Jenis Penilaian:</div>
                     <div class="text-sm text-gray-900">{{ $grade->type_assessment }}</div>
@@ -42,7 +42,8 @@
                     <div class="text-sm text-gray-900">{{ $grade->semester }}</div>
 
                     <div class="text-sm font-medium text-gray-500">Tanggal Input:</div>
-                    <div class="text-sm text-gray-900">{{ $grade->created_at->format('d M Y H:i') }}</div>
+                    <div class="text-sm text-gray-900">
+                        {{ $grade->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }}</div>
 
                     @if ($grade->description)
                         <div class="text-sm font-medium text-gray-500">Deskripsi:</div>
@@ -59,14 +60,14 @@
                         @elseif ($grade->verification_status == 'verified')
                             <span
                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Terverifikasi oleh {{ $grade->verifier->name }} pada
-                                {{ $grade->verified_at->format('d M Y H:i') }}
+                                Terverifikasi oleh {{ $grade->verifier->name ?? 'N/A' }} pada
+                                {{ $grade->verified_at ? $grade->verified_at->format('d M Y H:i') : 'N/A' }}
                             </span>
                         @else
                             <span
                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                Ditolak oleh {{ $grade->verifier->name }} pada
-                                {{ $grade->verified_at->format('d M Y H:i') }}
+                                Ditolak oleh {{ $grade->verifier->name ?? 'N/A' }} pada
+                                {{ $grade->verified_at ? $grade->verified_at->format('d M Y H:i') : 'N/A' }}
                             </span>
                         @endif
                     </div>

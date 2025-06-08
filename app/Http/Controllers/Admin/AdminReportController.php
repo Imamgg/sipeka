@@ -32,16 +32,16 @@ class AdminReportController extends Controller
         $averageGrade = Grade::avg('score') ?? 0;
 
         // Calculate average attendance rate
-        $totalPresences = Presence::count();
-        $presentCount = Presence::where('status', 'present')->count();
-        $averageAttendance = $totalPresences > 0 ? ($presentCount / $totalPresences) * 100 : 0;    // Recent activity
+        $totalPresenceDetails = PresenceDetail::count();
+        $presentCount = PresenceDetail::where('status', 'present')->count();
+        $averageAttendance = $totalPresenceDetails > 0 ? ($presentCount / $totalPresenceDetails) * 100 : 0;    // Recent activity
         $recentGrades = Grade::with(['student.user', 'student.classes', 'subject', 'teacher.user'])
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
-        $recentAttendances = Presence::with(['student.user', 'classes', 'subject'])
-            ->orderBy('date', 'desc')
+        $recentAttendances = PresenceDetail::with(['student.user', 'student.classes', 'presence.subject'])
+            ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
@@ -580,14 +580,20 @@ class AdminReportController extends Controller
         ];
 
         // Subject-wise grade analysis
-        $subjectGrades = Subjects::with(['teacher.user'])
-            ->get()
+        $subjectGrades = Subjects::get()
             ->map(function ($subject) use ($grades) {
                 $subjectGrades = $grades->where('subject_id', $subject->id);
 
+                // Get teacher name from the grades data (since grades have teacher_id)
+                $teacherName = 'N/A';
+                if ($subjectGrades->count() > 0) {
+                    $firstGrade = $subjectGrades->first();
+                    $teacherName = $firstGrade->teacher->user->name ?? 'N/A';
+                }
+
                 return [
                     'name' => $subject->subject_name,
-                    'teacher_name' => $subject->teacher->user->name ?? 'N/A',
+                    'teacher_name' => $teacherName,
                     'student_count' => $subjectGrades->groupBy('student_id')->count(),
                     'average' => $subjectGrades->count() > 0 ? $subjectGrades->avg('score') : 0,
                     'highest' => $subjectGrades->count() > 0 ? $subjectGrades->max('score') : 0,

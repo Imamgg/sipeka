@@ -29,8 +29,18 @@ class Subjects extends Model
         return $this->belongsTo(Material::class);
     }
 
-    public function teacher()
+    /**
+     * Get teachers who teach this subject through class schedules
+     */
+    public function teachers()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->hasManyThrough(
+            Teacher::class,
+            ClassSchedule::class,
+            'subject_id',
+            'id',
+            'id',
+            'teacher_id'
+        );
     }
 }

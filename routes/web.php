@@ -79,7 +79,6 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])-
     Route::get('grades/statistics', [TeacherGradeController::class, 'getStatistics'])->name('grades.statistics');
     Route::get('grades/students/ajax', [TeacherGradeController::class, 'getStudents'])->name('grades.students');
 
-    // QR Code Attendance routes
     Route::get('attendance', [TeacherAttendanceController::class, 'index'])->name('attendance.index');
     Route::get('attendance/create', [TeacherAttendanceController::class, 'create'])->name('attendance.create');
     Route::post('attendance', [TeacherAttendanceController::class, 'store'])->name('attendance.store');
@@ -93,6 +92,7 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher', 'server.status'])-
     Route::get('attendance/students/ajax', [TeacherAttendanceController::class, 'getStudents'])->name('attendance.students');
     Route::get('attendance/export', [TeacherAttendanceController::class, 'export'])->name('attendance.export');
     Route::get('attendance/{id}/export', [TeacherAttendanceController::class, 'exportSession'])->name('attendance.export-session');
+
     Route::resource('materials', TeacherMaterialController::class);
     Route::get('materials/{material}/download', [TeacherMaterialController::class, 'download'])->name('materials.download');
     Route::resource('announcements', TeacherAnnouncementController::class)->only(['index', 'show']);
@@ -113,17 +113,13 @@ Route::prefix('student')->middleware(['auth', 'role:student', 'server.status'])-
     Route::resource('schedules', StudentScheduleController::class);
     Route::resource('grades', StudentGradeController::class);
 
-    // QR Attendance routes for students
     Route::get('attendances', [StudentAttendanceController::class, 'index'])->name('attendances.index');
     Route::get('attendances/scan', [StudentAttendanceController::class, 'scanQr'])->name('attendances.scan');
-    Route::post('attendances/scan', [StudentAttendanceController::class, 'processScan'])->name('attendances.process-scan');
     Route::get('attendances/success/{id}', [StudentAttendanceController::class, 'scanSuccess'])->name('attendances.success');
 
-    // Materials routes for students
     Route::get('materials', [StudentMaterialController::class, 'index'])->name('materials.index');
     Route::get('materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
     Route::get('materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
-
     Route::resource('announcements', StudentAnnouncementController::class);
 });
 

@@ -13,7 +13,6 @@
     <div class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center">
-                <!-- Page Badge -->
                 <div
                     class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-800 border border-purple-200 mb-4">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -207,7 +206,7 @@
                                         <p class="text-sm font-medium text-gray-900">
                                             {{ $attendance->student->user->name ?? 'N/A' }}</p>
                                         <p class="text-xs text-gray-500">
-                                            {{ $attendance->classes->class_name ?? 'N/A' }}</p>
+                                            {{ $attendance->student->classes->class_name ?? 'N/A' }}</p>
                                     </div>
                                     <div class="text-right">
                                         <span
@@ -222,7 +221,8 @@
                                                 {{ ucfirst($attendance->status) }}
                                             @endif
                                         </span>
-                                        <p class="text-xs text-gray-500 mt-1">{{ $attendance->date->format('d/m/Y') }}
+                                        <p class="text-xs text-gray-500 mt-1">
+                                            {{ $attendance->created_at->format('d/m/Y') }}
                                         </p>
                                     </div>
                                 </div>

@@ -62,11 +62,16 @@ class TeacherMaterialController extends Controller
         $subjects = Subjects::whereIn('id', $subjectIds)->orderBy('subject_name')->get();
 
         // Get statistics
-        $allMaterials = Material::where('teacher_id', $teacher->id);
-        $totalMaterials = $allMaterials->whereIn('type', ['lesson', 'reference'])->count();
-        $totalAssignments = $allMaterials->whereIn('type', ['assignment', 'quiz'])->count();
-        $recentUploads = $allMaterials->where('created_at', '>=', now()->subWeek())->count();
-        $totalDownloads = 0; // Placeholder for download tracking
+        $totalMaterials = Material::where('teacher_id', $teacher->id)
+            ->whereIn('type', ['lesson', 'reference'])
+            ->count();
+        $totalAssignments = Material::where('teacher_id', $teacher->id)
+            ->whereIn('type', ['assignment', 'quiz'])
+            ->count();
+        $recentUploads = Material::where('teacher_id', $teacher->id)
+            ->where('created_at', '>=', now()->subWeek())
+            ->count();
+        $totalDownloads = 0;
 
         return view('teacher.materials.index', compact(
             'materials',

@@ -48,13 +48,17 @@ class StudentMaterialController extends Controller
         })->orderBy('subject_name')->get();
 
         // Get statistics
-        $allMaterials = Material::where('class_id', $student->class_id);
-        $totalMaterials = $allMaterials->whereIn('type', ['lesson', 'reference'])->count();
-        $totalAssignments = $allMaterials->whereIn('type', ['assignment', 'quiz'])->count();
-        $totalUploads = $allMaterials->count();
+        $totalMaterials = Material::where('class_id', $student->class_id)
+            ->whereIn('type', ['lesson', 'reference'])
+            ->count();
+        $totalAssignments = Material::where('class_id', $student->class_id)
+            ->whereIn('type', ['assignment', 'quiz'])
+            ->count();
+        $totalUploads = Material::where('class_id', $student->class_id)
+            ->count();
 
-        // Get pending assignments (with due date in future)
-        $pendingAssignments = $allMaterials->whereIn('type', ['assignment', 'quiz'])
+        $pendingAssignments = Material::where('class_id', $student->class_id)
+            ->whereIn('type', ['assignment', 'quiz'])
             ->where('due_date', '>=', now())
             ->count();
 

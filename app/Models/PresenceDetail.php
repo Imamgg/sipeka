@@ -16,6 +16,10 @@ class PresenceDetail extends Model
         'verification_note',
     ];
 
+    protected $casts = [
+        'verified_at' => 'datetime',
+    ];
+
     public function presence()
     {
         return $this->belongsTo(Presence::class);
