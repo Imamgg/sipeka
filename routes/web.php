@@ -121,6 +121,7 @@ Route::prefix('student')->middleware(['auth', 'role:student', 'server.status'])-
     Route::get('materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
     Route::get('materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
     Route::resource('announcements', StudentAnnouncementController::class);
+    Route::get('announcements/{announcement}/download', [StudentAnnouncementController::class, 'download'])->name('announcements.download');
 });
 
 Route::middleware(['auth', 'server.status'])->group(function () {

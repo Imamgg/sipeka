@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('published_at')->nullable();
             $table->date('expires_at')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->enum('target', ['all', 'students', 'teachers'])->default('all');
+            $table->enum('target', ['all', 'students', 'teachers', 'classes'])->default('all');
             $table->string('class_target')->nullable();
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->string('attachment')->nullable(); // lampiran file path for attachments

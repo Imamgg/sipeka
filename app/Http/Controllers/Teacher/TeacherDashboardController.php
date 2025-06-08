@@ -88,11 +88,27 @@ class TeacherDashboardController extends Controller
         }
 
         // Get recent announcements
+        // Get classes taught by this teacher
+        $taughtClassIds = ClassSchedule::where('teacher_id', $teacher->id)
+            ->distinct('class_id')
+            ->pluck('class_id')
+            ->toArray();
+
         $announcements = Announcement::with('author.user')
             ->where('is_active', true)
-            ->where(function ($query) {
+            ->where(function ($query) use ($taughtClassIds) {
                 $query->where('target', 'all')
-                    ->orWhere('target', 'teachers');
+                    ->orWhere('target', 'teachers')
+                    ->orWhere(function ($subQ) use ($taughtClassIds) {
+                        $subQ->where('target', 'classes');
+                        if (!empty($taughtClassIds)) {
+                            $subQ->where(function ($classQ) use ($taughtClassIds) {
+                                foreach ($taughtClassIds as $classId) {
+                                    $classQ->orWhereJsonContains('class_target', (string)$classId);
+                                }
+                            });
+                        }
+                    });
             })
             ->where('published_at', '<=', now())
             ->where(function ($query) {

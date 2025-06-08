@@ -102,8 +102,15 @@
                                                 Prioritas Rendah
                                             @endif
                                         </span>
-
-                                        @if ($announcement->target === 'teachers')
+                                        @if ($announcement->target === 'all')
+                                            <span
+                                                class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Untuk Semua
+                                            </span>
+                                        @elseif ($announcement->target === 'teachers')
                                             <span
                                                 class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                                 <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -111,6 +118,15 @@
                                                 </svg>
                                                 Khusus Guru
                                             </span>
+                                        @elseif($announcement->target === 'classes')
+                                            <span
+                                                class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Khusus Kelas
+                                            </span>
+                                        @else
                                         @endif
                                     </div>
 
@@ -145,7 +161,8 @@
                                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                                                         clip-rule="evenodd" />
                                                 </svg>
-                                                Berakhir: {{ $announcement->expires_at->timezone('Asia/Jakarta')->format('d M Y') }}
+                                                Berakhir:
+                                                {{ $announcement->expires_at->timezone('Asia/Jakarta')->format('d M Y') }}
                                             </div>
                                         @endif
 

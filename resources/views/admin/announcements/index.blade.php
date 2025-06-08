@@ -1,39 +1,84 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Header -->
+    <div class="container mx-auto px-4 py-6">
+        <!-- Breadcrumb Navigation -->
         <div class="mb-8">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Kelola Pengumuman</h1>
-                    <p class="text-gray-600 mt-1">Buat dan kelola pengumuman untuk siswa, guru, dan admin</p>
-                </div>
-                <a href="{{ route('admin.announcements.create') }}"
-                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-lg">
+            <nav class="flex items-center space-x-4 text-sm">
+                <a href="{{ route('admin.dashboard') }}"
+                    class="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors group">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v6m8-6v6"></path>
                     </svg>
-                    Buat Pengumuman
+                    <span class="font-medium">Dashboard</span>
                 </a>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-900 font-medium">Kelola Pengumuman</span>
+            </nav>
+        </div>
+
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-gray-200 mb-6">
+            <div class="p-8">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl font-bold text-gray-900">Kelola Pengumuman</h1>
+                                <p class="text-gray-600 mt-1">Buat dan kelola pengumuman untuk siswa dan guru
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <a href="{{ route('admin.announcements.create') }}"
+                            class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Buat Pengumuman
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Filter & Search -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+        {{-- <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
             <div class="p-6">
                 <form method="GET" action="{{ route('admin.announcements.index') }}" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <!-- Search -->
                         <div>
-                            <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari
+                            <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Cari
                                 Pengumuman</label>
-                            <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                placeholder="Cari judul atau isi..."
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <div class="relative">
+                                <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                    placeholder="Cari berdasarkan judul atau isi..."
+                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Status Filter -->
                         <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                             <select name="status" id="status"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Semua Status</option>
@@ -42,14 +87,13 @@
                                 <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Tidak
                                     Aktif</option>
                                 <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>
-                                    Kadaluarsa
-                                </option>
+                                    Kadaluarsa</option>
                             </select>
                         </div>
 
                         <!-- Target Filter -->
                         <div>
-                            <label for="target" class="block text-sm font-medium text-gray-700 mb-1">Target</label>
+                            <label for="target" class="block text-sm font-medium text-gray-700 mb-2">Target</label>
                             <select name="target" id="target"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Semua Target</option>
@@ -64,180 +108,191 @@
                             </select>
                         </div>
 
-                        <!-- Action -->
+                        <!-- Action Buttons -->
                         <div class="flex items-end space-x-2">
                             <button type="submit"
-                                class="flex-1 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
                                 Filter
                             </button>
                             <a href="{{ route('admin.announcements.index') }}"
-                                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500">
                                 Reset
                             </a>
                         </div>
                     </div>
                 </form>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Announcements List -->
-        <div class="space-y-6">
+        <div class="space-y-4">
             @forelse($announcements as $announcement)
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200
+                    border-l-4 {{ $announcement->priority === 'high' ? 'border-l-red-500' : ($announcement->priority === 'medium' ? 'border-l-yellow-500' : 'border-l-green-500') }}">
                     <div class="p-6">
                         <div class="flex items-start justify-between">
                             <!-- Content -->
                             <div class="flex-1 min-w-0">
-                                <div class="flex items-start space-x-4">
-                                    <!-- Priority Indicator -->
-                                    <div class="flex-shrink-0 mt-1">
+                                <!-- Header with badges -->
+                                <div class="flex items-center gap-2 mb-3">
+                                    <!-- Priority Badge -->
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+                                        {{ $announcement->priority === 'high' ? 'bg-red-100 text-red-800' : ($announcement->priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800') }}">
                                         @if ($announcement->priority === 'high')
-                                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            Prioritas Tinggi
                                         @elseif($announcement->priority === 'medium')
-                                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            Prioritas Sedang
                                         @else
-                                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            Prioritas Normal
                                         @endif
+                                    </span>
+
+                                    <!-- Target Badge -->
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+                                        {{ $announcement->target === 'all'
+                                            ? 'bg-blue-100 text-blue-800'
+                                            : ($announcement->target === 'students'
+                                                ? 'bg-green-100 text-green-800'
+                                                : ($announcement->target === 'teachers'
+                                                    ? 'bg-purple-100 text-purple-800'
+                                                    : 'bg-orange-100 text-orange-800')) }}">
+                                        @if ($announcement->target === 'all')
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            Semua Warga Sekolah
+                                        @elseif($announcement->target === 'students')
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Siswa
+                                        @elseif($announcement->target === 'teachers')
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Guru
+                                        @else
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Kelas Tertentu
+                                        @endif
+                                    </span>
+
+                                    <!-- Status Badge -->
+                                    @if ($announcement->expires_at && \Carbon\Carbon::parse($announcement->expires_at)->isPast())
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            Sudah Berakhir
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            Aktif
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight">
+                                    <a href="{{ route('admin.announcements.show', $announcement->id) }}"
+                                        class="hover:text-blue-600 transition-colors">
+                                        {{ $announcement->title }}
+                                    </a>
+                                </h3>
+
+                                <!-- Content Preview -->
+                                <div class="text-gray-600 mb-4 leading-relaxed">
+                                    {{ Str::limit(strip_tags($announcement->content), 200) }}
+                                </div>
+
+                                <!-- Meta Information Grid -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                        <div>
+                                            <span class="font-medium">Dipublikasi:</span><br>
+                                            {{ $announcement->published_at->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                            WIB
+                                        </div>
                                     </div>
 
-                                    <div class="flex-1 min-w-0">
-                                        <!-- Title -->
-                                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                            <a href="{{ route('admin.announcements.show', $announcement->id) }}"
-                                                class="hover:text-blue-600 transition-colors">
-                                                {{ $announcement->title }}
-                                            </a>
-                                        </h3>
-
-                                        <!-- Meta Information -->
-                                        <div class="flex flex-wrap items-center text-sm text-gray-600 space-x-4 mb-3">
-                                            <div class="flex items-center">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                                    </path>
-                                                </svg>
-                                                {{ $announcement->published_at->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                    @if ($announcement->expires_at)
+                                        <div class="flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-orange-500" fill="none"
+                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <div>
+                                                <span class="font-medium">Berakhir:</span><br>
+                                                {{ $announcement->expires_at->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }}
                                                 WIB
                                             </div>
-
-                                            @if ($announcement->expires_at)
-                                                <div class="flex items-center">
-                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                    </svg>
-                                                    Berakhir:
-                                                    {{ $announcement->expires_at->setTimezone('Asia/Jakarta')->format('d M Y') }}
-                                                    WIB
-                                                </div>
-                                            @endif
-
-                                            <div class="flex items-center">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
-                                                    </path>
-                                                </svg>
-                                                {{ $announcement->author->user->name ?? 'Admin' }}
-                                            </div>
                                         </div>
+                                    @endif
 
-                                        <!-- Content Preview -->
-                                        <div class="text-gray-600 mb-4">
-                                            {{ Str::limit(strip_tags($announcement->content), 150) }}
-                                        </div>
-
-                                        <!-- Tags -->
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            <!-- Target Badge -->
-                                            @if ($announcement->target === 'all')
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                    Semua
-                                                </span>
-                                            @elseif($announcement->target === 'students')
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                    Siswa
-                                                </span>
-                                            @elseif($announcement->target === 'teachers')
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                                    Guru
-                                                </span>
-                                            @elseif($announcement->target === 'classes')
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                                                    Kelas Tertentu
-                                                </span>
-                                            @endif
-
-                                            <!-- Priority Badge -->
-                                            @if ($announcement->priority === 'high')
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                    Penting
-                                                </span>
-                                            @elseif($announcement->priority === 'medium')
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                    Sedang
-                                                </span>
-                                            @else
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                                    Biasa
-                                                </span>
-                                            @endif
-
-                                            <!-- Status Badge -->
-                                            @if ($announcement->is_active)
-                                                @if ($announcement->expires_at && $announcement->expires_at->lt(now()))
-                                                    <span
-                                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                                        Kadaluarsa
-                                                    </span>
-                                                @else
-                                                    <span
-                                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                        Aktif
-                                                    </span>
-                                                @endif
-                                            @else
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                    Tidak Aktif
-                                                </span>
-                                            @endif
-
-                                            <!-- Attachment Badge -->
-                                            @if ($announcement->attachment)
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13">
-                                                        </path>
-                                                    </svg>
-                                                    Ada Lampiran
-                                                </span>
-                                            @endif
+                                    <div class="flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                            </path>
+                                        </svg>
+                                        <div>
+                                            <span class="font-medium">Penulis:</span><br>
+                                            {{ $announcement->author->user->name ?? 'Administrator' }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Actions -->
-                            <div class="flex-shrink-0 ml-4">
+                            <div class="flex-shrink-0 ml-6">
                                 <div class="flex items-center space-x-2">
                                     <!-- View -->
                                     <a href="{{ route('admin.announcements.show', $announcement->id) }}"
@@ -271,7 +326,7 @@
                                         class="inline">
                                         @csrf
                                         <button type="submit"
-                                            class="p-2 text-gray-400 hover:text-{{ $announcement->is_active ? 'red' : 'green' }}-600 hover:bg-{{ $announcement->is_active ? 'red' : 'green' }}-50 rounded-lg transition-colors"
+                                            class="p-2 {{ $announcement->is_active ? 'text-gray-400 hover:text-red-600 hover:bg-red-50' : 'text-gray-400 hover:text-green-600 hover:bg-green-50' }} rounded-lg transition-colors"
                                             title="{{ $announcement->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
                                             @if ($announcement->is_active)
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor"

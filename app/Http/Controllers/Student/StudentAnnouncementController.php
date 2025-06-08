@@ -11,76 +11,107 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentAnnouncementController extends Controller
 {
-  /**
-   * Display a listing of announcements.
-   */
-  public function index()
-  {
-    $user = Auth::user();
-    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
+    /**
+     * Display a listing of announcements.
+     */
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+        $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
-    $announcements = Announcement::where('is_active', true)
-      ->where(function ($query) use ($student) {
-        $query->where('target', 'all')
-          ->orWhere('target', 'students')
-          ->orWhere(function ($q) use ($student) {
-            $q->where('target', 'classes')
-              ->whereJsonContains('class_target', $student->class_id);
-          });
-      })
-      ->where('published_at', '<=', now())
-      ->where(function ($query) {
-        $query->whereNull('expires_at')
-          ->orWhere('expires_at', '>=', now());
-      })
-      ->orderBy('published_at', 'desc')
-      ->paginate(10);
+        $query = Announcement::where('is_active', true)
+            ->where(function ($query) use ($student) {
+                $query->where('target', 'all')
+                    ->orWhere('target', 'students')
+                    ->orWhere(function ($q) use ($student) {
+                        $q->where('target', 'classes')
+                            ->whereJsonContains('class_target', (string)$student->class_id);
+                    });
+            })
+            ->where('published_at', '<=', now())
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhere('expires_at', '>=', now());
+            });
 
-    return view('student.announcements.index', compact('student', 'announcements'));
-  }
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
 
-  /**
-   * Display the specified announcement.
-   */
-  public function show($id)
-  {
-    $user = Auth::user();
-    $student = Student::with(['classes'])->where('user_id', $user->id)->first();
+        // Filter by priority
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
 
-    $announcement = Announcement::where('id', $id)
-      ->where('is_active', true)
-      ->where(function ($query) use ($student) {
-        $query->where('target', 'all')
-          ->orWhere('target', 'students')
-          ->orWhere(function ($q) use ($student) {
-            $q->where('target', 'classes')
-              ->whereJsonContains('class_target', $student->class_id);
-          });
-      })
-      ->where('published_at', '<=', now())
-      ->where(function ($query) {
-        $query->whereNull('expires_at')
-          ->orWhere('expires_at', '>=', now());
-      })
-      ->firstOrFail();
+        // Order by priority and publication date
+        $announcements = $query->with('author.user')
+            ->orderByRaw("FIELD(priority, 'high', 'medium', 'low')")
+            ->orderBy('published_at', 'desc')
+            ->paginate(10);
 
-    return view('student.announcements.show', compact('student', 'announcement'));
-  }
-
-  /**
-   * Download the attachment of the specified announcement.
-   */
-  /**
-   * Download attachment file.
-   */  public function download(Announcement $announcement)
-  {
-    if (!$announcement->attachment || !Storage::disk('public')->exists($announcement->attachment)) {
-      abort(404, 'File tidak ditemukan');
+        return view('student.announcements.index', compact('student', 'announcements'));
     }
 
-    $filePath = Storage::disk('public')->path($announcement->attachment);
-    $fileName = basename($announcement->attachment);
+    /**
+     * Display the specified announcement.
+     */
+    public function show($id)
+    {
+        $user = Auth::user();
+        $student = Student::with(['classes'])->where('user_id', $user->id)->first();
 
-    return response()->download($filePath, $fileName);
-  }
+        $announcement = Announcement::where('id', $id)
+            ->where('is_active', true)
+            ->where(function ($query) use ($student) {
+                $query->where('target', 'all')
+                    ->orWhere('target', 'students')
+                    ->orWhere(function ($q) use ($student) {
+                        $q->where('target', 'classes')
+                            ->whereJsonContains('class_target', (string)$student->class_id);
+                    });
+            })
+            ->where('published_at', '<=', now())
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhere('expires_at', '>=', now());
+            })
+            ->firstOrFail();
+
+        return view('student.announcements.show', compact('student', 'announcement'));
+    }
+
+    /**
+     * Download attachment file.
+     */
+    public function download(Announcement $announcement)
+    {
+        $user = Auth::user();
+        $student = Student::with(['classes'])->where('user_id', $user->id)->first();
+
+        // Check if the announcement is accessible to the student
+        if (
+            !$announcement->is_active ||
+            $announcement->published_at > now() ||
+            ($announcement->expires_at && $announcement->expires_at < now()) ||
+            !($announcement->target === 'all' ||
+                $announcement->target === 'students' ||
+                ($announcement->target === 'classes' && $announcement->class_target && in_array($student->class_id, $announcement->class_target)))
+        ) {
+            abort(403, 'Anda tidak memiliki akses ke pengumuman ini');
+        }
+
+        if (!$announcement->attachment || !Storage::disk('public')->exists($announcement->attachment)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        $filePath = Storage::disk('public')->path($announcement->attachment);
+        $fileName = basename($announcement->attachment);
+
+        return response()->download($filePath, $fileName);
+    }
 }

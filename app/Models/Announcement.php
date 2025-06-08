@@ -13,10 +13,10 @@ class Announcement extends Model
         'published_at',
         'expires_at',
         'is_active',
-        'target', // 'all', 'students', 'teachers'
+        'target',
         'class_target',
-        'priority', // 'low', 'medium', 'high'
-        'attachment', // file path for attachments
+        'priority',
+        'attachment',
     ];
 
     protected $casts = [
@@ -48,16 +48,27 @@ class Announcement extends Model
     }
 
     // Scope untuk target tertentu
-    public function scopeForTarget($query, $target, $classId = null)
+    public function scopeForTarget($query, $target, $classIds = null)
     {
-        return $query->where(function ($q) use ($target, $classId) {
+        return $query->where(function ($q) use ($target, $classIds) {
             $q->where('target', 'all')
                 ->orWhere('target', $target);
 
-            if ($target === 'students' && $classId) {
-                $q->orWhere(function ($subQ) use ($classId) {
-                    $subQ->where('target', 'classes')
-                        ->whereJsonContains('class_target', $classId);
+            // Handle class-targeted announcements for both students and teachers
+            if (($target === 'students' || $target === 'teachers') && $classIds) {
+                $q->orWhere(function ($subQ) use ($classIds) {
+                    $subQ->where('target', 'classes');
+
+                    // Handle both single class ID and array of class IDs
+                    if (is_array($classIds)) {
+                        $subQ->where(function ($classQ) use ($classIds) {
+                            foreach ($classIds as $classId) {
+                                $classQ->orWhereJsonContains('class_target', (string)$classId);
+                            }
+                        });
+                    } else {
+                        $subQ->whereJsonContains('class_target', (string)$classIds);
+                    }
                 });
             }
         });
