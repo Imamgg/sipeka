@@ -1,6 +1,5 @@
 <x-student-layout>
     <div class="p-6">
-        <!-- Error Messages -->
         @if (session('error'))
             <div class="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-sm" role="alert">
                 <div class="flex items-start">
@@ -17,7 +16,6 @@
             </div>
         @endif
 
-        <!-- Info Messages -->
         @if (session('info'))
             <div class="mb-6 bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded-md shadow-sm"
                 role="alert">
@@ -35,7 +33,6 @@
             </div>
         @endif
 
-        <!-- Success Messages -->
         @if (session('success'))
             <div class="mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md shadow-sm"
                 role="alert">
@@ -52,7 +49,6 @@
             </div>
         @endif
 
-        <!-- Header -->
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
@@ -70,11 +66,8 @@
             </div>
         </div>
 
-        <!-- QR Scanner Card -->
         <div class="max-w-4xl mx-auto">
-            <!-- Main Scanner Card -->
             <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                <!-- Header with Gradient -->
                 <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
                     <div class="text-center">
                         <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -90,27 +83,23 @@
 
                 <div class="p-8">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <!-- Scanner Section -->
                         <div class="flex flex-col items-center space-y-6">
-                            <!-- QR Reader Container -->
-                            <div class="relative">
+                            <div class="relative w-full max-w-sm">
                                 <div id="qr-reader"
-                                    class="w-full max-w-sm mx-auto border-4 border-gray-200 rounded-2xl overflow-hidden shadow-lg">
+                                    class="w-full mx-auto border-4 border-indigo-300 rounded-2xl overflow-hidden shadow-inner-lg">
                                 </div>
 
-                                <!-- Overlay untuk status -->
                                 <div id="scanner-overlay"
-                                    class="absolute inset-0 bg-black/50 rounded-2xl items-center justify-center hidden">
+                                    class="absolute inset-0 bg-black/60 rounded-2xl flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
                                     <div class="text-white text-center">
                                         <div
-                                            class="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-3">
+                                            class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white mx-auto mb-4">
                                         </div>
-                                        <p class="text-sm">Memproses QR Code...</p>
+                                        <p class="text-base font-semibold">Memproses QR Code...</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Controls -->
                             <div class="flex flex-col space-y-3 w-full max-w-sm">
                                 <button id="startButton"
                                     class="group bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
@@ -138,7 +127,6 @@
                                     </div>
                                 </button>
 
-                                <!-- Scanner Status -->
                                 <div id="scanner-status"
                                     class="text-center p-3 rounded-xl bg-gray-50 border border-gray-200 hidden">
                                     <div class="flex items-center justify-center">
@@ -149,9 +137,7 @@
                             </div>
                         </div>
 
-                        <!-- Instructions & Tips -->
                         <div class="space-y-6">
-                            <!-- Instructions -->
                             <div
                                 class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
                                 <div class="flex items-start">
@@ -177,7 +163,6 @@
                                 </div>
                             </div>
 
-                            <!-- Tips -->
                             <div
                                 class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-100">
                                 <div class="flex items-start">
@@ -217,7 +202,6 @@
                                 </div>
                             </div>
 
-                            <!-- Troubleshooting -->
                             <div
                                 class="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-6 border border-red-100">
                                 <div class="flex items-start">
@@ -258,140 +242,182 @@
         </div>
     </div>
 
-    <!-- Include HTML5-QRCode library -->
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <style>
+        #html5-qrcode-select-camera {
+            display: none;
+        }
+    </style>
+
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script>
         let html5QrcodeScanner = null;
         let processingQr = false;
 
         function onScanSuccess(decodedText, decodedResult) {
-            // Prevent multiple submissions while processing
             if (processingQr) {
                 return;
             }
-
             processingQr = true;
+            showScannerOverlay(true);
             showScanStatus('QR Code terdeteksi, memproses...', 'info');
-
-            // Handle the scanned code
-            console.log(`Code matched = ${decodedText}`, decodedResult);
-
             let token = null;
-
-            // Check if the scanned text is a URL with token parameter
             try {
                 const url = new URL(decodedText);
-
-                // Check if this is our attendance scan URL
                 if (url.pathname === '/student/attendances/scan' && url.searchParams.has('token')) {
                     token = url.searchParams.get("token");
-                    console.log('Extracted token from URL:', token);
-                    showScanStatus(`Token ditemukan: ${token}`, 'success');
                 } else {
-                    // If it's a different URL format, try to extract token
                     token = url.searchParams.get("token");
                     if (!token) {
-                        // If no token in URL params, use the entire decoded text
                         token = decodedText;
                     }
-                    console.log('Token from different URL format:', token);
                 }
             } catch (e) {
-                // If not a valid URL, assume the entire decoded text is the token
                 token = decodedText;
-                console.log('Not a URL, using decoded text as token:', token);
-                showScanStatus(`Menggunakan teks sebagai token: ${token}`, 'info');
             }
 
             if (token) {
                 showScanStatus('Memproses absensi...', 'info');
-
-                // Stop scanning while processing
                 if (html5QrcodeScanner) {
-                    html5QrcodeScanner.pause();
+                    html5QrcodeScanner.pause(true)
                 }
-
-                // Redirect to the scan URL with the token parameter for automatic processing
                 const scanUrl = `{{ route('student.attendances.scan') }}?token=${encodeURIComponent(token)}`;
                 window.location.href = scanUrl;
             } else {
                 showNotification('QR code tidak valid - tidak dapat menemukan token', 'error');
                 showScanStatus('QR code tidak valid', 'error');
                 processingQr = false;
-                return;
-            }
-
-            // Reset after a timeout (in case the redirection fails)
-            setTimeout(() => {
+                showScannerOverlay(false);
                 if (html5QrcodeScanner) {
                     html5QrcodeScanner.resume();
                 }
-                processingQr = false;
-
-                // Check if we're still on the same page (redirection failed)
-                if (window.location.pathname.includes('/attendances/scan')) {
-                    showNotification('Terjadi kesalahan saat memproses QR code', 'error');
-                    showScanStatus('Gagal memproses QR code', 'error');
+            }
+            setTimeout(() => {
+                if (html5QrcodeScanner && !processingQr) {
+                    html5QrcodeScanner.resume();
                 }
-            }, 10000); // 10 seconds timeout
+                processingQr = false;
+                showScannerOverlay(false);
+                if (window.location.pathname.includes('/attendances/scan')) {
+                    showNotification('Terjadi kesalahan saat memproses QR code atau QR code tidak valid', 'error');
+                    showScanStatus('Gagal memproses QR code atau QR code tidak valid', 'error');
+                }
+            }, 5000);
         }
 
         function onScanFailure(error) {
-            // handle scan failure, usually better to ignore and keep scanning.
             // console.warn(`Code scan error = ${error}`);
         }
 
-        // Function to display a temporary notification
         function showNotification(message, type = 'info') {
-            // Create notification element
+            const notificationContainer = document.getElementById('notification-container') || (() => {
+                const div = document.createElement('div');
+                div.id = 'notification-container';
+                div.className = 'fixed bottom-4 right-4 z-[9999] space-y-2';
+                document.body.appendChild(div);
+                return div;
+            })();
+
             const notification = document.createElement('div');
-            notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white z-50 ${
+            notification.className = `p-4 rounded-md shadow-md text-white transition-all duration-300 transform translate-x-full opacity-0 ${
                 type === 'error' ? 'bg-red-600' : type === 'success' ? 'bg-green-600' : 'bg-blue-600'
             }`;
-            notification.style.zIndex = '9999';
-            notification.innerHTML = message;
+            notification.innerHTML = `<div class="flex items-center">
+                <div class="flex-shrink-0 mr-2">
+                    ${type === 'error' ? '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>' : ''}
+                    ${type === 'success' ? '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>' : ''}
+                    ${type === 'info' ? '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>' : ''}
+                </div>
+                <p class="text-sm font-medium">${message}</p>
+            </div>`;
 
-            // Add to document
-            document.body.appendChild(notification);
-
-            // Remove after 3 seconds
+            notificationContainer.appendChild(notification);
             setTimeout(() => {
-                notification.classList.add('opacity-0');
-                notification.style.transition = 'opacity 0.5s ease-out';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.remove();
-                    }
-                }, 500);
+                notification.classList.remove('translate-x-full', 'opacity-0');
+                notification.classList.add('translate-x-0', 'opacity-100');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.remove('translate-x-0', 'opacity-100');
+                notification.classList.add('translate-x-full', 'opacity-0');
             }, 3000);
         }
 
-        // Function to show scan status
-        function showScanStatus(message, type = 'info') {
-            const statusDiv = document.getElementById('scan-status');
-            if (statusDiv) {
-                statusDiv.remove();
+        function showScannerOverlay(show) {
+            const overlay = document.getElementById('scanner-overlay');
+            if (show) {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100');
+            } else {
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
             }
-
-            const newStatus = document.createElement('div');
-            newStatus.id = 'scan-status';
-            newStatus.className = `mt-4 p-3 rounded-lg text-center ${
-                type === 'error' ? 'bg-red-100 text-red-700' :
-                type === 'success' ? 'bg-green-100 text-green-700' :
-                'bg-blue-100 text-blue-700'
-            }`;
-            newStatus.innerHTML = message;
-
-            const qrReader = document.getElementById('qr-reader');
-            qrReader.parentNode.insertBefore(newStatus, qrReader.nextSibling);
         }
 
-        document.getElementById("startButton").addEventListener("click", function() {
+
+        function showScanStatus(message, type = 'info') {
+            let statusDiv = document.getElementById('scan-status');
+
+            if (!statusDiv) {
+                statusDiv = document.createElement('div');
+                statusDiv.id = 'scan-status';
+                statusDiv.className = `mt-4 p-3 rounded-xl text-center transition-all duration-300 ease-in-out`;
+                const qrReaderContainer = document.querySelector('.relative.w-full.max-w-sm');
+                if (qrReaderContainer) {
+                    qrReaderContainer.parentNode.insertBefore(statusDiv, qrReaderContainer.nextSibling);
+                } else {
+                    document.getElementById('qr-reader').parentNode.insertBefore(statusDiv, document.getElementById(
+                        'qr-reader').nextSibling);
+                }
+            }
+
+            statusDiv.classList.remove('bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'bg-blue-100',
+                'text-blue-700', 'hidden');
+            if (type === 'error') {
+                statusDiv.classList.add('bg-red-100', 'text-red-700');
+            } else if (type === 'success') {
+                statusDiv.classList.add('bg-green-100', 'text-green-700');
+            } else {
+                statusDiv.classList.add('bg-blue-100', 'text-blue-700');
+            }
+
+            statusDiv.innerHTML = `<div class="flex items-center justify-center">
+                <div class="w-2 h-2 ${type === 'error' ? 'bg-red-500' : type === 'success' ? 'bg-green-500' : 'bg-blue-500'} rounded-full mr-2"></div>
+                <span class="text-sm font-medium">${message}</span>
+            </div>`;
+        }
+
+
+        document.getElementById("startButton").addEventListener("click", async function() {
             try {
-                // Clear any previous scan status
                 const existingStatus = document.getElementById('scan-status');
                 if (existingStatus) {
                     existingStatus.remove();
+                }
+
+                showScanStatus('Mengakses kamera...', 'info');
+
+                const devices = await Html5Qrcode.getCameras();
+
+                let cameraConfig = {
+                    facingMode: "environment"
+                };
+
+                if (devices && devices.length > 0) {
+                    const rearCamera = devices.find(device =>
+                        device.label.toLowerCase().includes('back') ||
+                        device.label.toLowerCase().includes('rear') ||
+                        device.label.toLowerCase().includes('environment')
+                    );
+
+                    if (rearCamera) {
+                        cameraConfig = rearCamera.id;
+                        showScanStatus('Menggunakan kamera belakang...', 'info');
+                    } else {
+                        cameraConfig = devices[0].id;
+                        showScanStatus('Menggunakan kamera utama...', 'info');
+                    }
+                } else {
+                    showScanStatus('Menggunakan kamera default...', 'info');
                 }
 
                 html5QrcodeScanner = new Html5QrcodeScanner(
@@ -401,31 +427,30 @@
                             width: 250,
                             height: 250
                         },
-                        rememberLastUsedCamera: true
+                        rememberLastUsedCamera: true,
+                        defaultCameraIdOrVideoTrackConstraints: cameraConfig,
+                        videoConstraints: {
+                            facingMode: "environment"
+                        },
+                        aspectRatio: 1.0
                     },
                     /* verbose= */
-                    false);
-
-                // Handle errors during initialization
-                html5QrcodeScanner.render(
-                    onScanSuccess,
-                    onScanFailure,
-                    (errorMessage) => {
-                        // This is an error callback for camera initialization errors
-                        showNotification(`Error akses kamera: ${errorMessage}`, 'error');
-                        showScanStatus('Gagal mengakses kamera', 'error');
-                        document.getElementById("startButton").classList.remove("hidden");
-                        document.getElementById("stopButton").classList.add("hidden");
-                    }
+                    false
                 );
+
+                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
                 document.getElementById("startButton").classList.add("hidden");
                 document.getElementById("stopButton").classList.remove("hidden");
-                showScanStatus('Scanner aktif - arahkan kamera ke QR code', 'info');
+                showScanStatus('Scanner aktif - arahkan kamera ke QR code',
+                    'success');
                 showNotification('Scanner QR code berhasil dimulai', 'success');
+
             } catch (error) {
                 showNotification(`Gagal memulai scanner: ${error.message}`, 'error');
                 showScanStatus('Gagal memulai scanner', 'error');
+                document.getElementById("startButton").classList.remove("hidden");
+                document.getElementById("stopButton").classList.add("hidden");
             }
         });
 
@@ -436,12 +461,13 @@
 
                 document.getElementById("startButton").classList.remove("hidden");
                 document.getElementById("stopButton").classList.add("hidden");
-
-                // Clear any status messages
+                processingQr = false;
                 const existingStatus = document.getElementById('scan-status');
                 if (existingStatus) {
                     existingStatus.remove();
                 }
+                showScannerOverlay(false);
+                showNotification('Scanner QR code telah dihentikan', 'info');
             }
         });
     </script>

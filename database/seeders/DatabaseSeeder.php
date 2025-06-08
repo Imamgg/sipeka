@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user
         User::factory()->create([
             'name' => 'Imamgg',
             'email' => 'admin@gmail.com',
@@ -33,16 +32,12 @@ class DatabaseSeeder extends Seeder
             'full_name' => 'Imam Syafii',
         ]);
 
-        // Create Teachers
         $this->createTeachers();
 
-        // Create Students
         $this->createStudents();
 
-        // Create Subjects
         $this->createSubjects();
 
-        // Create Class Schedules
         $this->createClassSchedules();
     }
 
@@ -59,10 +54,7 @@ class DatabaseSeeder extends Seeder
      */
     private function createStudents()
     {
-        // Create classes first
         $classes = Classes::factory()->count(6)->create();
-
-        // Create students and assign them to random classes
         Student::factory()
             ->count(30)
             ->create([
@@ -76,20 +68,15 @@ class DatabaseSeeder extends Seeder
     private function createSubjects()
     {
         $commonSubjects = [
-            'Mathematics' => 'Study of numbers, quantities, and shapes',
-            'Physics' => 'Study of matter, energy, and the interaction between them',
-            'Chemistry' => 'Study of substances, their properties, structure, and the changes they undergo',
-            'Biology' => 'Study of living organisms and their interactions',
-            'Literature' => 'Study of written works with artistic or intellectual value',
-            'History' => 'Study of past events',
-            'Geography' => 'Study of places and relationships between people and their environments',
-            'Computer Science' => 'Study of computers and computational systems',
-            'Physical Education' => 'Education in physical exercise, care of the body',
-            'Art' => 'Expression or application of creative skill and imagination',
-            'Music' => 'Study of vocal or instrumental sounds',
-            'Economics' => 'Study of how goods and services are produced, distributed, and consumed',
-            'Psychology' => 'Study of mind and behavior',
-            'Sociology' => 'Study of society, patterns of social relationships, and culture'
+            'Bahasa Indonesia' => 'Mata pelajaran yang mempelajari bahasa Indonesia, termasuk tata bahasa, sastra, dan keterampilan berbahasa.',
+            'Matematika' => 'Mata pelajaran yang mempelajari konsep-konsep matematika dasar seperti aritmetika, geometri, dan aljabar.',
+            'Ilmu Pengetahuan Alam' => 'Mata pelajaran yang mempelajari fenomena alam, termasuk fisika, kimia, dan biologi.',
+            'Ilmu Pengetahuan Sosial' => 'Mata pelajaran yang mempelajari aspek sosial, budaya, ekonomi, dan politik masyarakat.',
+            'Bahasa Inggris' => 'Mata pelajaran yang mempelajari bahasa Inggris, termasuk tata bahasa, kosakata, dan keterampilan berbahasa.',
+            'Pendidikan Pancasila dan Kewarganegaraan' => 'Mata pelajaran yang mempelajari nilai-nilai Pancasila, hak dan kewajiban warga negara, serta sistem pemerintahan Indonesia.',
+            'Seni Budaya' => 'Mata pelajaran yang mempelajari seni rupa, seni musik, seni tari, dan seni pertunjukan.',
+            'Pendidikan Jasmani, Olahraga, dan Kesehatan' => 'Mata pelajaran yang mempelajari aktivitas fisik, olahraga, dan pentingnya kesehatan.',
+            'Prakarya dan Kewirausahaan' => 'Mata pelajaran yang mempelajari keterampilan prakarya, kerajinan, dan dasar-dasar kewirausahaan.',
         ];
 
         $counter = 1;
@@ -101,8 +88,6 @@ class DatabaseSeeder extends Seeder
             ]);
             $counter++;
         }
-
-        // Create a few additional random subjects as well
         Subjects::factory()->count(6)->create();
     }
 
@@ -111,45 +96,35 @@ class DatabaseSeeder extends Seeder
      */
     private function createClassSchedules()
     {
-        // Get existing data
         $classes = Classes::all();
         $teachers = Teacher::all();
         $subjects = Subjects::all();
 
-        // Days of the week for scheduling
         $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-        // For each class, create multiple schedules with different subjects
         foreach ($classes as $class) {
-            // Each class has 8-12 different subjects in their schedule
             $subjectsCount = fake()->numberBetween(8, 12);
             $classSubjects = $subjects->random($subjectsCount);
 
             foreach ($classSubjects as $subject) {
-                // Assign a random teacher for this subject
                 $teacher = $teachers->random();
 
-                // Determine which day this subject is taught (avoid duplicates on same day for same class)
                 $day = fake()->randomElement($days);
 
-                // Random start time between 7:00 and 16:00
                 $startHour = fake()->numberBetween(7, 16);
                 $startMinute = fake()->randomElement([0, 15, 30, 45]);
                 $startTime = sprintf('%02d:%02d:00', $startHour, $startMinute);
 
-                // End time is 1-2 hours after start time
                 $durationHours = fake()->randomElement([1, 1.5, 2]);
                 $endHour = $startHour + floor($durationHours);
                 $endMinute = ($startMinute + ($durationHours - floor($durationHours)) * 60) % 60;
 
-                // If we roll over to the next hour
                 if ($endMinute < $startMinute) {
                     $endHour++;
                 }
 
                 $endTime = sprintf('%02d:%02d:00', $endHour, $endMinute);
 
-                // Create the class schedule
                 ClassSchedule::create([
                     'class_id' => $class->id,
                     'teacher_id' => $teacher->id,
