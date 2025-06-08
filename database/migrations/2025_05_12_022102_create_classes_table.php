@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('major', ['IPA', 'IPS']);
             $table->string('academic_year', 9);
             $table->timestamps();
+
+            $table->unique('homeroom_teacher_id', 'unique_homeroom_teacher');
         });
     }
 

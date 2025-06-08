@@ -192,9 +192,6 @@
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {{ 'E (<60)' }}</th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Status</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -202,11 +199,11 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div
+                                            {{-- <div
                                                 class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
                                                 {{ substr($subject['name'], 0, 2) }}
-                                            </div>
-                                            <div class="ml-4">
+                                            </div> --}}
+                                            <div>
                                                 <div class="text-sm font-medium text-gray-900">{{ $subject['name'] }}
                                                 </div>
                                                 <div class="text-sm text-gray-500">{{ $subject['teacher_name'] }}
@@ -265,36 +262,14 @@
                                             {{ $subject['grade_e'] }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        @if ($subject['average'] >= 85)
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                Sangat Baik
-                                            </span>
-                                        @elseif($subject['average'] >= 75)
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                                Baik
-                                            </span>
-                                        @elseif($subject['average'] >= 65)
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                Cukup
-                                            </span>
-                                        @else
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                Perlu Perhatian
-                                            </span>
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div> <!-- Grade Performance by Class -->
+        </div>
+        <!-- Grade Performance by Class -->
         <div class="mb-8">
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200">

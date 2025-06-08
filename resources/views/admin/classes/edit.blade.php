@@ -142,12 +142,21 @@
                                 class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 @error('homeroom_teacher_id') !border-red-500 ring-2 ring-red-200 @enderror">
                                 <option value="">Pilih Guru</option>
                                 @foreach ($teachers as $teacher)
+                                    @php
+                                        $isAssigned = isset($assignedTeachers[$teacher->id]);
+                                        $isCurrentTeacher = $class->homeroom_teacher_id == $teacher->id;
+                                        $assignedClass = $isAssigned ? $assignedTeachers[$teacher->id] : null;
+                                    @endphp
                                     <option value="{{ $teacher->id }}"
-                                        {{ old('homeroom_teacher_id', $class->homeroom_teacher_id) == $teacher->id ? 'selected' : '' }}>
+                                        {{ old('homeroom_teacher_id', $class->homeroom_teacher_id) == $teacher->id ? 'selected' : '' }}
+                                        {{ $isAssigned && !$isCurrentTeacher ? 'disabled' : '' }}>
                                         {{ $teacher->user->name }} (NIP: {{ $teacher->nip }})
+                                        {{ $isAssigned && !$isCurrentTeacher ? ' - Wali Kelas ' . $assignedClass->class_name : '' }}
                                     </option>
                                 @endforeach
                             </select>
+                            <p class="text-xs text-gray-500 mt-1">Satu guru hanya bisa menjadi wali kelas untuk satu
+                                kelas.</p>
                             @error('homeroom_teacher_id')
                                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                             @enderror

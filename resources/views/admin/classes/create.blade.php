@@ -159,13 +159,19 @@
                             class="w-full rounded-xl border @error('homeroom_teacher_id') border-red-300 focus:border-red-500 focus:ring-red-200 @enderror bg-gray-50 px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 transition-all duration-200">
                             <option value="">Pilih Guru (Opsional)</option>
                             @foreach ($teachers as $teacher)
+                                @php
+                                    $isAssigned = isset($assignedTeachers[$teacher->id]);
+                                    $assignedClass = $isAssigned ? $assignedTeachers[$teacher->id] : null;
+                                @endphp
                                 <option value="{{ $teacher->id }}"
-                                    {{ old('homeroom_teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                    {{ old('homeroom_teacher_id') == $teacher->id ? 'selected' : '' }}
+                                    {{ $isAssigned ? 'disabled' : '' }}>
                                     {{ $teacher->user->name }} (NIP: {{ $teacher->nip }})
+                                    {{ $isAssigned ? ' - Wali Kelas ' . $assignedClass->class_name : '' }}
                                 </option>
                             @endforeach
                         </select>
-                        <p class="text-xs text-gray-500">Wali kelas dapat diatur nanti jika belum ditentukan</p>
+                        <p class="text-xs text-gray-500">Wali kelas dapat diatur nanti jika belum ditentukan.</p>
                         @error('homeroom_teacher_id')
                             <p class="mt-1 text-sm text-red-500 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
