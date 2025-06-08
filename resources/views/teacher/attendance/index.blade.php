@@ -245,12 +245,11 @@
                                             </button>
                                         </form>
                                         <form action="{{ route('teacher.attendance.destroy', $attendance->id) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus sesi ini?');">
+                                            method="POST" class="delete-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-red-100 hover:bg-red-200 text-red-800 p-2 rounded-lg transition-colors"
+                                            <button type="button"
+                                                class="bg-red-100 hover:bg-red-200 text-red-800 p-2 rounded-lg transition-colors delete-btn"
                                                 title="Hapus">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
@@ -274,4 +273,55 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteForms = document.querySelectorAll('.delete-form');
+                deleteForms.forEach(form => {
+                    const deleteBtn = form.querySelector('.delete-btn');
+                    deleteBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        Swal.fire({
+                            title: 'Hapus Sesi Absensi?',
+                            text: "Sesi absensi yang dihapus tidak dapat dikembalikan! Semua data kehadiran pada sesi ini akan hilang.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#dc2626',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, Hapus!',
+                            cancelButtonText: 'Batal',
+                            reverseButtons: true,
+                            customClass: {
+                                popup: 'rounded-2xl border-0 shadow-2xl',
+                                confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                            },
+                            focusConfirm: false,
+                            focusCancel: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: 'Menghapus Sesi...',
+                                    text: 'Sedang memproses penghapusan sesi absensi',
+                                    icon: 'info',
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    showConfirmButton: false,
+                                    customClass: {
+                                        popup: 'rounded-2xl border-0 shadow-2xl'
+                                    },
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                                form.submit();
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+    @endpush
 </x-teacher-layout>

@@ -37,11 +37,12 @@
                         <label for="class_id" class="block text-sm font-semibold text-slate-700">
                             Kelas <span class="text-red-500">*</span>
                         </label>
-                        <select name="class_id" id="class_id" required
+                        <select name="class_id" id="class_id"
                             class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-200">
                             <option value="">Pilih Kelas</option>
                             @foreach ($classes as $class)
-                                <option value="{{ $class->id }}" {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                                <option value="{{ $class->id }}"
+                                    {{ old('class_id') == $class->id ? 'selected' : '' }}>
                                     {{ $class->name }}
                                 </option>
                             @endforeach
@@ -56,7 +57,7 @@
                         <label for="subject_id" class="block text-sm font-semibold text-slate-700">
                             Mata Pelajaran <span class="text-red-500">*</span>
                         </label>
-                        <select name="subject_id" id="subject_id" required
+                        <select name="subject_id" id="subject_id"
                             class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-200">
                             <option value="">Pilih Mata Pelajaran</option>
                             @foreach ($subjects as $subject)
@@ -78,7 +79,7 @@
                         <label for="title" class="block text-sm font-semibold text-slate-700">
                             Judul Materi <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="title" id="title" value="{{ old('title') }}" required
+                        <input type="text" name="title" id="title" value="{{ old('title') }}"
                             class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-200"
                             placeholder="Masukkan judul materi...">
                         @error('title')
@@ -91,7 +92,7 @@
                         <label for="type" class="block text-sm font-semibold text-slate-700">
                             Tipe Materi <span class="text-red-500">*</span>
                         </label>
-                        <select name="type" id="type" required
+                        <select name="type" id="type"
                             class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-200">
                             <option value="">Pilih Tipe</option>
                             <option value="lesson" {{ old('type') == 'lesson' ? 'selected' : '' }}>📚 Materi Pelajaran

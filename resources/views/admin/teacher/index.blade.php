@@ -167,11 +167,11 @@
 
                                         <!-- Delete Button -->
                                         <form action="{{ route('admin.teachers.destroy', $teacher) }}" method="POST"
-                                            class="inline delete-form">
+                                            class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="inline-flex items-center p-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 hover:text-red-700 transition-all duration-200 group/btn"
+                                                class="delete-btn inline-flex items-center p-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 hover:text-red-700 transition-all duration-200 group/btn"
                                                 title="Hapus Data">
                                                 <svg class="w-4 h-4 group-hover/btn:scale-110 transition-transform"
                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,15 +187,6 @@
                         </div>
                     @endforeach
                 </div>
-
-                <!-- Pagination -->
-                @if ($teachers->hasPages())
-                    <div class="mt-8 flex justify-center">
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 px-6 py-4">
-                            {{ $teachers->links() }}
-                        </div>
-                    </div>
-                @endif
             @else
                 <!-- Empty State -->
                 <div class="text-center py-16">
@@ -238,26 +229,42 @@
                 }
 
                 document.addEventListener('DOMContentLoaded', function() {
-                    const deleteForms = document.querySelectorAll('.delete-form');
-                    deleteForms.forEach(form => {
-                        form.addEventListener('submit', function(e) {
-                            e.preventDefault();
+                    const deleteButtons = document.querySelectorAll('.delete-btn');
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const form = this.closest('form');
+                            event.preventDefault();
                             Swal.fire({
-                                title: 'Apakah Anda yakin?',
-                                text: "Data guru ini akan dihapus secara permanen!",
+                                title: 'Konfirmasi Hapus',
+                                text: "Data guru yang dihapus tidak dapat dikembalikan!",
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#ef4444',
                                 cancelButtonColor: '#6b7280',
                                 confirmButtonText: 'Ya, hapus!',
                                 cancelButtonText: 'Batal',
-                                buttonsStyling: false,
+                                reverseButtons: true,
                                 customClass: {
-                                    confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg mr-2',
-                                    cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg'
-                                }
+                                    popup: 'rounded-2xl border-0 shadow-2xl',
+                                    confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                    cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                                },
+                                focusConfirm: false,
+                                focusCancel: true
                             }).then((result) => {
                                 if (result.isConfirmed) {
+                                    Swal.fire({
+                                        title: 'Menghapus...',
+                                        text: 'Sedang memproses penghapusan data',
+                                        allowOutsideClick: false,
+                                        showConfirmButton: false,
+                                        customClass: {
+                                            popup: 'rounded-2xl border-0 shadow-2xl'
+                                        },
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        }
+                                    });
                                     form.submit();
                                 }
                             });

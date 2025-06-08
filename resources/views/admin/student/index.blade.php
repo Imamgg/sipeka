@@ -289,10 +289,12 @@
                             cancelButtonText: 'Batal',
                             reverseButtons: true,
                             customClass: {
-                                popup: 'rounded-xl shadow-2xl',
-                                confirmButton: 'rounded-lg px-6 py-2.5',
-                                cancelButton: 'rounded-lg px-6 py-2.5'
-                            }
+                                popup: 'rounded-2xl border-0 shadow-2xl',
+                                confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                            },
+                            focusConfirm: false,
+                            focusCancel: true
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 Swal.fire({
@@ -301,7 +303,7 @@
                                     allowOutsideClick: false,
                                     showConfirmButton: false,
                                     customClass: {
-                                        popup: 'rounded-xl shadow-2xl'
+                                        popup: 'rounded-2xl border-0 shadow-2xl'
                                     },
                                     didOpen: () => {
                                         Swal.showLoading();

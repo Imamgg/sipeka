@@ -402,7 +402,6 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Delete confirmation
                 const deleteForms = document.querySelectorAll('.delete-form');
                 deleteForms.forEach(form => {
                     const deleteBtn = form.querySelector('.delete-btn');
@@ -420,12 +419,28 @@
                             cancelButtonText: 'Batal',
                             reverseButtons: true,
                             customClass: {
-                                popup: 'rounded-2xl',
-                                confirmButton: 'rounded-xl px-6 py-2.5',
-                                cancelButton: 'rounded-xl px-6 py-2.5'
-                            }
+                                popup: 'rounded-2xl border-0 shadow-2xl',
+                                confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                            },
+                            focusConfirm: false,
+                            focusCancel: true
                         }).then((result) => {
                             if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: 'Menghapus Pengumuman...',
+                                    text: 'Sedang memproses penghapusan pengumuman',
+                                    icon: 'info',
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    showConfirmButton: false,
+                                    customClass: {
+                                        popup: 'rounded-2xl border-0 shadow-2xl'
+                                    },
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
                                 form.submit();
                             }
                         });

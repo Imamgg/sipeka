@@ -70,7 +70,7 @@
                         <div class="mb-4">
                             <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Judul
                                 Pengumuman</label>
-                            <input type="text" name="title" id="title" value="{{ old('title') }}" required
+                            <input type="text" name="title" id="title" value="{{ old('title') }}"
                                 class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('title') border-red-500 @enderror"
                                 placeholder="Masukkan judul pengumuman">
                             @error('title')
@@ -82,7 +82,7 @@
                         <div>
                             <label for="content" class="block text-sm font-medium text-gray-700 mb-2">Isi
                                 Pengumuman</label>
-                            <textarea name="content" id="content" rows="4" required
+                            <textarea name="content" id="content" rows="4"
                                 class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('content') border-red-500 @enderror"
                                 placeholder="Tulis isi pengumuman dengan jelas dan lengkap...">{{ old('content') }}</textarea>
                             @error('content')
@@ -113,7 +113,7 @@
                             <div>
                                 <label for="target" class="block text-sm font-medium text-gray-700 mb-2">Target
                                     Pengumuman</label>
-                                <select name="target" id="target" required
+                                <select name="target" id="target"
                                     class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('target') border-red-500 @enderror">
                                     <option value="">Pilih target pengumuman</option>
                                     <option value="all" {{ old('target') === 'all' ? 'selected' : '' }}>Semua
@@ -170,7 +170,7 @@
                             <div>
                                 <label for="priority"
                                     class="block text-sm font-medium text-gray-700 mb-2">Prioritas</label>
-                                <select name="priority" id="priority" required
+                                <select name="priority" id="priority"
                                     class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('priority') border-red-500 @enderror">
                                     <option value="">Pilih prioritas</option>
                                     <option value="low" {{ old('priority') === 'low' ? 'selected' : '' }}>Rendah
@@ -209,7 +209,6 @@
                                     Publikasi</label>
                                 <input type="datetime-local" name="published_at" id="published_at"
                                     value="{{ old('published_at', now()->setTimezone('Asia/Jakarta')->format('Y-m-d\TH:i')) }}"
-                                    required
                                     class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('published_at') border-red-500 @enderror">
                                 @error('published_at')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

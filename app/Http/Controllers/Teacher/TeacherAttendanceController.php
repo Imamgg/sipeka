@@ -727,39 +727,40 @@ class TeacherAttendanceController extends Controller
      */
     public function sendAbsenceNotifications($id)
     {
-        $user = Auth::user();
-        $teacher = $user->teacher;
-
-        if (!$teacher) {
-            return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
-        }
-
-        // Get attendance session
-        $attendance = Presence::with(['classes', 'subject', 'presenceDetails', 'presenceDetails.student'])
-            ->where('id', $id)
-            ->where('teacher_id', $teacher->id)
-            ->firstOrFail();
-
-        $absentCount = 0;
-
-        // Find absent students and send notifications
-        foreach ($attendance->presenceDetails as $detail) {
-            if ($detail->status === 'absent') {
-                $student = $detail->student;
-                $parent = User::where('email', $student->parent_email)->first();
-
-                if ($parent && $parent->email) {
-                    try {
-                        Mail::to($parent->email)->send(new \App\Mail\AbsenceNotification($student, $attendance, $parent));
-                        $absentCount++;
-                    } catch (\Exception $e) {
-                        Log::error('Gagal mengirim notifikasi ketidakhadiran: ' . $e->getMessage());
-                    }
-                }
-            }
-        }
-
         return redirect()->route('teacher.attendance.show', $id)
-            ->with('success', "Notifikasi berhasil dikirim kepada {$absentCount} orang tua siswa yang tidak hadir.");
+            ->with('error', 'Fitur ini belum tersedia. Masih dalam pengembangan😁.');
+
+        // $user = Auth::user();
+        // $teacher = $user->teacher;
+
+        // if (!$teacher) {
+        //     return redirect()->route('teacher.dashboard')->with('error', 'Data guru tidak ditemukan.');
+        // }
+
+        // $attendance = Presence::with(['classes', 'subject', 'presenceDetails', 'presenceDetails.student'])
+        //     ->where('id', $id)
+        //     ->where('teacher_id', $teacher->id)
+        //     ->firstOrFail();
+
+        // $absentCount = 0;
+
+        // foreach ($attendance->presenceDetails as $detail) {
+        //     if ($detail->status === 'absent') {
+        //         $student = $detail->student;
+        //         $parent = User::where('email', $student->parent_email)->first();
+
+        //         if ($parent && $parent->email) {
+        //             try {
+        //                 Mail::to($parent->email)->send(new \App\Mail\AbsenceNotification($student, $attendance, $parent));
+        //                 $absentCount++;
+        //             } catch (\Exception $e) {
+        //                 Log::error('Gagal mengirim notifikasi ketidakhadiran: ' . $e->getMessage());
+        //             }
+        //         }
+        //     }
+        // }
+
+        // return redirect()->route('teacher.attendance.show', $id)
+        //     ->with('success', "Notifikasi berhasil dikirim kepada {$absentCount} orang tua siswa yang tidak hadir.");
     }
 }

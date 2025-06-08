@@ -213,27 +213,39 @@
                     deleteBtn.addEventListener('click', function(e) {
                         e.preventDefault();
                         Swal.fire({
-                            title: 'Apakah Anda yakin?',
-                            text: "Data mata pelajaran akan dihapus secara permanen!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#ef4444',
-                            cancelButtonColor: '#6b7280',
-                            confirmButtonText: 'Ya, hapus!',
-                            cancelButtonText: 'Batal',
-                            background: '#ffffff',
-                            customClass: {
-                                popup: 'rounded-xl border-0 shadow-xl',
-                                title: 'text-gray-900 font-bold',
-                                content: 'text-gray-600',
-                                confirmButton: 'rounded-lg px-4 py-2 font-medium',
-                                cancelButton: 'rounded-lg px-4 py-2 font-medium'
-                            }
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                form.submit();
-                            }
-                        });
+                                title: 'Konfirmasi Hapus',
+                                text: "Data mata pelajaran akan dihapus secara permanen!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#ef4444',
+                                cancelButtonColor: '#6b7280',
+                                confirmButtonText: 'Ya, hapus!',
+                                cancelButtonText: 'Batal',
+                                reverseButtons: true,
+                                customClass: {
+                                    popup: 'rounded-2xl border-0 shadow-2xl',
+                                    confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                    cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                                },
+                                focusConfirm: false,
+                                focusCancel: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    Swal.fire({
+                                        title: 'Menghapus...',
+                                        text: 'Sedang memproses penghapusan mata pelajaran...',
+                                        allowOutsideClick: false,
+                                        showConfirmButton: false,
+                                        customClass: {
+                                            popup: 'rounded-2xl border-0 shadow-2xl'
+                                        },
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        }
+                                    });
+                                    form.submit();
+                                }
+                            });
                     });
                 });
             });

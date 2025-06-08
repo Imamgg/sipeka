@@ -62,7 +62,7 @@
                 <div>
                     <label for="grade_type" class="block text-sm font-semibold text-gray-700 mb-3">Jenis Penilaian
                         <span class="text-red-500">*</span></label>
-                    <select id="grade_type" name="grade_type" required
+                    <select id="grade_type" name="grade_type"
                         class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('grade_type') border-red-500 @enderror">
                         <option value="">Pilih Jenis Penilaian</option>
                         <option value="tugas" {{ old('grade_type', $grade->grade_type) == 'tugas' ? 'selected' : '' }}>
@@ -98,7 +98,7 @@
                             class="text-red-500">*</span></label>
                     <div class="relative">
                         <input type="number" id="score" name="score" min="0" max="100" step="0.1"
-                            value="{{ old('score', $grade->score) }}" required
+                            value="{{ old('score', $grade->score) }}"
                             class="w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('score') border-red-500 @enderror text-xl font-bold text-center">
                         <div class="absolute inset-y-0 right-0 flex items-center pr-4">
                             <span class="text-sm font-medium text-gray-500">/100</span>

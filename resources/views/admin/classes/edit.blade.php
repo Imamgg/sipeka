@@ -197,36 +197,33 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                        const form = document.getElementById('editClassForm');
-                        const submitBtn = document.getElementById('submitBtn');
-                        const submitText = document.getElementById('submitText');
-                        const loadingIcon = document.getElementById('loadingIcon');
-                        const saveIcon = document.getElementById('saveIcon');
+                const form = document.getElementById('editClassForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const submitText = document.getElementById('submitText');
+                const loadingIcon = document.getElementById('loadingIcon');
+                const saveIcon = document.getElementById('saveIcon');
 
-                        form.addEventListener('submit', function() {
-                            // Show loading state
-                            submitBtn.disabled = true;
-                            submitText.textContent = 'Menyimpan...';
-                            loadingIcon.classList.remove('hidden');
-                            saveIcon.classList.add('hidden');
-                            submitBtn.classList.add('opacity-75');
-                        });
+                form.addEventListener('submit', function() {
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitText.textContent = 'Menyimpan...';
+                    loadingIcon.classList.remove('hidden');
+                    saveIcon.classList.add('hidden');
+                    submitBtn.classList.add('opacity-75');
+                });
 
-                        // Add input validation feedback
-                        const inputs = form.querySelectorAll('input, select');
-                        inputs.forEach(input => {
-                            input.addEventListener('blur', function() {
-                                if (this.hasAttribute('required') && !this.value) {
-                                    this.classList.add('border-red-500', 'ring-2', 'ring-red-200');
-                                    this.classList.remove(');
-                                    }
-                                    else {
-                                        this.classList.remove('border-red-500', 'ring-2', 'ring-red-200');
-                                        this.classList.add(');
-                                        }
-                                    });
-                            });
-                        });
+                // Add input validation feedback
+                const inputs = form.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.addEventListener('blur', function() {
+                        if (this.hasAttribute('required') && !this.value) {
+                            this.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+                        } else {
+                            this.classList.remove('border-red-500', 'ring-2', 'ring-red-200');
+                        }
+                    });
+                });
+            });
         </script>
     @endpush
 </x-app-layout>

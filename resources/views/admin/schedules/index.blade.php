@@ -246,7 +246,7 @@
                                 </svg>
                             </a>
                             <form action="{{ route('admin.schedules.destroy', $schedule->id) }}" method="POST"
-                                class="inline delete-form">
+                                class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button"
@@ -295,37 +295,42 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Modern SweetAlert2 delete confirmation
-                const deleteForms = document.querySelectorAll('.delete-form');
-                deleteForms.forEach(form => {
-                    const deleteBtn = form.querySelector('.delete-btn');
-                    deleteBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const form = this.closest('form');
+                        event.preventDefault();
                         Swal.fire({
                             title: 'Hapus Jadwal Pelajaran?',
                             text: "Data jadwal pelajaran akan dihapus secara permanen!",
                             icon: 'warning',
                             showCancelButton: true,
-                            confirmButtonColor: '#dc2626',
+                            confirmButtonColor: '#ef4444',
                             cancelButtonColor: '#6b7280',
-                            confirmButtonText: 'Ya, Hapus!',
+                            confirmButtonText: 'Ya, hapus!',
                             cancelButtonText: 'Batal',
                             reverseButtons: true,
                             customClass: {
-                                popup: 'rounded-2xl',
-                                confirmButton: 'rounded-xl px-6 py-2.5',
-                                cancelButton: 'rounded-xl px-6 py-2.5'
-                            }
+                                popup: 'rounded-2xl border-0 shadow-2xl',
+                                confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                            },
+                            focusConfirm: false,
+                            focusCancel: true
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // Show loading state
-                                deleteBtn.innerHTML = `
-                                    <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                `;
-                                deleteBtn.disabled = true;
+                                Swal.fire({
+                                    title: 'Menghapus...',
+                                    text: 'Sedang memproses penghapusan jadwal pelajaran...',
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+                                    customClass: {
+                                        popup: 'rounded-2xl border-0 shadow-2xl'
+                                    },
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
                                 form.submit();
                             }
                         });

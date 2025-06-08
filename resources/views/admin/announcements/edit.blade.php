@@ -86,7 +86,7 @@
                                             class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('title') border-red-300 @enderror"
                                             id="title" name="title"
                                             value="{{ old('title', $announcement->title) }}"
-                                            placeholder="Masukkan judul pengumuman yang menarik" required>
+                                            placeholder="Masukkan judul pengumuman yang menarik">
                                         @error('title')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
@@ -148,7 +148,7 @@
                                                 </div>
                                             </div>
                                             <textarea class="w-full px-4 py-3 border-0 focus:ring-0 resize-none" id="content" name="content" rows="8"
-                                                placeholder="Tulis konten pengumuman di sini..." required>{{ old('content', $announcement->content) }}</textarea>
+                                                placeholder="Tulis konten pengumuman di sini...">{{ old('content', $announcement->content) }}</textarea>
                                         </div>
                                         @error('content')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

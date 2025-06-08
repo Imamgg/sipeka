@@ -119,7 +119,7 @@
                     <div class="mb-4">
                         <x-input-label for="verification_status" :value="__('Status Verifikasi')" />
                         <select id="verification_status" name="verification_status"
-                            class="mt-1 block w-full rounded-md border-gray-300" required>
+                            class="mt-1 block w-full rounded-md border-gray-300">
                             <option value="">Pilih Status Verifikasi</option>
                             <option value="verified">Verifikasi</option>
                             <option value="rejected">Tolak</option>
