@@ -277,12 +277,11 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const deleteForms = document.querySelectorAll('.delete-form');
-                deleteForms.forEach(form => {
-                    const deleteBtn = form.querySelector('.delete-btn');
-                    deleteBtn.addEventListener('click', function(e) {
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        const form = this.closest('form');
                         e.preventDefault();
-
                         Swal.fire({
                             title: 'Hapus Sesi Absensi?',
                             text: "Sesi absensi yang dihapus tidak dapat dikembalikan! Semua data kehadiran pada sesi ini akan hilang.",

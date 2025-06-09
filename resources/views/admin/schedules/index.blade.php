@@ -297,9 +297,9 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const deleteButtons = document.querySelectorAll('.delete-btn');
                 deleteButtons.forEach(button => {
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function(e) {
                         const form = this.closest('form');
-                        event.preventDefault();
+                        e.preventDefault();
                         Swal.fire({
                             title: 'Hapus Jadwal Pelajaran?',
                             text: "Data jadwal pelajaran akan dihapus secara permanen!",

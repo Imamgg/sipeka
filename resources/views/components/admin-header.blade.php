@@ -21,18 +21,54 @@
                     <div class="text-center">
                         <div class="text-3xl font-bold text-gray-900" id="current-date">
                             {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('d') }}</div>
-                        <div class="text-gray-500 text-sm font-medium">
+                        <div class="text-gray-500 text-sm font-medium" id="current-month-year">
                             {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('F Y') }}</div>
                     </div>
                     <div class="w-px bg-gray-300 h-12"></div>
                     <div class="text-center">
                         <div class="text-3xl font-bold text-gray-900" id="current-time">
                             {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('H:i') }}</div>
-                        <div class="text-gray-500 text-sm font-medium">
+                        <div class="text-gray-500 text-sm font-medium" id="current-day">
                             {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('l') }}</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateClock() {
+                const now = new Date();
+
+                now.setHours(now.getHours() + 7);
+
+                // Format tanggal
+                const day = String(now.getUTCDate()).padStart(2, '0');
+                document.getElementById('current-date').textContent = day;
+
+                // Format bulan dan tahun
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                const month = monthNames[now.getUTCMonth()];
+                const year = now.getUTCFullYear();
+                document.getElementById('current-month-year').textContent = month + ' ' + year;
+
+                // Format waktu
+                const hours = String(now.getUTCHours()).padStart(2, '0');
+                const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+                const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+                document.getElementById('current-time').textContent = hours + ':' + minutes;
+
+                // Format hari
+                const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const dayOfWeek = dayNames[now.getUTCDay()];
+                document.getElementById('current-day').textContent = dayOfWeek;
+            }
+
+            updateClock();
+            setInterval(updateClock, 1000);
+        });
+    </script>
 </div>

@@ -197,12 +197,11 @@
                                                 </svg>
                                             </a>
                                             <form action="{{ route('teacher.grades.destroy', $grade) }}"
-                                                method="POST" class="inline"
-                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus nilai ini?')">
+                                                method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="text-red-600 hover:text-red-800 font-semibold">
+                                                    class="delete-btn text-red-600 hover:text-red-800 font-semibold">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                         viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -247,53 +246,99 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const classFilter = document.getElementById('class_filter');
-            const subjectFilter = document.getElementById('subject_filter');
-            const gradeTypeFilter = document.getElementById('grade_type_filter');
-            const semesterFilter = document.getElementById('semester_filter');
-
-            function updateFilters() {
-                const params = new URLSearchParams();
-
-                if (classFilter.value) params.set('class_id', classFilter.value);
-                if (subjectFilter.value) params.set('subject_id', subjectFilter.value);
-                if (gradeTypeFilter.value) params.set('grade_type', gradeTypeFilter.value);
-                if (semesterFilter.value) params.set('semester', semesterFilter.value);
-
-                const queryString = params.toString();
-                const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location
-                    .pathname;
-
-                window.location.href = newUrl;
-            }
-
-            function loadStatistics() {
-                const params = new URLSearchParams();
-
-                if (classFilter.value) params.append('class_id', classFilter.value);
-                if (subjectFilter.value) params.append('subject_id', subjectFilter.value);
-                if (gradeTypeFilter.value) params.append('grade_type', gradeTypeFilter.value);
-                if (semesterFilter.value) params.append('semester', semesterFilter.value);
-
-                const queryString = params.toString();
-                const url = `{{ route('teacher.grades.statistics') }}${queryString ? '?' + queryString : ''}`;
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateStatisticsDashboard(data);
-                    })
-                    .catch(error => {
-                        console.error('Error loading statistics:', error);
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(deleteBtn => {
+                    deleteBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const form = this.closest('form');
+                        Swal.fire({
+                            title: 'Hapus Nilai',
+                            text: "Nilai yang dihapus tidak dapat dikembalikan!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#dc2626',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, Hapus!',
+                            cancelButtonText: 'Batal',
+                            reverseButtons: true,
+                            customClass: {
+                                popup: 'rounded-2xl border-0 shadow-2xl',
+                                confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                            },
+                            focusConfirm: false,
+                            focusCancel: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: 'Menghapus Nilai...',
+                                    text: 'Sedang memproses penghapusan nilai',
+                                    icon: 'info',
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    showConfirmButton: false,
+                                    customClass: {
+                                        popup: 'rounded-2xl border-0 shadow-2xl'
+                                    },
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                                form.submit();
+                            }
+                        });
                     });
-            }
+                });
 
-            function updateStatisticsDashboard(stats) {
-                const dashboard = document.getElementById('statistics-dashboard');
+                const classFilter = document.getElementById('class_filter');
+                const subjectFilter = document.getElementById('subject_filter');
+                const gradeTypeFilter = document.getElementById('grade_type_filter');
+                const semesterFilter = document.getElementById('semester_filter');
 
-                const html = `
+                function updateFilters() {
+                    const params = new URLSearchParams();
+                    if (classFilter.value) params.set('class_id', classFilter.value);
+                    if (subjectFilter.value) params.set('subject_id', subjectFilter.value);
+                    if (gradeTypeFilter.value) params.set('grade_type', gradeTypeFilter.value);
+                    if (semesterFilter.value) params.set('semester', semesterFilter.value);
+
+                    const queryString = params.toString();
+                    const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window
+                        .location
+                        .pathname;
+
+                    window.location.href = newUrl;
+                }
+
+                function loadStatistics() {
+                    const params = new URLSearchParams();
+
+                    if (classFilter.value) params.append('class_id', classFilter.value);
+                    if (subjectFilter.value) params.append('subject_id', subjectFilter.value);
+                    if (gradeTypeFilter.value) params.append('grade_type', gradeTypeFilter.value);
+                    if (semesterFilter.value) params.append('semester', semesterFilter.value);
+
+                    const queryString = params.toString();
+                    const url =
+                        `{{ route('teacher.grades.statistics') }}${queryString ? '?' + queryString : ''}`;
+
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateStatisticsDashboard(data);
+                        })
+                        .catch(error => {
+                            console.error('Error loading statistics:', error);
+                        });
+                }
+
+                function updateStatisticsDashboard(stats) {
+                    const dashboard = document.getElementById('statistics-dashboard');
+
+                    const html = `
                     <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
                         <div class="flex items-center justify-between">
                             <div>
@@ -351,29 +396,31 @@
                     </div>
                 `;
 
-                dashboard.innerHTML = html;
-            }
+                    dashboard.innerHTML = html;
+                }
 
-            // Event listeners for all filters
-            classFilter.addEventListener('change', function() {
-                updateFilters();
-                loadStatistics();
-            });
-            subjectFilter.addEventListener('change', function() {
-                updateFilters();
-                loadStatistics();
-            });
-            gradeTypeFilter.addEventListener('change', function() {
-                updateFilters();
-                loadStatistics();
-            });
-            semesterFilter.addEventListener('change', function() {
-                updateFilters();
-                loadStatistics();
-            });
+                // Event listeners for all filters
+                classFilter.addEventListener('change', function() {
+                    updateFilters();
+                    loadStatistics();
+                });
+                subjectFilter.addEventListener('change', function() {
+                    updateFilters();
+                    loadStatistics();
+                });
+                gradeTypeFilter.addEventListener('change', function() {
+                    updateFilters();
+                    loadStatistics();
+                });
+                semesterFilter.addEventListener('change', function() {
+                    updateFilters();
+                    loadStatistics();
+                });
 
-            // Load initial statistics
-            loadStatistics();
-        });
-    </script>
+                // Load initial statistics
+                loadStatistics();
+            });
+        </script>
+    @endpush
+
 </x-teacher-layout>

@@ -407,7 +407,6 @@
                     const deleteBtn = form.querySelector('.delete-btn');
                     deleteBtn.addEventListener('click', function(e) {
                         e.preventDefault();
-
                         Swal.fire({
                             title: 'Hapus Pengumuman?',
                             text: "Pengumuman yang dihapus tidak dapat dikembalikan!",

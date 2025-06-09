@@ -275,9 +275,9 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const deleteButtons = document.querySelectorAll('.delete-btn');
                 deleteButtons.forEach(button => {
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function(e) {
                         const form = this.closest('form');
-
+                        e.preventDefault();
                         Swal.fire({
                             title: 'Konfirmasi Hapus',
                             text: "Data siswa yang dihapus tidak dapat dikembalikan!",

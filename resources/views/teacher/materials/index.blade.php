@@ -297,12 +297,11 @@
                                             </svg>
                                         </a>
                                         <form action="{{ route('teacher.materials.destroy', $material) }}"
-                                            method="POST" class="inline"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus materi ini?')">
+                                            method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="text-red-600 hover:text-red-800 font-semibold text-sm"
+                                                class="text-red-600 hover:text-red-800 font-semibold text-sm delete-btn"
                                                 title="Hapus">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
@@ -361,25 +360,72 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const classFilter = document.getElementById('class_filter');
-            const subjectFilter = document.getElementById('subject_filter');
-            const typeFilter = document.getElementById('type_filter');
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        const form = this.closest('form');
+                        e.preventDefault();
+                        Swal.fire({
+                            title: 'Konfirmasi Hapus',
+                            text: 'Apakah Anda yakin ingin menghapus ini?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#ef4444',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal',
+                            reverseButtons: true,
+                            customClass: {
+                                popup: 'rounded-2xl border-0 shadow-2xl',
+                                confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                            },
+                            focusConfirm: false,
+                            focusCancel: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: 'Menghapus...',
+                                    text: 'Sedang memproses penghapusan...',
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+                                    customClass: {
+                                        popup: 'rounded-2xl border-0 shadow-2xl'
+                                    },
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                                form.submit();
+                            }
+                        });
+                    });
+                });
+            });
 
-            function updateFilters() {
-                const params = new URLSearchParams();
+            document.addEventListener('DOMContentLoaded', function() {
+                const classFilter = document.getElementById('class_filter');
+                const subjectFilter = document.getElementById('subject_filter');
+                const typeFilter = document.getElementById('type_filter');
 
-                if (classFilter.value) params.set('class_id', classFilter.value);
-                if (subjectFilter.value) params.set('subject_id', subjectFilter.value);
-                if (typeFilter.value) params.set('type', typeFilter.value);
+                function updateFilters() {
+                    const params = new URLSearchParams();
 
-                window.location.href = '{{ route('teacher.materials.index') }}?' + params.toString();
-            }
+                    if (classFilter.value) params.set('class_id', classFilter.value);
+                    if (subjectFilter.value) params.set('subject_id', subjectFilter.value);
+                    if (typeFilter.value) params.set('type', typeFilter.value);
 
-            classFilter.addEventListener('change', updateFilters);
-            subjectFilter.addEventListener('change', updateFilters);
-            typeFilter.addEventListener('change', updateFilters);
-        });
-    </script>
+                    window.location.href = '{{ route('teacher.materials.index') }}?' + params.toString();
+                }
+
+                classFilter.addEventListener('change', updateFilters);
+                subjectFilter.addEventListener('change', updateFilters);
+                typeFilter.addEventListener('change', updateFilters);
+            });
+        </script>
+    @endpush
+
 </x-teacher-layout>
