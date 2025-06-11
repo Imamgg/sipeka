@@ -213,6 +213,86 @@
                     </div>
                 </div>
             @endif
+
+            <!-- Pagination -->
+            @if ($teachers->hasPages())
+                <div class="mt-8">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
+                        <div class="flex flex-col items-center justify-between gap-3 sm:flex-row">
+                            <!-- Pagination Info -->
+                            <div class="text-sm text-gray-600">
+                                Menampilkan
+                                <span class="font-medium text-gray-900">{{ $teachers->firstItem() ?? 0 }}</span>
+                                sampai
+                                <span class="font-medium text-gray-900">{{ $teachers->lastItem() ?? 0 }}</span>
+                                dari
+                                <span class="font-medium text-gray-900">{{ $teachers->total() }}</span>
+                                data
+                            </div>
+
+                            <!-- Pagination Links -->
+                            <div class="inline-flex flex-wrap justify-center gap-1">
+                                <!-- Previous Page -->
+                                @if ($teachers->onFirstPage())
+                                    <span
+                                        class="inline-flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-lg bg-gray-100 text-gray-400">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </span>
+                                @else
+                                    <a href="{{ $teachers->previousPageUrl() }}"
+                                        class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </a>
+                                @endif
+
+                                <!-- Page Links -->
+                                @foreach ($teachers->getUrlRange(max($teachers->currentPage() - 2, 1), min($teachers->currentPage() + 2, $teachers->lastPage())) as $page => $url)
+                                    @if ($page == $teachers->currentPage())
+                                        <span
+                                            class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-md">
+                                            {{ $page }}
+                                        </span>
+                                    @else
+                                        <a href="{{ $url }}"
+                                            class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                            {{ $page }}
+                                        </a>
+                                    @endif
+                                @endforeach
+
+                                <!-- Next Page -->
+                                @if ($teachers->hasMorePages())
+                                    <a href="{{ $teachers->nextPageUrl() }}"
+                                        class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </a>
+                                @else
+                                    <span
+                                        class="inline-flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-lg bg-gray-100 text-gray-400">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
 
         @push('scripts')

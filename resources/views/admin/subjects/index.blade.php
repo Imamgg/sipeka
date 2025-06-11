@@ -172,6 +172,81 @@
                 <p class="text-gray-500">Coba kata kunci pencarian yang berbeda.</p>
             </div>
         </div>
+        <!-- Pagination -->
+        @if ($subjects->hasPages())
+            <div class="mt-8">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
+                    <div class="flex flex-col items-center justify-between gap-3 sm:flex-row">
+                        <!-- Pagination Info -->
+                        <div class="text-sm text-gray-600">
+                            Menampilkan
+                            <span class="font-medium text-gray-900">{{ $subjects->firstItem() ?? 0 }}</span>
+                            sampai
+                            <span class="font-medium text-gray-900">{{ $subjects->lastItem() ?? 0 }}</span>
+                            dari
+                            <span class="font-medium text-gray-900">{{ $subjects->total() }}</span>
+                            data
+                        </div>
+
+                        <!-- Pagination Links -->
+                        <div class="inline-flex flex-wrap justify-center gap-1">
+                            <!-- Previous Page -->
+                            @if ($subjects->onFirstPage())
+                                <span
+                                    class="inline-flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-lg bg-gray-100 text-gray-400">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </span>
+                            @else
+                                <a href="{{ $subjects->previousPageUrl() }}"
+                                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </a>
+                            @endif
+
+                            <!-- Page Links -->
+                            @foreach ($subjects->getUrlRange(max($subjects->currentPage() - 2, 1), min($subjects->currentPage() + 2, $subjects->lastPage())) as $page => $url)
+                                @if ($page == $subjects->currentPage())
+                                    <span
+                                        class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-md">
+                                        {{ $page }}
+                                    </span>
+                                @else
+                                    <a href="{{ $url }}"
+                                        class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            @endforeach
+
+                            <!-- Next Page -->
+                            @if ($subjects->hasMorePages())
+                                <a href="{{ $subjects->nextPageUrl() }}"
+                                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            @else
+                                <span
+                                    class="inline-flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-lg bg-gray-100 text-gray-400">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
     @push('scripts')
         <script>
@@ -213,39 +288,39 @@
                     deleteBtn.addEventListener('click', function(e) {
                         e.preventDefault();
                         Swal.fire({
-                                title: 'Konfirmasi Hapus',
-                                text: "Data mata pelajaran akan dihapus secara permanen!",
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#ef4444',
-                                cancelButtonColor: '#6b7280',
-                                confirmButtonText: 'Ya, hapus!',
-                                cancelButtonText: 'Batal',
-                                reverseButtons: true,
-                                customClass: {
-                                    popup: 'rounded-2xl border-0 shadow-2xl',
-                                    confirmButton: 'rounded-xl px-6 py-3 font-semibold',
-                                    cancelButton: 'rounded-xl px-6 py-3 font-semibold'
-                                },
-                                focusConfirm: false,
-                                focusCancel: true
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    Swal.fire({
-                                        title: 'Menghapus...',
-                                        text: 'Sedang memproses penghapusan mata pelajaran...',
-                                        allowOutsideClick: false,
-                                        showConfirmButton: false,
-                                        customClass: {
-                                            popup: 'rounded-2xl border-0 shadow-2xl'
-                                        },
-                                        didOpen: () => {
-                                            Swal.showLoading();
-                                        }
-                                    });
-                                    form.submit();
-                                }
-                            });
+                            title: 'Konfirmasi Hapus',
+                            text: "Data mata pelajaran akan dihapus secara permanen!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#ef4444',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal',
+                            reverseButtons: true,
+                            customClass: {
+                                popup: 'rounded-2xl border-0 shadow-2xl',
+                                confirmButton: 'rounded-xl px-6 py-3 font-semibold',
+                                cancelButton: 'rounded-xl px-6 py-3 font-semibold'
+                            },
+                            focusConfirm: false,
+                            focusCancel: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: 'Menghapus...',
+                                    text: 'Sedang memproses penghapusan mata pelajaran...',
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+                                    customClass: {
+                                        popup: 'rounded-2xl border-0 shadow-2xl'
+                                    },
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                                form.submit();
+                            }
+                        });
                     });
                 });
             });
