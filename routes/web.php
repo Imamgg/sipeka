@@ -133,7 +133,6 @@ Route::middleware(['auth', 'server.status'])->group(function () {
 Route::middleware(['auth', 'server.status'])->group(function () {
     Route::get('/dashboard', function () {
         $user = Auth::user();
-
         if ($user) {
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');

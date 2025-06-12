@@ -67,7 +67,7 @@
                                 </div>
                                 <ul class="py-1">
                                     <li>
-                                        <a href="{{ route('student.profile.edit') }}"
+                                        <a href="{{ route('teacher.profile.edit') }}"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                                     </li>
                                     <li>
