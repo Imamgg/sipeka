@@ -29,7 +29,7 @@ class StudentRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($userId)],
-            'phone_number' => ['nullable', 'string', 'max:15'],
+            'phone_number' => ['nullable', 'numeric', 'min:12', 'max:15'],
             'password' => [$this->isMethod('POST') ? 'required' : 'nullable', Password::defaults(), 'confirmed'],
             'nis' => ['required', 'string', 'max:20', Rule::unique('students')->ignore($studentId)],
             'nisn' => ['nullable', 'string', 'max:20', Rule::unique('students')->ignore($studentId)],
