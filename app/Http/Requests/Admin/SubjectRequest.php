@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,14 +22,14 @@ class SubjectRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'code_subject' => 'required|string|max:20|unique:subjects,code_subject',
-            'subject_name' => 'required|string|max:255',
+            'code_subject' => 'required|string|max:20|regex:/^[A-Z0-9]+$/|unique:subjects,code_subject',
+            'subject_name' => 'required|string|max:255|regex:/^[a-zA-Z0-9\s\-&]+$/',
             'description' => 'nullable|string',
         ];
 
         // For update requests, we need to ignore the current subject's code
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['code_subject'] = 'required|string|max:20|unique:subjects,code_subject,' . $this->subject->id;
+            $rules['code_subject'] = 'required|string|max:20|regex:/^[A-Z0-9]+$/|unique:subjects,code_subject,' . $this->subject->id;
         }
 
         return $rules;

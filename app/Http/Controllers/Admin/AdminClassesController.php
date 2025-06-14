@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClassRequest;
+use App\Http\Requests\Admin\ClassesRequest;
 use App\Models\Classes;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -38,7 +38,7 @@ class AdminClassesController extends Controller
     /**
      * Store a newly created class in storage.
      */
-    public function store(ClassRequest $request)
+    public function store(ClassesRequest $request)
     {
         try {
             Classes::create($request->validated());
@@ -87,7 +87,7 @@ class AdminClassesController extends Controller
     /**
      * Update the specified class in storage.
      */
-    public function update(ClassRequest $request, Classes $class)
+    public function update(ClassesRequest $request, Classes $class)
     {
         try {
             $class->update($request->validated());

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentRequest;
+use App\Http\Requests\Admin\StudentRequest;
 use App\Http\Resources\StudentResource;
 use App\Models\Classes;
 use App\Models\Student;

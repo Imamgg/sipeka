@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Classes;
 use App\Models\Grade;
-use App\Models\Presence;
 use App\Models\PresenceDetail;
 use App\Models\Student;
 use App\Models\Subjects;

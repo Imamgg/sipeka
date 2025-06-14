@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassRequest extends FormRequest
+class ClassesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,14 +18,14 @@ class ClassRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */  public function rules(): array
+     */    public function rules(): array
     {
         $rules = [
-            'class_name' => 'required|string|max:255',
+            'class_name' => 'required|string|max:255|regex:/^[a-zA-Z0-9\s\-]+$/',
             'level' => 'required|integer|between:10,12',
             'major' => 'required|in:IPA,IPS',
-            'homeroom_teacher_id' => 'nullable|exists:teachers,id',
-            'academic_year' => 'required|string|max:9',
+            'homeroom_teacher_id' => 'nullable|numeric|exists:teachers,id',
+            'academic_year' => 'required|string|regex:/^[0-9]{4}\/[0-9]{4}$/|max:9',
         ];
 
         if ($this->homeroom_teacher_id) {

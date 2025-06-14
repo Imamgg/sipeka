@@ -9,39 +9,39 @@ use Illuminate\Support\Facades\Auth;
 
 class ServerController extends Controller
 {
-  /**
-   * Display the server status management page.
-   */
-  public function index()
-  {
-    $serverStatus = ServerStatus::current();
+    /**
+     * Display the server status management page.
+     */
+    public function index()
+    {
+        $serverStatus = ServerStatus::current();
 
-    return view('admin.server.index', compact('serverStatus'));
-  }
-
-  /**
-   * Update server status (online/offline).
-   */
-  public function updateStatus(Request $request)
-  {
-    $request->validate([
-      'is_online' => 'required|boolean',
-      'maintenance_message' => 'nullable|string|max:255'
-    ]);
-
-    $serverStatus = ServerStatus::current();
-
-    if ($request->is_online) {
-      $serverStatus->setOnline(Auth::id());
-    } else {
-      $serverStatus->setOffline(
-        $request->maintenance_message ?? 'Server sedang dalam pemeliharaan. Hanya admin yang dapat mengakses sistem.',
-        Auth::id()
-      );
+        return view('admin.server.index', compact('serverStatus'));
     }
 
-    $statusText = $request->is_online ? 'online' : 'maintenance';
+    /**
+     * Update server status (online/offline).
+     */
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'is_online' => 'required|boolean',
+            'maintenance_message' => 'nullable|string|max:255'
+        ]);
 
-    return redirect()->back()->with('success', "Status server berhasil diubah ke {$statusText}.");
-  }
+        $serverStatus = ServerStatus::current();
+
+        if ($request->is_online) {
+            $serverStatus->setOnline(Auth::id());
+        } else {
+            $serverStatus->setOffline(
+                $request->maintenance_message ?? 'Server sedang dalam pemeliharaan. Hanya admin yang dapat mengakses sistem.',
+                Auth::id()
+            );
+        }
+
+        $statusText = $request->is_online ? 'online' : 'maintenance';
+
+        return redirect()->back()->with('success', "Status server berhasil diubah ke {$statusText}.");
+    }
 }
