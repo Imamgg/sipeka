@@ -269,7 +269,7 @@ class StudentAttendanceController extends Controller
                     'is_automatic' => $isAutomatic
                 ]);
 
-                $errorMessage = 'Anda tidak terdaftar di kelas ini. QR code ini untuk kelas ' . $className . '. Silakan hubungi admin jika ini adalah kesalahan.';
+                $errorMessage = 'Anda tidak terdaftar di kelas ini. QR code ini untuk kelas ' . $className . '. Silakan hubungi guru jika ini adalah kesalahan.';
 
                 if ($isAutomatic) {
                     return redirect()->route('student.attendances.scan')->with('error', $errorMessage);
