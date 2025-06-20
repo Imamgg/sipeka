@@ -1,6 +1,6 @@
 @props(['schedules', 'classes', 'teachers', 'subjects'])
 <x-app-layout>
-    <div class="p-6 space-y-6 overflow-y-auto">
+    <div class="px-6 py-8 space-y-6 overflow-y-auto">
         <!-- Header Section with Gradient -->
         <div
             class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 p-8 text-white shadow-2xl">

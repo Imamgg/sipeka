@@ -119,7 +119,7 @@
                                 </dt>
                                 <dd class="text-sm">
                                     <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                         {{ $class->major == 'IPA' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800' }}">
                                         {{ $class->major }}
                                     </span>
@@ -182,11 +182,12 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- Students List -->
+            </div>
+            <!-- Students List -->
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                     <!-- Card Header -->
-                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-4 sm:px-6 py-4 border-b border-gray-200">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0">
@@ -201,8 +202,8 @@
                                     </div>
                                 </div>
                                 <div class="ml-3">
-                                    <h3 class="text-lg font-semibold text-gray-900">Daftar Siswa</h3>
-                                    <p class="text-sm text-gray-600">{{ $class->students->count() }} siswa terdaftar
+                                    <h3 class="text-base sm:text-lg font-semibold text-gray-900">Daftar Siswa</h3>
+                                    <p class="text-xs sm:text-sm text-gray-600">{{ $class->students->count() }} siswa terdaftar
                                         dalam kelas ini</p>
                                 </div>
                             </div>
@@ -210,12 +211,12 @@
                     </div>
 
                     <!-- Students Content -->
-                    <div class="p-6">
+                    <div class="p-4 sm:p-6">
                         @forelse ($class->students as $student)
                             <!-- Student Card -->
                             <div
-                                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 {{ !$loop->last ? 'mb-3' : '' }}">
-                                <div class="flex items-center space-x-4">
+                                class="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 {{ !$loop->last ? 'mb-3' : '' }}">
+                                <div class="flex items-center space-x-3 sm:space-x-4">
                                     <!-- Student Avatar -->
                                     <div class="flex-shrink-0">
                                         <div
@@ -227,20 +228,20 @@
                                     </div>
 
                                     <!-- Student Info -->
-                                    <div class="flex-1">
-                                        <div class="flex items-center space-x-3">
-                                            <h4 class="text-sm font-semibold text-gray-900">{{ $student->user->name }}
-                                            </h4>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3">
                                             <span
-                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {{ $student->gender === 'M' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }}">
+                                                class="mt-1 sm:mt-0 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {{ $student->gender === 'M' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }} w-fit">
                                                 {{ $student->gender === 'M' ? 'Laki-laki' : 'Perempuan' }}
                                             </span>
+                                            <h4 class="text-sm font-semibold text-gray-900 truncate">{{ $student->user->name }}
+                                            </h4>
                                         </div>
-                                        <div class="flex items-center space-x-4 mt-1">
-                                            <p class="text-sm text-gray-500">
+                                        <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mt-1 space-y-1 sm:space-y-0">
+                                            <p class="text-xs sm:text-sm text-gray-500">
                                                 <span class="font-medium">NIS:</span> {{ $student->nis }}
                                             </p>
-                                            <p class="text-sm text-gray-500">
+                                            <p class="text-xs sm:text-sm text-gray-500">
                                                 <span class="font-medium">Lahir:</span>
                                                 {{ $student->date_of_birth->format('d-m-Y') }}
                                             </p>
@@ -249,9 +250,9 @@
                                 </div>
 
                                 <!-- Action Button -->
-                                <div class="flex-shrink-0">
+                                <div class="flex-shrink-0 mt-3 sm:mt-0 sm:ml-4">
                                     <a href="{{ route('admin.students.show', $student) }}"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-all duration-200">
+                                        class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-xs sm:text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-all duration-200">
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -266,19 +267,19 @@
                             </div>
                         @empty
                             <!-- Empty State -->
-                            <div class="text-center py-12">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor"
+                            <div class="text-center py-8 sm:py-12">
+                                <svg class="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
                                     </path>
                                 </svg>
                                 <h3 class="mt-2 text-sm font-medium text-gray-900">Belum Ada Siswa</h3>
-                                <p class="mt-1 text-sm text-gray-500">Kelas ini belum memiliki siswa yang terdaftar.
+                                <p class="mt-1 text-xs sm:text-sm text-gray-500 px-4">Kelas ini belum memiliki siswa yang terdaftar.
                                 </p>
-                                <div class="mt-6">
+                                <div class="mt-4 sm:mt-6">
                                     <a href="{{ route('admin.students.create') }}"
-                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-500 border border-transparent rounded-lg hover:from-blue-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
+                                        class="inline-flex items-center px-4 py-2 text-xs sm:text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-500 border border-transparent rounded-lg hover:from-blue-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

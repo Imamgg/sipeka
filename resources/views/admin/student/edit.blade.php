@@ -161,7 +161,7 @@
 
                 <!-- Informasi Siswa -->
                 <div
-                    class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+                    class="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
                     <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-gray-200">
                         <div class="flex items-center gap-3">
                             <div class="rounded-full bg-blue-100 p-3 text-blue-600">
@@ -178,8 +178,8 @@
                         </div>
                     </div>
 
-                    <div class="p-6">
-                        <div class="grid gap-6 md:grid-cols-2">
+                    <div class="p-4 sm:p-6">
+                        <div class="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
                             <div class="space-y-2">
                                 <label for="nis" class="block text-sm font-semibold text-gray-700">
                                     NIS <span class="text-red-500">*</span>
@@ -263,7 +263,7 @@
                                 <label class="block text-sm font-semibold text-gray-700">
                                     Jenis Kelamin <span class="text-red-500">*</span>
                                 </label>
-                                <div class="flex gap-6">
+                                <div class="flex gap-2 md:gap-6 flex-col md:flex-row">
                                     <label class="flex items-center group cursor-pointer">
                                         <input type="radio" name="gender" value="M"
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 transition-all"

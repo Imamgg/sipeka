@@ -160,8 +160,8 @@
                                                         ];
                                                     @endphp
                                                     {{ $days[$schedule->day] ?? ($schedule->day ?? 'N/A') }},
-                                                    {{ $schedule->start_time ?? 'N/A' }} -
-                                                    {{ $schedule->end_time ?? 'N/A' }}
+                                                    {{ \Carbon\Carbon::parse($schedule->start_time)->translatedFormat('H:i') ?? 'N/A' }} -
+                                                    {{ \Carbon\Carbon::parse($schedule->end_time)->translatedFormat('H:i') ?? 'N/A' }}
                                                 </p>
                                             </div>
                                         </div>

@@ -70,7 +70,7 @@
                                 <div>
                                     <h3 class="text-sm font-medium text-blue-800 dark:text-blue-300">Kelas</h3>
                                     <p class="text-lg font-semibold text-blue-900 dark:text-blue-100">
-                                        {{ $schedule->class->class_name ?? 'N/A' }}</p>
+                                        {{ $schedule->classes->class_name ?? 'N/A' }}</p>
                                 </div>
                             </div>
 

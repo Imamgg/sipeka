@@ -4,7 +4,7 @@
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">QR Code Attendance</h1>
+                    <h1 class="text-3xl font-bold text-gray-900">Absensi</h1>
                     <p class="text-gray-600">Kelola sesi absensi dengan QR code untuk siswa</p>
                 </div>
                 <div class="flex space-x-3">
@@ -14,7 +14,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
                             </path>
                         </svg>
-                        Buat Sesi QR Baru
+                        Buat Absensi
                     </a>
                 </div>
             </div>

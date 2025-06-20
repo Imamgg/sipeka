@@ -431,7 +431,7 @@
                             </a>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
+                        <div class="grid grid-cols-3 md:grid-cols-7 gap-4">
                             @php
                                 $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                                 $dayNames = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
