@@ -145,41 +145,42 @@
                             </div>
                         </div>
                     </div>
-                </div> <!-- Informasi Guru -->
+                </div>
+                <!-- Informasi Guru -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-gray-200">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:p-6 border-b border-gray-200">
                         <div class="flex items-center gap-3">
-                            <div class="rounded-full bg-blue-100 p-3 text-blue-600">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="rounded-full bg-blue-100 p-2 sm:p-3 text-blue-600 flex-shrink-0">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
                                     </path>
                                 </svg>
                             </div>
-                            <div>
-                                <h2 class="text-xl font-bold text-gray-900">Informasi Guru</h2>
-                                <p class="text-sm text-gray-600">Data identitas dan akademik guru</p>
+                            <div class="min-w-0 flex-1">
+                                <h2 class="text-lg sm:text-xl font-bold text-gray-900">Informasi Guru</h2>
+                                <p class="text-xs sm:text-sm text-gray-600">Data identitas dan akademik guru</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="p-6">
-                        <div class="grid gap-6 md:grid-cols-2">
+                    <div class="p-4 sm:p-6">
+                        <div class="grid gap-4 sm:gap-6 md:grid-cols-2">
                             <div class="space-y-2">
                                 <label for="nip" class="block text-sm font-medium text-gray-700">
                                     NIP <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" name="nip" id="nip" value="{{ old('nip') }}"
                                     placeholder="Nomor Induk Pegawai"
-                                    class="w-full rounded-xl border  bg-gray-50 px-4 py-3 text-sm  focus:bg-white focus:outline-none focus:ring-2 transition-all duration-200 @error('nip') border-red-300 focus:border-red-500 focus:ring-red-200 @enderror">
+                                    class="w-full rounded-xl border bg-gray-50 px-3 py-2.5 sm:px-4 sm:py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 transition-all duration-200 @error('nip') border-red-300 focus:border-red-500 focus:ring-red-200 @enderror">
                                 @error('nip')
                                     <p class="mt-1 text-sm text-red-500 flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
                                                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                                                 clip-rule="evenodd"></path>
                                         </svg>
-                                        {{ $message }}
+                                        <span class="break-words">{{ $message }}</span>
                                     </p>
                                 @enderror
                             </div>
@@ -190,15 +191,15 @@
                                 </label>
                                 <input type="text" name="place_of_birth" id="place_of_birth"
                                     value="{{ old('place_of_birth') }}" placeholder="Kota tempat lahir"
-                                    class="w-full rounded-xl border  bg-gray-50 px-4 py-3 text-sm  focus:bg-white focus:outline-none focus:ring-2 transition-all duration-200 @error('place_of_birth') border-red-300 focus:border-red-500 focus:ring-red-200 @enderror">
+                                    class="w-full rounded-xl border bg-gray-50 px-3 py-2.5 sm:px-4 sm:py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 transition-all duration-200 @error('place_of_birth') border-red-300 focus:border-red-500 focus:ring-red-200 @enderror">
                                 @error('place_of_birth')
                                     <p class="mt-1 text-sm text-red-500 flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
                                                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                                                 clip-rule="evenodd"></path>
                                         </svg>
-                                        {{ $message }}
+                                        <span class="break-words">{{ $message }}</span>
                                     </p>
                                 @enderror
                             </div>
@@ -209,15 +210,15 @@
                                 </label>
                                 <input type="date" name="date_of_birth" id="date_of_birth"
                                     value="{{ old('date_of_birth') }}"
-                                    class="w-full rounded-xl border  bg-gray-50 px-4 py-3 text-sm  focus:bg-white focus:outline-none focus:ring-2 transition-all duration-200 @error('date_of_birth') border-red-300 focus:border-red-500 focus:ring-red-200 @enderror">
+                                    class="w-full rounded-xl border bg-gray-50 px-3 py-2.5 sm:px-4 sm:py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 transition-all duration-200 @error('date_of_birth') border-red-300 focus:border-red-500 focus:ring-red-200 @enderror">
                                 @error('date_of_birth')
                                     <p class="mt-1 text-sm text-red-500 flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
                                                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                                                 clip-rule="evenodd"></path>
                                         </svg>
-                                        {{ $message }}
+                                        <span class="break-words">{{ $message }}</span>
                                     </p>
                                 @enderror
                             </div>
@@ -226,25 +227,25 @@
                                 <label class="block text-sm font-medium text-gray-700">
                                     Jenis Kelamin <span class="text-red-500">*</span>
                                 </label>
-                                <div class="flex gap-4 mt-2">
+                                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-2">
                                     <label
-                                        class="flex items-center px-4 py-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+                                        class="flex items-center bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                                         <input type="radio" name="gender" value="M"
-                                            class="h-4 w-4  text-blue-600 focus:ring-blue-500"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 flex-shrink-0"
                                             {{ old('gender') == 'M' ? 'checked' : '' }}>
                                         <span class="ml-3 text-sm font-medium text-gray-700">Laki-laki</span>
                                     </label>
                                     <label
-                                        class="flex items-center px-4 py-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+                                        class="flex items-center bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                                         <input type="radio" name="gender" value="F"
-                                            class="h-4 w-4  text-blue-600 focus:ring-blue-500"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 flex-shrink-0"
                                             {{ old('gender') == 'F' ? 'checked' : '' }}>
                                         <span class="ml-3 text-sm font-medium text-gray-700">Perempuan</span>
                                     </label>
                                 </div>
                                 @error('gender')
                                     <p class="mt-1 text-sm text-red-500 flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
                                                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                                                 clip-rule="evenodd"></path>
