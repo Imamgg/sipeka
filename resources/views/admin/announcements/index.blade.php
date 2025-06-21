@@ -1,11 +1,12 @@
 <x-app-layout>
     <div class="container mx-auto px-6 py-8">
         <!-- Breadcrumb Navigation -->
-        <div class="mb-8">
-            <nav class="flex items-center space-x-4 text-sm">
+        <div class="mb-6 sm:mb-8">
+            <nav class="flex flex-wrap items-center space-x-2 sm:space-x-4 text-sm">
                 <a href="{{ route('admin.dashboard') }}"
                     class="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors group">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v6m8-6v6"></path>
@@ -19,7 +20,7 @@
 
         <!-- Header Section -->
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-gray-200 mb-6">
-            <div class="p-8">
+            <div class="p-4 sm:p-8">
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                     <div class="flex-1">
                         <div class="flex items-center space-x-4 mb-4">
@@ -32,7 +33,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="text-3xl font-bold text-gray-900">Kelola Pengumuman</h1>
+                                <h1 class="text-xl sm:text-3xl font-bold text-gray-900">Kelola Pengumuman</h1>
                                 <p class="text-gray-600 mt-1">Buat dan kelola pengumuman untuk siswa dan guru
                                 </p>
                             </div>
@@ -135,12 +136,12 @@
                 <div
                     class="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200
                     border-l-4 {{ $announcement->priority === 'high' ? 'border-l-red-500' : ($announcement->priority === 'medium' ? 'border-l-yellow-500' : 'border-l-green-500') }}">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
+                    <div class="p-4 sm:p-6">
+                        <div class="flex flex-col sm:flex-row items-start justify-between">
                             <!-- Content -->
                             <div class="flex-1 min-w-0">
                                 <!-- Header with badges -->
-                                <div class="flex items-center gap-2 mb-3">
+                                <div class="flex flex-wrap items-center gap-2 mb-3">
                                     <!-- Priority Badge -->
                                     <span
                                         class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
@@ -233,7 +234,7 @@
                                 </div>
 
                                 <!-- Title -->
-                                <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight">
+                                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 leading-tight">
                                     <a href="{{ route('admin.announcements.show', $announcement->id) }}"
                                         class="hover:text-blue-600 transition-colors">
                                         {{ $announcement->title }}
@@ -241,15 +242,16 @@
                                 </h3>
 
                                 <!-- Content Preview -->
-                                <div class="text-gray-600 mb-4 leading-relaxed">
-                                    {{ Str::limit(strip_tags($announcement->content), 200) }}
+                                <div class="text-sm sm:text-base text-gray-600 mb-4 leading-relaxed">
+                                    {{ Str::limit(strip_tags($announcement->content), 150, '...') }}
                                 </div>
 
                                 <!-- Meta Information Grid -->
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-500">
+                                <div
+                                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-500">
                                     <div class="flex items-center">
-                                        <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                        <svg class="flex-shrink-0 w-4 h-4 mr-2 text-blue-500" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                             </path>
@@ -263,7 +265,7 @@
 
                                     @if ($announcement->expires_at)
                                         <div class="flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-orange-500" fill="none"
+                                            <svg class="flex-shrink-0 w-4 h-4 mr-2 text-orange-500" fill="none"
                                                 stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -277,8 +279,8 @@
                                     @endif
 
                                     <div class="flex items-center">
-                                        <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                        <svg class="flex-shrink-0 w-4 h-4 mr-2 text-green-500" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
                                             </path>
@@ -292,8 +294,8 @@
                             </div>
 
                             <!-- Actions -->
-                            <div class="flex-shrink-0 ml-6">
-                                <div class="flex items-center space-x-2">
+                            <div class="flex-shrink-0 mt-4 sm:mt-0 sm:ml-6">
+                                <div class="flex sm:flex-col items-center space-x-2 sm:space-x-0 sm:space-y-2">
                                     <!-- View -->
                                     <a href="{{ route('admin.announcements.show', $announcement->id) }}"
                                         class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
@@ -368,20 +370,20 @@
                         </div>
                     </div>
                 </div>
-            @empty
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
-                    <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
+            @empty <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-12 text-center">
+                    <svg class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-400 mb-4" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
                         </path>
                     </svg>
-                    <h3 class="text-xl font-medium text-gray-900 mb-2">Belum ada pengumuman</h3>
+                    <h3 class="text-lg sm:text-xl font-medium text-gray-900 mb-2">Belum ada pengumuman</h3>
                     <p class="text-gray-600 mb-6">Mulai dengan membuat pengumuman pertama untuk menyampaikan informasi
                         penting.</p>
                     <a href="{{ route('admin.announcements.create') }}"
                         class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
                             </path>
                         </svg>
