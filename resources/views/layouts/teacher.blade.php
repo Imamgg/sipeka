@@ -48,10 +48,16 @@
                                         class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
                                         id="user-menu-button" aria-expanded="false">
                                         <span class="sr-only">Open user menu</span>
-                                        <div
-                                            class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                                            {{ substr(Auth::user()->name, 0, 1) }}
-                                        </div>
+                                        @if (Auth::user()->profile_picture)
+                                            <img class="w-8 h-8 rounded-full object-cover"
+                                                src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
+                                                alt="Profile Picture">
+                                        @else
+                                            <div
+                                                class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                                                {{ substr(Auth::user()->name, 0, 1) }}
+                                            </div>
+                                        @endif
                                     </button>
                                 </div>
                             </div>

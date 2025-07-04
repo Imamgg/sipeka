@@ -3,9 +3,35 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <!-- Profile Picture Upload Section -->
+        <div class="space-y-4">
+            <label class="block text-sm font-semibold text-gray-700">
+                {{ __('Foto Profil') }}
+            </label>
+            <div class="flex items-center space-x-6">
+                <div class="shrink-0">
+                    @if ($user->profile_picture)
+                        <img id="profile-preview" class="h-20 w-20 object-cover rounded-full border-2 border-gray-300"
+                            src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
+                    @else
+                        <div id="profile-preview"
+                            class="h-20 w-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-gray-300">
+                            {{ substr($user->name, 0, 1) }}
+                        </div>
+                    @endif
+                </div>
+                <div class="flex-1">
+                    <input type="file" name="profile_picture" id="profile_picture" accept="image/*"
+                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    <p class="mt-2 text-xs text-gray-500">PNG, JPG, GIF hingga 2MB</p>
+                    <x-input-error class="mt-2" :messages="$errors->get('profile_picture')" />
+                </div>
+            </div>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-2">
@@ -108,4 +134,29 @@
             </button>
         </div>
     </form>
+
+    <script>
+        // Image preview functionality
+        document.getElementById('profile_picture').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('profile-preview');
+                    if (preview.tagName === 'IMG') {
+                        preview.src = e.target.result;
+                    } else {
+                        // Replace the div with an img element
+                        const img = document.createElement('img');
+                        img.id = 'profile-preview';
+                        img.className = 'h-20 w-20 object-cover rounded-full border-2 border-gray-300';
+                        img.src = e.target.result;
+                        img.alt = 'Profile Picture';
+                        preview.parentNode.replaceChild(img, preview);
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </section>

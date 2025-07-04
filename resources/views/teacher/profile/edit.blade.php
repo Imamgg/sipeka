@@ -74,7 +74,7 @@
                                     <p class="text-sm text-gray-600">Update informasi pribadi Anda di bawah ini</p>
                                 </div>
                             </div>
-                            @if (session('success'))
+                            @if (session('profile_success'))
                                 <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
                                     <div class="flex items-center">
                                         <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
@@ -82,7 +82,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M5 13l4 4L19 7"></path>
                                         </svg>
-                                        <span class="text-green-800 font-medium">{{ session('success') }}</span>
+                                        <span class="text-green-800 font-medium">{{ session('profile_success') }}</span>
                                     </div>
                                 </div>
                             @endif
@@ -99,9 +99,49 @@
                                     </div>
                                 </div>
                             @endif
-                            <form action="{{ route('teacher.profile.update') }}" method="POST" class="space-y-8">
+                            <form action="{{ route('teacher.profile.update') }}" method="POST" class="space-y-8"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
+
+                                <!-- Profile Picture Upload Section -->
+                                <div class="space-y-4">
+                                    <label class="block text-sm font-semibold text-gray-700">
+                                        <span class="flex items-center">
+                                            <svg class="h-4 w-4 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                </path>
+                                            </svg>
+                                            Foto Profil
+                                        </span>
+                                    </label>
+                                    <div class="flex items-center space-x-6">
+                                        <div class="shrink-0">
+                                            @if ($user->profile_picture)
+                                                <img id="teacher-profile-preview"
+                                                    class="h-24 w-24 object-cover rounded-full border-4 border-blue-200"
+                                                    src="{{ asset('storage/' . $user->profile_picture) }}"
+                                                    alt="Profile Picture">
+                                            @else
+                                                <div id="teacher-profile-preview"
+                                                    class="h-24 w-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold border-4 border-blue-200">
+                                                    {{ substr($user->name, 0, 1) }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <input type="file" name="profile_picture" id="teacher_profile_picture"
+                                                accept="image/*"
+                                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                            <p class="mt-2 text-xs text-gray-500">PNG, JPG, GIF hingga 2MB</p>
+                                            @error('profile_picture')
+                                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <!-- Basic Information -->
@@ -114,8 +154,8 @@
                                                 value="{{ old('name', $user->name) }}"
                                                 class="block w-full rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 pl-10 @error('name') border-red-500 @enderror">
                                             <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
+                                                <svg class="h-5 w-5 text-gray-400" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
                                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
@@ -259,11 +299,11 @@
                                             <select name="gender" id="gender"
                                                 class="block w-full rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 @error('gender') border-red-500 @enderror">
                                                 <option value="">Pilih Jenis Kelamin</option>
-                                                <option value="male"
-                                                    {{ old('gender', $teacher->gender) == 'male' ? 'selected' : '' }}>
+                                                <option value="M"
+                                                    {{ old('gender', $teacher->gender) == 'M' ? 'selected' : '' }}>
                                                     Laki-laki</option>
-                                                <option value="female"
-                                                    {{ old('gender', $teacher->gender) == 'female' ? 'selected' : '' }}>
+                                                <option value="F"
+                                                    {{ old('gender', $teacher->gender) == 'F' ? 'selected' : '' }}>
                                                     Perempuan</option>
                                             </select>
                                             @error('gender')
@@ -350,4 +390,28 @@
                 </div>
             </div>
         </div>
+        <script>
+            // Image preview functionality for teacher
+            document.getElementById('teacher_profile_picture').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('teacher-profile-preview');
+                        if (preview.tagName === 'IMG') {
+                            preview.src = e.target.result;
+                        } else {
+                            // Replace the div with an img element
+                            const img = document.createElement('img');
+                            img.id = 'teacher-profile-preview';
+                            img.className = 'h-24 w-24 object-cover rounded-full border-4 border-blue-200';
+                            img.src = e.target.result;
+                            img.alt = 'Profile Picture';
+                            preview.parentNode.replaceChild(img, preview);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        </script>
 </x-teacher-layout>
